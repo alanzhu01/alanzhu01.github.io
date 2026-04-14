@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Distribution Matching</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link href="./css/style.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="icon" href="./assets/favicon.png" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['\\(', '\\)'], ['$', '$']],
+          displayMath: [['\\[', '\\]'], ['$$', '$$']]
+        },
+        options: {
+          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+  <header class="header">
+    <a href="/" class="home">
+      <img src="./assets/ucsb-logo-light.png" alt="UCSB" class="ucsb-logo logo-light">
+      <img src="./assets/ucsb-logo-dark.png" alt="UCSB" class="ucsb-logo logo-dark">
+      <h1 class="header-text">PSTAT 120 Applets</h1>
+    </a>
+
+    <button id="theme-toggle" aria-label="Toggle dark mode" class="dark-mode-btn"> 
+      <span>Dark Mode</span>
+    </button>
+
+    <script src="./js/utils/dark-mode.js"></script>
+  </header>
+
+  <main class="distribution-content">
+    <div class="distribution-container">
+      <div class="distribution-name">
+        <h1>Distribution Matching</h1>
+      </div>
+
+      <div id="matching-app" class="matching-app">
+        <div class="start-menu" id="start-menu">
+          <div class="distribution-selection">
+            <p>Select distributions:</p>
+            <div id="dist-checklist" class="dist-checklist"></div>
+
+            <div class="start-actions" hidden>
+              <button id="select-all" class="pill pill--soft" type="button">Select all</button>
+              <button id="select-none" class="pill pill--soft" type="button">Select none</button>
+            </div>
+          </div>
+
+          <span class="matching-bottom">
+            <label class="num_questions">
+              <span>Number of questions:</span>
+              <select id="question-count" class="question-count">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+            </label>
+
+            <button id="start-btn" class="start-btn">Start</button>
+          </span>
+          <div id="start-error" class="feedback" aria-live="polite"></div>
+        </div>
+
+        <div id="end-screen" class="end-screen" hidden>
+          <p hidden>Your score: <strong><span id="final-score"></span></strong></p>
+          <p>Well done! You answered <strong><span id="final-correct"></span></strong> out of <strong><span id="final-total"></span></strong> correctly! Click the button below to keep practicing.</p>
+          <button id="play-again" class="play-again" type="button">Play again</button>
+        </div>
+
+        <div class="game-screen" id="game-screen" hidden>
+          <div class="scorebar" aria-live="polite">
+            <span><strong>Question:</strong> <span id="qnum-val">1</span>/<span id="qtotal-val">10</span></span>
+            <span hidden><strong>Score:</strong> <span id="score-val">0</span></span>
+          </div>
+
+          <div class="distribution-prompt">
+            <div class="prompt-text">
+              <p>Scenario</p>
+              <div id="prompt-text"></div>
+            </div>
+            
+
+            <div class="controls-row">
+              <select id="distribution-selection" class="dist-select">
+                <option value="" selected disabled>Select distribution</option>
+                <option value="binomial">Binomial</option>
+                <option value="geometric">Geometric</option>
+                <option value="hypergeometric">Hypergeometric</option>
+                <option value="poisson">Poisson</option>
+                <option value="negative-binomial">Negative Binomial</option>
+                <option value="uniform">Uniform</option>
+                <option value="normal">Normal</option>
+                <option value="exponential">Exponential</option>
+                <option value="gamma">Gamma</option>
+                <option value="chi-square">Chi-Square</option>
+                <option value="beta">Beta</option>
+              </select>
+
+              <div id="param-inputs" class="param-inputs"></div>
+
+              <button id="submit-guess" class="submit-btn" hidden>Submit</button>
+            </div>
+
+            <div id="feedback" class="feedback" aria-live="polite"></div>
+
+            <button id="continue-btn" class="submit-btn" hidden>Continue</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script type="module" src="./js/other_applets/distribution-matching.js"></script>
+</body>
+</html>

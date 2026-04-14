@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gamma Distribution</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link href="./css/style.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="icon" href="./assets/favicon.png" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['\\(', '\\)'], ['$', '$']],
+          displayMath: [['\\[', '\\]'], ['$$', '$$']]
+        },
+        options: {
+          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js"></script>
+</head>
+<body>
+  <header class="header">
+    <a href="/" class="home">
+      <img src="./assets/ucsb-logo-light.png" alt="UCSB" class="ucsb-logo logo-light">
+      <img src="./assets/ucsb-logo-dark.png" alt="UCSB" class="ucsb-logo logo-dark">
+      <h1 class="header-text">PSTAT 120 Applets</h1>
+    </a>
+
+    <button id="theme-toggle" aria-label="Toggle dark mode" class="dark-mode-btn"> 
+      <span>Dark Mode</span>
+    </button>
+
+    <script src="./js/utils/dark-mode.js"></script>
+  </header>
+
+  <main class="distribution-content">
+    <div class="distribution-container">
+      <div class="distribution-name">
+        <h1>Gamma Distribution</h1>
+        <label class="segmented-toggle">
+          <input type="checkbox" id="formula-toggle" class="segmented-input">
+
+          <span class="segmented-track">
+            <span class="segmented-option left">Value</span>
+            <span class="segmented-option right"> Formula</span>
+            <span class="segmented-thumb"></span>
+          </span>
+        </label>
+      </div>
+
+      <div class="distribution-app">
+        <div class="distribution-input-grid-2col">
+          <div class="distribution-input">
+            <label for="a">\(\alpha =\)</label>
+            <div class="has-tip">
+              <input type="number" id="a">
+              <div class="tip" role="tooltip">Shape</div>
+            </div>
+          </div>
+
+          <div class="distribution-input">
+            <select id="param" class="pill">
+                <option value="b" selected>β</option>
+                <option value="l">λ</option>
+            </select>
+            <label>\(=\)</label>
+            <div class="has-tip">
+              <input type="number" id="b">
+              <div class="tip" role="tooltip"></div>
+            </div>
+          </div>
+  
+          <div class="distribution-input">
+            <label for="x">\(x =\)</label>
+            <input type="number" id="x">
+          </div>
+
+          <div class="distribution-input">
+            <label>
+              <span>\( \mathbb{P}(X \)</span>
+
+              <select id="rel" class="pill">
+                <option value="le" selected>≤</option>
+                <option value="ge">≥</option>
+              </select>
+
+              <span class="math">\( x) = \)</span>
+            </label>
+
+            <input type="number" id="px" class="px">
+          </div>
+        </div>
+
+        <div class="distribution-output">
+          <div id="plot"></div>
+
+          <div id="stats-col" class="stats-col hidden">
+            <aside class="functions">
+              <div class="functions-row">
+                <div class="stats-label">Probability Density Function</div>
+                <div id="pdf" class="stats-function">\( \text{—} \)</div>
+              </div>
+
+              <div class="functions-row">
+                <div class="stats-label">Moment Generating Function</div>
+                <div id="mgf" class="stats-function">\( \text{—} \)</div>
+              </div>
+            </aside>
+
+            <aside class="stats">
+              <div class="stats-row">
+                <span class="stats-label">Mean</span>
+                <span id="mean" class="stats-value">—</span>
+              </div>
+
+              <div class="stats-row">
+                <span class="stats-label">Variance</span>
+                <span id="var" class="stats-value">—</span>
+              </div>
+
+              <div class="stats-row">
+                <span class="stats-label">Std Dev</span>
+                <span id="sd" class="stats-value">—</span>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script type="module" src="./js/pages/gamma.js"></script>
+</body>
+</html>

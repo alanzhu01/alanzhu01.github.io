@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>PSTAT 120 Applets</title>
+  <link href="./css/style.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="icon" href="./assets/favicon.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+  <header class="header">
+    <a href="./index.html" class="home">
+      <img src="./assets/ucsb-logo-light.png" alt="UCSB" class="ucsb-logo logo-light">
+      <img src="./assets/ucsb-logo-dark.png" alt="UCSB" class="ucsb-logo logo-dark">
+      <h1 class="header-text">PSTAT 120 Applets</h1>
+    </a>
+
+    <button id="theme-toggle" aria-label="Toggle dark mode" class="dark-mode-btn"> 
+      <span>Dark Mode</span>
+    </button>
+    
+    <script src="./js/utils/dark-mode.js"></script>
+  </header>
+
+  <main class="content">
+    <div class="categories">
+      <div class="category">
+        <h1>Distributions</h1>
+      </div>
+
+      <div class="applets">
+        <a class="applet-selection" href="./binomial.html">
+          <img src="./assets/binomial.png"
+              alt="binomial"
+              class="applet-selection-icon">
+          <div class="applet-text">
+            <h3>Binomial</h3>
+            <span class="applet-type">Discrete</span>
+          </div>
+          
+        </a>
+
+        <a class="applet-selection" href="./geometric.html">
+          <img src="./assets/geometric.png"
+              alt="geometric"
+              class="applet-selection-icon">
+          <div class="applet-text">
+            <h3>Geometric</h3>
+            <span class="applet-type">Discrete</span>
+          </div>
+        </a>
+
+        <a class="applet-selection" href="./hypergeometric.html">
+          <img src="./assets/hypergeometric.png"
+              alt="hypergeometric"
+              class="applet-selection-icon">
+          <div class="applet-text">
+            <h3>Hypergeometric</h3>
+            <span class="applet-type">Discrete</span>
+          </div>
+        </a>
+
+        <a class="applet-selection" href="./poisson.html">
+          <img src="./assets/poisson.png"
+              alt="poisson"
+              class="applet-selection-icon">
+          <div class="applet-text">
+            <h3>Poisson</h3>
+            <span class="applet-type">Discrete</span>
+          </div>
+        </a>
+
+        <a class="applet-selection" href="./negative-binomial.html">
+          <img src="./assets/negative-binomial.png"
+              alt="negative-binomial"
+              class="applet-selection-icon">
+          <div class="applet-text">
+            <h3>Negative Binomial</h3>
+            <span class="applet-type">Discrete</span>
+          </div>
+        </a>
+
+        <a class="applet-selection" href="./uniform.html">
+          <img src="./assets/uniform.png"
+              alt="uniform"
+              class="applet-selection-icon">
+          <div class="applet-text">
+            <h3>Uniform</h3>
+            <span class="applet-type">Continuous</span>
+          </div>
+        </a>
+
+        <a class="applet-selection" href="./normal.html">
+          <img src="./assets/normal.png"
+              alt="normal"
+              class="applet-selection-icon">
+          <div class="applet-text">
+            <h3>Normal</h3>
+            <span class="applet-type">Continuous</span>
+          </div>
+        </a>
+
+        <a class="applet-selection" href="./exponential.html">
+          <img src="./assets/exponential.png"
+              alt="exponential"
+              class="applet-selection-icon">
+          <div class="applet-text">
+            <h3>Exponential</h3>
+            <span class="applet-type">Continuous</span>
+          </div>
+        </a>
+
+        <a class="applet-selection" href="./gamma.html">
+          <img src="./assets/gamma.png"
+              alt="gamma"
+              class="applet-selection-icon">
+          <div class="applet-text">
+            <h3>Gamma</h3>
+            <span class="applet-type">Continuous</span>
+          </div>
+        </a>
+
+        <a class="applet-selection" href="./chi-square.html">
+          <img src="./assets/chi-square.png"
+              alt="chi-square"
+              class="applet-selection-icon">
+          <div class="applet-text">
+            <h3>Chi-Square</h3>
+            <span class="applet-type">Continuous</span>
+          </div>
+        </a>
+
+        <a class="applet-selection" href="./beta.html">
+          <img src="./assets/beta.png"
+              alt="beta"
+              class="applet-selection-icon">
+          <div class="applet-text">
+            <h3>Beta</h3>
+            <span class="applet-type">Continuous</span>
+          </div>
+        </a>
+
+        <a class="applet-selection" href="./t-distribution.html">
+          <img src=""
+              alt="t-distribution"
+              class="applet-selection-icon">
+          <div class="applet-text">
+            <h3>T</h3>
+            <span class="applet-type">Continuous</span>
+          </div>
+        </a>
+
+        <a class="applet-selection" href="./f-distribution.html">
+          <img src=""
+              alt="f-distribution"
+              class="applet-selection-icon">
+          <div class="applet-text">
+            <h3>F</h3>
+            <span class="applet-type">Continuous</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="categories">
+      <div class="category">
+        <h1>Non-Parametric Statistics</h1>
+      </div>
+
+      <div class="applets">
+        <a class="applet-selection" href="./runs-test.html">
+          <img src=""
+              alt="runs-test"
+              class="applet-selection-icon">
+          <div class="applet-text">
+            <h3>Wald-Wolfowitz Runs</h3>
+          </div>
+        </a>
+          
+        <a class="applet-selection" href="./u-test.html">
+          <img src=""
+              alt="u-test"
+              class="applet-selection-icon">
+          <div class="applet-text">
+            <h3>Mann-Whitney U</h3>
+          </div>
+        </a>
+
+        <a class="applet-selection" href="./signed-rank-test.html">
+          <img src=""
+              alt="signed-rank-test"
+              class="applet-selection-icon">
+          <div class="applet-text">
+            <h3>Wilcoxon Signed-Rank</h3>
+          </div>
+        </a>
+
+        <a class="applet-selection" href="./rank-sum-test.html">
+          <img src=""
+              alt="signed-rank-test"
+              class="applet-selection-icon">
+          <div class="applet-text">
+            <h3>Wilcoxon Rank Sum</h3>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="categories">
+      <div class="category">
+        <h1>Other Applets</h1>
+      </div>
+
+      <div class="applets">
+        <a class="applet-selection" href="./distribution-matching.html">
+          <img src="./assets/beta.png"
+              alt="beta"
+              class="applet-selection-icon">
+          <div class="applet-text">
+            <h3>Distribution Matching</h3>
+          </div>
+        </a>
+          
+        <a class="applet-selection" href="./one-sample-z.html">
+          <img src="./assets/beta.png"
+              alt="one-sample-z"
+              class="applet-selection-icon">
+          <div class="applet-text">
+            <h3>One Sample Z Test</h3>
+          </div>
+        </a>
+
+        <a class="applet-selection" href="./index.html">
+          <h3>Placeholder</h3>
+        </a>
+
+        <a class="applet-selection" href="./index.html">
+          <h3>Placeholder</h3>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="department">
+      <a href="https://www.pstat.ucsb.edu/"> 
+        <strong>Statistics and Applied Probability</strong>
+      </a>
+      <div>UC Santa Barbara</div>
+      <div>Santa Barbara, CA 93106-3110</div>
+    </div>
+  </footer>
+</body>
+</html>
