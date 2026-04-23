@@ -1,0 +1,287 @@
+{
+  "binomial": [
+    {
+      "template": "{name} flips a fair coin {n} times. The number of {coin_flip.plural} flipped follows which probability distribution?",
+      "fixed_params": {
+        "p": 0.5
+      }
+    },
+    {
+      "template": "{name} rolls a fair die {n} times. The number of {dice_roll}'s rolled follows which probability distribution?",
+      "fixed_params": {
+        "p": 0.17
+      }
+    },
+    {
+      "template": "{name} Co. manufactures {object_manufactured.plural}, which have a defect rate of {pct}%. If a random sample of {n} items is selected, the number of {not_choice}defective {object_manufactured.plural} in the sample follows which probability distribution?"
+    },
+    {
+      "template": "An infinitely large candy machine contains {pct1}% {candies.0.plural}, {pct2}% {candies.1.plural}, and the rest are {candies.2.plural}. If {n} candies are dispensed, the number of {not_choice}{choice.plural} dispensed follows which probability distribution?"
+    },
+    {
+      "template": "{name} is fishing at a river where {pct1}% of the fish are {fish.0.plural}, {pct2}% are {fish.1.plural}, and the rest are {fish.2.plural}. If {n} fish are randomly caught, the number of {not_choice}{choice.plural} caught follows which probability distribution?"
+    },
+    {
+      "template": "{name} makes {pct}% of their {basketball_type.plural} in basketball. If {name} attempts {n} {basketball_type.plural}, the number of {basketball_type.plural} {not_choice} follows which probability distribution?"
+    },
+    {
+      "template": "A movie streaming service finds that {pct1}% of their users prefer {movies.0} films, {pct2}% prefer {movies.1} films, and the rest prefer {movies.2} films. If {n} users are randomly selected, the number of users who {not_choice}prefer {choice} films in the sample follows which probability distribution?"
+    },
+    {
+      "template": "A music streaming service finds that {pct1}% of their users prefer {music.0} music, {pct2}% prefer {music.1} music, and the rest prefer {music.2} music. If {n} users are randomly selected, the number of users who {not_choice}prefer {choice} music in the sample follows which probability distribution?"
+    },
+    {
+      "template": "Dr. {name} performs {medical_treatment.plural} with a {pct}% success rate. If Dr. {name} performs {n} {medical_treatment.plural}, the number of {not_choice}successful {medical_treatment.plural} follows which probability distribution?"
+    },
+    {
+      "template": "At {name}'s Pizzeria, {pct}% of customers order {pizza_item} on their pizza. If {n} customers are randomly selected, the number of customers who {not_choice}order {pizza_item} on their pizza follows which probability distribution?"
+    }
+  ],
+  "geometric": [
+    {
+      "template": "{name} flips a fair coin repeatedly until the 1st {coin_flip.singular} appears. The total number of flips follows which probability distribution?",
+      "fixed_params": {
+        "p": 0.5
+      }
+    },
+    {
+      "template": "{name} rolls a fair die repeatedly until the 1st {dice_roll} appears. The total number of rolls follows which probability distribution?",
+      "fixed_params": {
+        "p": 0.17
+      }
+    },
+    {
+      "template": "{name} Co. manufactures {object_manufactured.plural}, which have a defect rate of {pct}%. If items are inspected one at a time until the 1st {not_choice}defective {object_manufactured.singular} is found, the total number of {object_manufactured.plural} inspected follows which probability distribution?"
+    },
+    {
+      "template": "An infinitely large candy machine contains {pct1}% {candies.0.plural}, {pct2}% {candies.1.plural}, and the rest are {candies.2.plural}. If candies are dispensed one at a time until the 1st {not_choice}{choice.singular} is dispensed, the total number of candies inspected follows which probability distribution?"
+    },
+    {
+      "template": "{name} is fishing at a river where {pct1}% of the fish are {fish.0.plural}, {pct2}% are {fish.1.plural}, and the rest are {fish.2.plural}. If fish are caught one at a time until the 1st {not_choice}{choice.singular} is caught, the total number of fish caught follows which probability distribution?"
+    },
+    {
+      "template": "{name} makes {pct}% of their {basketball_type.plural} in basketball. If {name} attempts {basketball_type.plural} repeatedly until the 1st {basketball_type.singular} is {not_choice}, the total number of attempts follows which probability distribution?"
+    },
+    {
+      "template": "A movie streaming service finds that {pct1}% of their users prefer {movies.0} films, {pct2}% prefer {movies.1} films, and the rest prefer {movies.2} films. If users are randomly selected one at a time until the 1st user who {not_choice} {choice} films is selected, the total number of users selected follows which probability distribution?"
+    },
+    {
+      "template": "A music streaming service finds that {pct1}% of their users prefer {music.0} music, {pct2}% prefer {music.1} music, and the rest prefer {music.2} music. If users are randomly selected one at a time until the 1st user who {not_choice} {choice} music is selected, the total number of users selected follows which probability distribution?"
+    },
+    {
+      "template": "Dr. {name} performs {medical_treatment.plural} with a {pct}% success rate. If Dr. {name} repeatedly performs {medical_treatment.plural} until they perform their 1st {not_choice}successful {medical_treatment.singular}, the total number of treatments performed follows which probability distribution?"
+    },
+    {
+      "template": "At {name}'s Pizzeria, {pct}% of customers order {pizza_item} on their pizza. If customers are randomly selected one at a time until the 1st customer who {not_choice} {pizza_item} on their pizza is selected, the total number of customers selected follows which probability distribution?"
+    }
+  ],
+  "hypergeometric": [
+
+    {
+      "template": "Dr. {name} teaches an Intro to Statistics course with {N} students, of which {r_display} are {major_name} majors. If {n} students are selected at random without replacement, the total number of students who are {not_choice}{major_name} majors in the sample follows which probability distribution?"
+    }
+  ],
+  "poisson": [
+    {
+      "template": "{name} Co. manufactures {l_display} {object_manufactured.plural} per day on average. The total number of {object_manufactured.plural} manufactured in {time_length} day{time_plural} follows which probability distribution?"
+    },
+    {
+      "template": "A candy machine dispenses {l_display} {candy_item.plural} per hour on average. The total number of {candy_item.plural} dispensed in {time_length} minute{time_plural} follows which probability distribution?"
+    },
+    {
+      "template": "{name} is fishing and catches {l_display} {fish_item.plural} per day on average. The total number of {fish_item.plural} caught in {time_length} day{time_plural} follows which probability distribution?"
+    },
+    {
+      "template": "In any given basketball game, {name} makes {l_display} {basketball_type.plural} on average. The total number of {basketball_type.plural} made in {time_length} basketball game{time_plural} follows which probability distribution?"
+    },
+    {
+      "template": "Dr. {name} performs {l_display} {medical_treatment.plural} per month on average. The total number of {medical_treatment.plural} performed in {time_length} month{time_plural} follows which probability distribution?"
+    },
+    {
+      "template": "At {name}'s Pizzeria, {l_display} pizzas with {pizza_item} are ordered per day on average. The total number of pizzas with {pizza_item} ordered in {time_length} day{time_plural} follows which probability distribution?"
+    },
+    {
+      "template": "A call center receives {l_display} customer calls per minute on average. The total number of customer calls received in {time_length} minute{time_plural} follows which probability distribution?"
+    },
+    {
+      "template": "Cars pass through a toll booth at a rate of {l_display} cars per minute on average. The total number of cars passing through in {time_length} minute{time_plural} follows which probability distribution?"
+    },
+    {
+      "template": "Emails arrive in an inbox at a rate of {l_display} emails per hour on average. The total number of emails received in {time_length} hour{time_plural} follows which probability distribution?"
+    },
+    {
+      "template": "{name}'s bookstore sells {l_display} {book_type.plural} per day on average. The total number of {book_type.plural} sold in {time_length} day{time_plural} follows which probability distribution?"
+    }
+  ],
+  "negative-binomial": [
+    {
+      "template": "{name} flips a fair coin repeatedly until the {r_str} {coin_flip.singular} appears. The total number of flips follows which probability distribution?",
+      "fixed_params": {
+        "p": 0.5
+      }
+    },
+    {
+      "template": "{name} rolls a fair die repeatedly until the {r_str} {dice_roll} appears. The total number of rolls follows which probability distribution?",
+      "fixed_params": {
+        "p": 0.17
+      }
+    },
+    {
+      "template": "{name} Co. manufactures {object_manufactured.plural}, which have a defect rate of {pct}%. If items are inspected one at a time until the {r_str} {not_choice}defective {object_manufactured.singular} is found, the total number of {object_manufactured.plural} inspected follows which probability distribution?"
+    },
+    {
+      "template": "An infinitely large candy machine contains {pct1}% {candies.0.plural}, {pct2}% {candies.1.plural}, and the rest are {candies.2.plural}. If candies are dispensed one at a time until the {r_str} {not_choice}{choice.singular} is dispensed, the total number of candies inspected follows which probability distribution?"
+    },
+    {
+      "template": "{name} is fishing at a river where {pct1}% of the fish are {fish.0.plural}, {pct2}% are {fish.1.plural}, and the rest are {fish.2.plural}. If fish are caught one at a time until the {r_str} {not_choice}{choice.singular} is caught, the total number of fish caught follows which probability distribution?"
+    },
+    {
+      "template": "{name} makes {pct}% of their {basketball_type.plural} in basketball. If {name} attempts {basketball_type.plural} repeatedly until the {r_str} {basketball_type.singular} is {not_choice}, the total number of attempts follows which probability distribution?"
+    },
+    {
+      "template": "A movie streaming service finds that {pct1}% of their users prefer {movies.0} films, {pct2}% prefer {movies.1} films, and the rest prefer {movies.2} films. If users are randomly selected one at a time until the {r_str} user who {not_choice} {choice} films is selected, the total number of users selected follows which probability distribution?"
+    },
+    {
+      "template": "A music streaming service finds that {pct1}% of their users prefer {music.0} music, {pct2}% prefer {music.1} music, and the rest prefer {music.2} music. If users are randomly selected one at a time until the {r_str} user who {not_choice} {choice} music is selected, the total number of users selected follows which probability distribution?"
+    },
+    {
+      "template": "Dr. {name} performs {medical_treatment.plural} with a {pct}% success rate. If Dr. {name} repeatedly performs {medical_treatment.plural} until they perform their {r_str} {not_choice}successful {medical_treatment.singular}, the total number of treatments performed follows which probability distribution?"
+    },
+    {
+      "template": "At {name}'s Pizzeria, {pct}% of customers order {pizza_item} on their pizza. If customers are randomly selected one at a time until the {r_str} customer who {not_choice} {pizza_item} on their pizza is selected, the total number of customers selected follows which probability distribution?"
+    }
+  ],
+  "uniform": [
+    {
+      "template": "{name} Co. makes shipments of {object_manufactured.plural} weighing between {a} and {b} pounds. If any weight within this range is equally likely, the weight of shipments of {object_manufactured.plural} made in pounds follows which probability distribution?"
+    },
+    {
+      "template": "{name} is fishing and catches {fish_item.plural} weighing between {a} and {b} ounces. If any weight within this range is equally likely, the weight of {fish_item.plural} caught in ounces follows which probability distribution?"
+    },
+    {
+      "template": "{name} Co. makes shipments of {object_manufactured.plural} weighing between {a} and {b} pounds. If any weight within this range is equally likely, the weight of shipments of {object_manufactured.plural} made in pounds follows which probability distribution?"
+    },
+    {
+      "template": "A random number generator produces values between {a} and {b} with every number having equal probability. The generated value follows which probability distribution?"
+    },
+    {
+      "template": "The temperature tomorrow is predicted to be between {a} F and {b} F. If any temperature within this range is equally likely, the temperature in Fahrenheit follows which probability distribution?"
+    },
+    {
+      "template": "{name} is driving to the {location_name}, which takes between {a} and {b} minutes depending on road conditions. If any length of time within this range is equally likely, the time it will take to drive to the {location_name} in minutes follows which probability distribution?"
+    }
+  ],
+  "normal": [
+    {
+      "template": "{name} is fishing for {fish_item.plural}. If the weight of these fish have a mean of {m} ounces and a standard deviation of {s} ounces, the weight of a randomly selected {fish_item.singular} caught in ounces follows which probability distribution?"
+    },
+    {
+      "template": "{name} is weighing {candy_item.plural} at a candy shop. If the weight of these {candy_item.plural} has a mean of {m} grams and a standard deviation of {s} grams, the weight of a randomly selected {candy_item.singular} in grams follows which probability distribution?"
+    },
+    {
+      "template": "{name} is manufacturing {object_manufactured.plural}. If the weight of these {object_manufactured.plural} have a mean of {m} pounds and a standard deviation of {s} pounds, the weight of a randomly selected {object_manufactured.singular} in pounds follows which probability distribution?"
+    },
+    {
+      "template": "{name} is studying commute times to the {location_name}. If commute times have a mean of {m} minutes and a standard deviation of {s} minutes, the commute time of a randomly selected traveler in minutes follows which probability distribution?"
+    },
+    {
+      "template": "If customer wait times at {name}'s Pizzeria have a mean of {m} minutes and a standard deviation of {s} minutes, the waiting time of a randomly selected customer in minutes follows which probability distribution?"
+    },
+    {
+      "template": "{name} is measuring the runtime of {movie_name} movies. If runtimes have a mean of {m} minutes and a standard deviation of {s} minutes, the runtime of a randomly selected movie follows which probability distribution?"
+    },
+    {
+      "template": "{name} is measuring {music_name} song lengths. If song lengths have a mean of {m} minutes and a standard deviation of {s} minutes, the length of a randomly selected song follows which probability distribution?"
+    }
+  ],
+  "exponential": [
+    {
+      "template": "{name} Co. manufactures {l_display} {object_manufactured.plural} per day on average. The time between {object_manufactured.plural} manufactured in days follows which probability distribution?"
+    },
+    {
+      "template": "A candy machine dispenses {l_display} {candy_item.plural} per minute on average. The time between {candy_item.plural} dispensed in minutes follows which probability distribution?"
+    },
+    {
+      "template": "{name} is fishing and catches {l_display} {fish_item.plural} per day on average. The time between {fish_item.plural} caught in days follows which probability distribution?"
+    },
+    {
+      "template": "Dr. {name} performs {l_display} {medical_treatment.plural} per month on average. The time between {medical_treatment.plural} performed in months follows which probability distribution?"
+    },
+    {
+      "template": "At {name}'s Pizzeria, {l_display} pizzas with {pizza_item} are ordered per day on average. The time between pizzas with {pizza_item} ordered in days follows which probability distribution?"
+    },
+    {
+      "template": "A call center receives {l_display} customer calls per minute on average. The time between customer calls received in minutes follows which probability distribution?"
+    },
+    {
+      "template": "Cars pass through a toll booth at a rate of {l_display} cars per minute on average. The time between cars passing through in minutes follows which probability distribution?"
+    },
+    {
+      "template": "Emails arrive in an inbox at a rate of {l_display} emails per hour on average. The time between emails received in hours follows which probability distribution?"
+    },
+    {
+      "template": "{name}'s bookstore sells {l_display} {book_type.plural} per day on average. The time between {book_type.plural} sold in days follows which probability distribution?"
+    }
+  ],
+  "gamma": [
+    {
+      "template": "{name} Co. manufactures {l_display} {object_manufactured.plural} per day on average. The time until {a} {object_manufactured.plural} are manufactured in days follows which probability distribution?"
+    },
+    {
+      "template": "A candy machine dispenses {l_display} {candy_item.plural} per hour on average. The time until {a} {candy_item.plural} are dispensed in minutes follows which probability distribution?"
+    },
+    {
+      "template": "{name} is fishing and catches {l_display} {fish_item.plural} per day on average. The time until {a} {fish_item.plural} are caught in days follows which probability distribution?"
+    },
+    {
+      "template": "Dr. {name} performs {l_display} {medical_treatment.plural} per month on average. The time until {a} {medical_treatment.plural} are performed in months follows which probability distribution?"
+    },
+    {
+      "template": "At {name}'s Pizzeria, {l_display} pizzas with {pizza_item} are ordered per day on average. The time until {a} pizzas with {pizza_item} are ordered in days follows which probability distribution?"
+    },
+    {
+      "template": "A call center receives {l_display} customer calls per minute on average. The time until {a} customer calls are received in minutes follows which probability distribution?"
+    },
+    {
+      "template": "Cars pass through a toll booth at a rate of {l_display} cars per minute on average. The time until {a} cars pass through in minutes follows which probability distribution?"
+    },
+    {
+      "template": "Emails arrive in an inbox at a rate of {l_display} emails per hour on average. The time until {a} emails are received in hours follows which probability distribution?"
+    },
+    {
+      "template": "{name}'s bookstore sells {l_display} {book_type.plural} per day on average. The time until {a} {book_type.plural} are sold in days follows which probability distribution?"
+    }
+  ],
+  "beta": [
+    {
+      "template": "{name} Co. manufactured {b_display} {object_manufactured.singular} during a week. The proportion into the week when the {a_display} {object_manufactured.plural} are manufactured follows which probability distribution?"
+    },
+    {
+      "template": "{name} catches {b_display} {fish_item.plural} during a day of fishing. The proportion into the day when the {a_display} {fish_item.plural} are caught follows which probability distribution?"
+    },
+    {
+      "template": "{name} eats {b_display} {candy_item.plural} during a movie. The proportion into the movie when the {a_display} {candy_item.plural} are eaten follows which probability distribution?"
+    },
+    {
+      "template": "{name} delivers {b_display} {pizza_item} pizzas during a shift. The proportion into the shift when the {a_display} pizza is delivered follows which probability distribution?"
+    },
+    {
+      "template": "{name} listens to {b_display} songs from the {music_name} genre. The proportion into the playlist when the {a_display} song is played follows which probability distribution?"
+    },
+    {
+      "template": "{name} watches {b_display} {movie_name} movies during a marathon. The proportion into the marathon when the {a_display} movie begins follows which probability distribution?"
+    },
+    {
+      "template": "{name} reads {b_display} {book_type.plural} during a semester. The proportion into the semester when the {a_display} {book_type.plural} are finished follows which probability distribution?"
+    },
+    {
+      "template": "{name} visits {b_display} locations near {location_name} during a trip. The proportion into the trip when the {a_display} location is visited follows which probability distribution?"
+    },
+    {
+      "template": "{name} receives {b_display} patients needing {medical_treatment.singular} during a shift. The proportion into the shift when the {a_display} patient arrives follows which probability distribution?"
+    },
+    {
+      "template": "{name} makes {b_display} {basketball_type.plural} during practice. The proportion into practice when the {a_display} {basketball_type.plural} is made follows which probability distribution?"
+    }
+  ]
+}

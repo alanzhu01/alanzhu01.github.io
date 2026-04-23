@@ -57,6 +57,38 @@
       <div class="distribution-app">
         <div class="split-layout">
           <div class="left-panel">
+            <div class="hypothesis-inputs">
+              <div class="distribution-input-grid-2col">
+                <div class="distribution-input">
+                  <label>\(H_0: \mu = \)</label>
+                  <input type="number" id="mu0">
+                </div>
+
+                <div class="distribution-input">
+                  <label for="a">\(\alpha =\)</label>
+
+                  <div class="has-tip">
+                    <input type="number" id="a">
+                    <div class="tip" role="tooltip">Significance level</div>
+                  </div>
+                </div>
+
+                <div class="distribution-input">
+                  <label>\(H_1: \mu \)</label>
+
+                  <select class="pill" id="h1-type">
+                    <option value="lt">\( < \)</option>
+                    <option value="neq" selected>\(\neq\)</option>
+                    <option value="gt">\( > \)</option>
+                  </select>
+
+                  <input type="number" id="h1">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="right-panel">
             <div class="distribution-input-grid-2col">
               <div class="distribution-input">
                 <label for="x">\(\bar{x} =\)</label>
@@ -85,35 +117,26 @@
                 </div>
               </div>
 
-              <div class="distribution-input">
-                <label for="a">\(\alpha =\)</label>
-
-                <div class="has-tip">
-                  <input type="number" id="a">
-                  <div class="tip" role="tooltip">Significance level</div>
-                </div>
+              <div class="raw-data-actions">
+                <button type="button" id="raw-data-btn" class="pill">Enter Raw Data</button>
               </div>
             </div>
-          </div>
 
-          <div class="right-panel">
-            <div class="hypothesis-inputs">
+            <div id="raw-data-modal" class="raw-data-modal hidden" aria-hidden="true">
+              <div class="raw-data-modal-card">
+                <h3>Enter numbers separated by commas</h3>
 
-              <div class="distribution-input">
-                <label>\(H_0: \mu = \)</label>
-                <input type="number" id="mu0">
-              </div>
+                <textarea
+                  id="raw-data-input"
+                  rows="2"
+                ></textarea>
 
-              <div class="distribution-input">
-                <label>\(H_1: \mu \)</label>
+                <div id="raw-data-error" class="raw-data-error"></div>
 
-                <select class="pill" id="h1-type">
-                  <option value="lt">\( < \)</option>
-                  <option value="neq" selected>\(\neq\)</option>
-                  <option value="gt">\( > \)</option>
-                </select>
-
-                <input type="number" id="h1">
+                <div class="raw-data-modal-actions">
+                  <button type="button" id="raw-data-cancel" class="pill">Cancel</button>
+                  <button type="button" id="raw-data-submit" class="pill">Enter</button>
+                </div>
               </div>
             </div>
           </div>
@@ -140,7 +163,7 @@
               </div>
             </aside>
 
-            <aside class="functions">
+            <aside class="decision masked" id="decision-box">
               <div class="functions-row">
                 <div class="stats-label">Decision</div>
                 <div id="decision" class="stats-function">\( \text{—} \)</div>

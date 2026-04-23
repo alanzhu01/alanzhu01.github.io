@@ -12,6 +12,14 @@ const altSelect = document.getElementById("h1-type");
 const statsCol = document.getElementById("stats-col");
 const plotEl = document.getElementById("plot");
 const formulaToggle = document.getElementById("formula-toggle");
+const decisionBox = document.getElementById("decision-box");
+
+const rawDataBtn = document.getElementById("raw-data-btn");
+const rawDataModal = document.getElementById("raw-data-modal");
+const rawDataInput = document.getElementById("raw-data-input");
+const rawDataSubmit = document.getElementById("raw-data-submit");
+const rawDataCancel = document.getElementById("raw-data-cancel");
+const rawDataError = document.getElementById("raw-data-error");
 
 async function updateStats(xbar, sigma, n, mu0, alt) {
   const formula = formulaToggle.checked ? 1 : 0;
@@ -208,4 +216,114 @@ Utils.onBlurOrEnter(mu0Input, () => {
 
 Utils.onBlurOrEnter(h1Input, () => {
   syncInputs(h1Input, mu0Input);
+});
+
+function hideDecision() {
+  decisionBox.classList.add("masked");
+  decisionBox.classList.remove("revealed");
+}
+
+function revealDecision() {
+  decisionBox.classList.remove("masked");
+  decisionBox.classList.add("revealed");
+}
+
+decisionBox.addEventListener("click", () => {
+  if (decisionBox.classList.contains("masked")) {
+    revealDecision();
+  } else {
+    hideDecision();
+  }
+});
+
+[
+  xbarInput,
+  sigmaInput,
+  nInput,
+  alphaInput,
+  mu0Input,
+  h1Input
+].forEach(input => {
+  Utils.onBlurOrEnter(input, hideDecision);
+});
+
+altSelect.addEventListener("change", hideDecision);
+
+function openRawDataModal() {
+  rawDataModal.classList.remove("hidden");
+  rawDataModal.setAttribute("aria-hidden", "false");
+  rawDataError.textContent = "";
+  rawDataInput.focus();
+}
+
+function closeRawDataModal() {
+  rawDataModal.classList.add("hidden");
+  rawDataModal.setAttribute("aria-hidden", "true");
+  rawDataError.textContent = "";
+}
+
+function parseRawData(text) {
+  return text
+    .split(",")
+    .map(s => s.trim())
+    .filter(s => s.length > 0)
+    .map(Number);
+}
+
+function mean(values) {
+  return values.reduce((sum, v) => sum + v, 0) / values.length;
+}
+
+function sampleStdDev(values) {
+  if (values.length < 2) return 0;
+
+  const xbar = mean(values);
+  const ss = values.reduce((sum, v) => sum + (v - xbar) ** 2, 0);
+  return Math.sqrt(ss / (values.length));
+}
+
+async function applyRawData() {
+  const values = parseRawData(rawDataInput.value);
+
+  if (values.length === 0) {
+    rawDataError.textContent = "Please enter at least one number.";
+    return;
+  }
+
+  if (values.some(v => !Number.isFinite(v))) {
+    rawDataError.textContent = "Please enter only numbers separated by commas.";
+    return;
+  }
+
+  const n = values.length;
+  const xbar = mean(values);
+  const sigma = sampleStdDev(values);
+
+  xbarInput.value = xbar;
+  sigmaInput.value = sigma;
+  nInput.value = n;
+
+  closeRawDataModal();
+  hideDecision();
+  await maybeGeneratePlot();
+}
+
+rawDataBtn.addEventListener("click", openRawDataModal);
+rawDataCancel.addEventListener("click", closeRawDataModal);
+rawDataSubmit.addEventListener("click", applyRawData);
+
+rawDataInput.addEventListener("keydown", async (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+    await applyRawData();
+  }
+
+  if (e.key === "Escape") {
+    closeRawDataModal();
+  }
+});
+
+rawDataModal.addEventListener("click", (e) => {
+  if (e.target === rawDataModal) {
+    closeRawDataModal();
+  }
 });

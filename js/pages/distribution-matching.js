@@ -1,3 +1,5 @@
+import { generateDistribution } from "../math/distribution-matching.js";
+
 let allowedDistKeys = null;
 
 let totalQuestions = 10;
@@ -137,15 +139,8 @@ const DISTRIBUTIONS = [
     key: "gamma",
     label: "Gamma",
     params: [
-      { key: "k", label: "\\alpha", type: "int", tip: "Shape" },
+      { key: "a", label: "\\alpha", type: "int", tip: "Shape" },
       { key: "l", label: "\\lambda", type: "float", tip: "Rate" }
-    ]
-  },
-  {
-    key: "chi-square",
-    label: "Chi-Square",
-    params: [
-      { key: "l", label: "\\nu", type: "int", tip: "Degrees of freedom" }
     ]
   },
   {
@@ -200,7 +195,7 @@ function renderParameterInputs(distKey) {
 
 async function newPrompt() {
   if (!gameActive) return;
-  
+
   feedbackEl.textContent = "";
   submitBtn.disabled = false;
   continueBtn.hidden = true;
@@ -213,15 +208,11 @@ async function newPrompt() {
   setSubmitVisible(false);
 
   try {
-    const query = allowedDistKeys?.length
-      ? `?allowed=${allowedDistKeys.join(",")}`
+    const allowed = allowedDistKeys?.length
+      ? allowedDistKeys.join(",")
       : "";
 
-    const res = await fetch(`/generate-distribution${query}`);
-
-    if (!res.ok) throw new Error("Failed to fetch prompt");
-
-    const data = await res.json();
+    const data = await generateDistribution(allowed);
 
     current = {
       distKey: data.distribution,
@@ -231,8 +222,13 @@ async function newPrompt() {
     promptEl.textContent = data.prompt;
 
   } catch (err) {
-    promptEl.textContent = "Error loading prompt.";
-    console.error(err);
+    promptEl.textContent =
+  `ERROR
+
+  ${err?.message ?? "Unknown error"}
+
+  STACK TRACE:
+  ${err?.stack ?? "No stack trace available"}`;
   }
 }
 

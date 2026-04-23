@@ -1193,3 +1193,141 @@ input[type=number]::-webkit-outer-spin-button {
   flex-direction: column;
   gap: 20px;
 }
+
+.decision {
+  width: max-content;
+  min-width: 100%;
+  background: var(--plot-bgcolor);
+  border: 1px solid var(--border-soft);
+  border-radius: 22px;
+  padding: 16px 16px;
+  color: var(--text-main);
+
+  position: relative;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.decision.masked {
+  overflow: hidden;
+}
+
+.decision.masked .decision-row {
+  filter: blur(8px);
+  user-select: none;
+  pointer-events: none;
+}
+
+.decision.masked::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgb(101, 101, 101);
+  border-radius: 22px;
+  z-index: 5;
+}
+
+.decision.masked::after {
+  content: "Reveal";
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.decision.masked:hover::before {
+  background: rgb(72, 72, 72);
+}
+
+.decision.revealed .decision-row {
+  filter: none;
+  pointer-events: auto;
+}
+
+.decision.revealed::before,
+.decision.revealed::after {
+  display: none;
+}
+
+.raw-data-actions {
+  text-align: center;
+}
+
+.raw-data-modal.hidden {
+  display: none;
+}
+
+.raw-data-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.raw-data-modal-card {
+  width: min(520px, 100%);
+  background: var(--panel-bg, #fff);
+  color: var(--text-main);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.raw-data-modal-card textarea {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color, #ccc);
+  background: var(--input-bg, #fff);
+  color: var(--text-main);
+  resize: vertical;
+  font: inherit;
+}
+
+.raw-data-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.raw-data-error {
+  min-height: 1.2em;
+  color: #c62828;
+  font-size: 0.95rem;
+}
+
+.pill {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  user-select: none;
+
+  border: none;
+
+  background: var(--distribution-choose);
+  color: white;
+
+  transition: all 0.18s ease;
+}
+
+.pill:active {
+  transform: scale(0.97);
+}
