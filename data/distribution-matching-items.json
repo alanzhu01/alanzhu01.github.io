@@ -1,0 +1,959 @@
+{
+  "coin_flip": [
+    {
+      "plural": "heads",
+      "singular": "head"
+    },
+    {
+      "plural": "tails",
+      "singular": "tail"
+    }
+  ],
+  "dice_roll": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6"
+  ],
+  "object_manufactured": [
+    {
+      "plural": "smartphones",
+      "singular": "smartphone"
+    },
+    {
+      "plural": "laptops",
+      "singular": "laptop"
+    },
+    {
+      "plural": "tablets",
+      "singular": "tablet"
+    },
+    {
+      "plural": "televisions",
+      "singular": "television"
+    },
+    {
+      "plural": "refrigerators",
+      "singular": "refrigerator"
+    },
+    {
+      "plural": "microwave ovens",
+      "singular": "microwave oven"
+    },
+    {
+      "plural": "washing machines",
+      "singular": "washing machine"
+    },
+    {
+      "plural": "dishwashers",
+      "singular": "dishwasher"
+    },
+    {
+      "plural": "air conditioners",
+      "singular": "air conditioner"
+    },
+    {
+      "plural": "electric motors",
+      "singular": "electric motor"
+    },
+    {
+      "plural": "light bulbs",
+      "singular": "light bulb"
+    },
+    {
+      "plural": "LED panels",
+      "singular": "LED panel"
+    },
+    {
+      "plural": "circuit boards",
+      "singular": "circuit board"
+    },
+    {
+      "plural": "microchips",
+      "singular": "microchip"
+    },
+    {
+      "plural": "hard drives",
+      "singular": "hard drive"
+    },
+    {
+      "plural": "USB drives",
+      "singular": "USB drive"
+    },
+    {
+      "plural": "headphones",
+      "singular": "headphone"
+    },
+    {
+      "plural": "speakers",
+      "singular": "speaker"
+    },
+    {
+      "plural": "cameras",
+      "singular": "camera"
+    },
+    {
+      "plural": "printer cartridges",
+      "singular": "printer cartridge"
+    },
+    {
+      "plural": "automobile tires",
+      "singular": "automobile tire"
+    },
+    {
+      "plural": "brake pads",
+      "singular": "brake pad"
+    },
+    {
+      "plural": "ballpoint pens",
+      "singular": "ballpoint pen"
+    },
+    {
+      "plural": "mechanical pencils",
+      "singular": "mechanical pencil"
+    },
+    {
+      "plural": "bicycles",
+      "singular": "bicycle"
+    },
+    {
+      "plural": "solar panels",
+      "singular": "solar panel"
+    },
+    {
+      "plural": "power banks",
+      "singular": "power bank"
+    },
+    {
+      "plural": "keyboards",
+      "singular": "keyboard"
+    }
+  ],
+  "fish_item": [
+    {
+      "plural": "salmon",
+      "singular": "salmon"
+    },
+    {
+      "plural": "trout",
+      "singular": "trout"
+    },
+    {
+      "plural": "bass",
+      "singular": "bass"
+    },
+    {
+      "plural": "catfish",
+      "singular": "catfish"
+    },
+    {
+      "plural": "tilapia",
+      "singular": "tilapia"
+    },
+    {
+      "plural": "cod",
+      "singular": "cod"
+    },
+    {
+      "plural": "haddock",
+      "singular": "haddock"
+    },
+    {
+      "plural": "flounder",
+      "singular": "flounder"
+    },
+    {
+      "plural": "halibut",
+      "singular": "halibut"
+    },
+    {
+      "plural": "tuna",
+      "singular": "tuna"
+    },
+    {
+      "plural": "mackerel",
+      "singular": "mackerel"
+    },
+    {
+      "plural": "sardines",
+      "singular": "sardine"
+    },
+    {
+      "plural": "anchovies",
+      "singular": "anchovy"
+    },
+    {
+      "plural": "herring",
+      "singular": "herring"
+    },
+    {
+      "plural": "snapper",
+      "singular": "snapper"
+    },
+    {
+      "plural": "grouper",
+      "singular": "grouper"
+    },
+    {
+      "plural": "carp",
+      "singular": "carp"
+    },
+    {
+      "plural": "perch",
+      "singular": "perch"
+    },
+    {
+      "plural": "pike",
+      "singular": "pike"
+    },
+    {
+      "plural": "walleye",
+      "singular": "walleye"
+    },
+    {
+      "plural": "bluegill",
+      "singular": "bluegill"
+    },
+    {
+      "plural": "crappie",
+      "singular": "crappie"
+    },
+    {
+      "plural": "swordfish",
+      "singular": "swordfish"
+    },
+    {
+      "plural": "marlin",
+      "singular": "marlin"
+    },
+    {
+      "plural": "mahi-mahi",
+      "singular": "mahi-mahi"
+    },
+    {
+      "plural": "barracuda",
+      "singular": "barracuda"
+    },
+    {
+      "plural": "pollock",
+      "singular": "pollock"
+    },
+    {
+      "plural": "sole",
+      "singular": "sole"
+    },
+    {
+      "plural": "arctic char",
+      "singular": "arctic char"
+    },
+    {
+      "plural": "redfish",
+      "singular": "redfish"
+    },
+    {
+      "plural": "drum",
+      "singular": "drum"
+    },
+    {
+      "plural": "whitefish",
+      "singular": "whitefish"
+    },
+    {
+      "plural": "rockfish",
+      "singular": "rockfish"
+    },
+    {
+      "plural": "sturgeon",
+      "singular": "sturgeon"
+    },
+    {
+      "plural": "eel",
+      "singular": "eel"
+    },
+    {
+      "plural": "rainbow trout",
+      "singular": "rainbow trout"
+    },
+    {
+      "plural": "brown trout",
+      "singular": "brown trout"
+    },
+    {
+      "plural": "lake trout",
+      "singular": "lake trout"
+    },
+    {
+      "plural": "striped bass",
+      "singular": "striped bass"
+    },
+    {
+      "plural": "largemouth bass",
+      "singular": "largemouth bass"
+    },
+    {
+      "plural": "smallmouth bass",
+      "singular": "smallmouth bass"
+    },
+    {
+      "plural": "yellowtail",
+      "singular": "yellowtail"
+    },
+    {
+      "plural": "kingfish",
+      "singular": "kingfish"
+    },
+    {
+      "plural": "goby",
+      "singular": "goby"
+    },
+    {
+      "plural": "sunfish",
+      "singular": "sunfish"
+    },
+    {
+      "plural": "sheepshead",
+      "singular": "sheepshead"
+    },
+    {
+      "plural": "tilefish",
+      "singular": "tilefish"
+    },
+    {
+      "plural": "triggerfish",
+      "singular": "triggerfish"
+    },
+    {
+      "plural": "amberjack",
+      "singular": "amberjack"
+    },
+    {
+      "plural": "cobia",
+      "singular": "cobia"
+    }
+  ],
+  "candy_item": [
+    {
+      "plural": "dark chocolate",
+      "singular": "dark chocolate"
+    },
+    {
+      "plural": "gummy bears",
+      "singular": "gummy bear"
+    },
+    {
+      "plural": "lollipops",
+      "singular": "lollipop"
+    },
+    {
+      "plural": "jelly beans",
+      "singular": "jelly bean"
+    },
+    {
+      "plural": "Hershey's",
+      "singular": "Hershey's"
+    },
+    {
+      "plural": "licorice",
+      "singular": "licorice"
+    },
+    {
+      "plural": "Sour Patch Kids",
+      "singular": "Sour Patch Kid"
+    },
+    {
+      "plural": "mint chocolate",
+      "singular": "mint chocolate"
+    },
+    {
+      "plural": "Reese's Peanut Butter Cups",
+      "singular": "Reese's Peanut Butter Cup"
+    },
+    {
+      "plural": "Skittles",
+      "singular": "Skittle"
+    },
+    {
+      "plural": "candy corn",
+      "singular": "candy corn"
+    },
+    {
+      "plural": "marshmallows",
+      "singular": "marshmallow"
+    },
+    {
+      "plural": "M&M's",
+      "singular": "M&M"
+    },
+    {
+      "plural": "butterscotch",
+      "singular": "butterscotch"
+    },
+    {
+      "plural": "chewing gum",
+      "singular": "chewing gum"
+    },
+    {
+      "plural": "Starburst",
+      "singular": "Starburst"
+    },
+    {
+      "plural": "Kit Kat",
+      "singular": "Kit Kat"
+    },
+    {
+      "plural": "Snickers",
+      "singular": "Snickers"
+    },
+    {
+      "plural": "Twix",
+      "singular": "Twix"
+    },
+    {
+      "plural": "Milky Way",
+      "singular": "Milky Way"
+    },
+    {
+      "plural": "milk chocolate",
+      "singular": "milk chocolate"
+    },
+    {
+      "plural": "chocolate-covered almonds",
+      "singular": "chocolate-covered almond"
+    },
+    {
+      "plural": "gummy worms",
+      "singular": "gummy worm"
+    },
+    {
+      "plural": "gummy rings",
+      "singular": "gummy ring"
+    },
+    {
+      "plural": "Almond Joy",
+      "singular": "Almond Joy"
+    }
+  ],
+  "movie_name": [
+    "action",
+    "adventure",
+    "animation",
+    "biography",
+    "comedy",
+    "crime",
+    "documentary",
+    "drama",
+    "family",
+    "fantasy",
+    "history",
+    "horror",
+    "music",
+    "musical",
+    "mystery",
+    "romance",
+    "sci-fi",
+    "sport",
+    "thriller",
+    "Western"
+  ],
+  "music_name": [
+    "pop",
+    "rock",
+    "hip-hop",
+    "R&B",
+    "country",
+    "jazz",
+    "blues",
+    "classical",
+    "electronic",
+    "metal",
+    "folk",
+    "soul",
+    "funk",
+    "disco",
+    "gospel",
+    "Latin",
+    "K-pop",
+    "indie",
+    "punk",
+    "EDM",
+    "trap",
+    "dubstep",
+    "opera"
+  ],
+  "medical_treatment": [
+    {
+      "plural": "appendectomies",
+      "singular": "appendectomy"
+    },
+    {
+      "plural": "biopsies",
+      "singular": "biopsy"
+    },
+    {
+      "plural": "blood transfusions",
+      "singular": "blood transfusion"
+    },
+    {
+      "plural": "cataract surgeries",
+      "singular": "cataract surgery"
+    },
+    {
+      "plural": "colonoscopies",
+      "singular": "colonoscopy"
+    },
+    {
+      "plural": "CT scans",
+      "singular": "CT scan"
+    },
+    {
+      "plural": "dialysis treatments",
+      "singular": "dialysis treatment"
+    },
+    {
+      "plural": "echocardiograms",
+      "singular": "echocardiogram"
+    },
+    {
+      "plural": "electrocardiograms",
+      "singular": "electrocardiogram"
+    },
+    {
+      "plural": "endoscopies",
+      "singular": "endoscopy"
+    },
+    {
+      "plural": "hernia repairs",
+      "singular": "hernia repair"
+    },
+    {
+      "plural": "hysterectomies",
+      "singular": "hysterectomy"
+    },
+    {
+      "plural": "joint replacements",
+      "singular": "joint replacement"
+    },
+    {
+      "plural": "kidney transplants",
+      "singular": "kidney transplant"
+    },
+    {
+      "plural": "lumbar punctures",
+      "singular": "lumbar puncture"
+    },
+    {
+      "plural": "mammograms",
+      "singular": "mammogram"
+    },
+    {
+      "plural": "MRI scans",
+      "singular": "MRI scan"
+    },
+    {
+      "plural": "organ transplants",
+      "singular": "organ transplant"
+    },
+    {
+      "plural": "pacemaker implantations",
+      "singular": "pacemaker implantation"
+    },
+    {
+      "plural": "radiation therapy treatments",
+      "singular": "radiation therapy treatment"
+    },
+    {
+      "plural": "root canals",
+      "singular": "root canal"
+    },
+    {
+      "plural": "stent placements",
+      "singular": "stent placement"
+    },
+    {
+      "plural": "tonsillectomies",
+      "singular": "tonsillectomy"
+    },
+    {
+      "plural": "ultrasounds",
+      "singular": "ultrasound"
+    }
+  ],
+  "basketball_type": [
+    {
+      "plural": "free throws",
+      "singular": "free throw"
+    },
+    {
+      "plural": "layups",
+      "singular": "layup"
+    },
+    {
+      "plural": "three-pointers",
+      "singular": "three-pointer"
+    },
+    {
+      "plural": "dunks",
+      "singular": "dunk"
+    },
+    {
+      "plural": "hook shots",
+      "singular": "hook shot"
+    },
+    {
+      "plural": "jump shots",
+      "singular": "jump shot"
+    }
+  ],
+  "pizza_item": [
+    "pepperoni",
+    "sausage",
+    "mushrooms",
+    "onions",
+    "green peppers",
+    "black olives",
+    "ham",
+    "bacon",
+    "pineapple",
+    "spinach",
+    "tomatoes",
+    "anchovies",
+    "extra cheese",
+    "chicken",
+    "broccoli",
+    "artichokes"
+  ],
+  "time_frame": [
+    "minute",
+    "hour",
+    "day",
+    "week"
+  ],
+  "book_type": [
+    {
+      "plural": "novels",
+      "singular": "novel"
+    },
+    {
+      "plural": "poems",
+      "singular": "poem"
+    },
+    {
+      "plural": "magazines",
+      "singular": "magazine"
+    },
+    {
+      "plural": "newspapers",
+      "singular": "newspaper"
+    },
+    {
+      "plural": "biographies",
+      "singular": "biography"
+    },
+    {
+      "plural": "autobiographies",
+      "singular": "autobiography"
+    },
+    {
+      "plural": "memoirs",
+      "singular": "memoir"
+    },
+    {
+      "plural": "textbooks",
+      "singular": "textbook"
+    },
+    {
+      "plural": "academic journals",
+      "singular": "academic journal"
+    },
+    {
+      "plural": "graphic novels",
+      "singular": "graphic novel"
+    },
+    {
+      "plural": "comic books",
+      "singular": "comic book"
+    },
+    {
+      "plural": "anthologies",
+      "singular": "anthology"
+    },
+    {
+      "plural": "encyclopedias",
+      "singular": "encyclopedia"
+    }
+  ],
+  "deck_suit": [
+    {
+      "plural": "hearts",
+      "singular": "heart"
+    },
+    {
+      "plural": "spades",
+      "singular": "spade"
+    },
+    {
+      "plural": "diamonds",
+      "singular": "diamond"
+    },
+    {
+      "plural": "clubs",
+      "singular": "club"
+    }
+  ],
+  "deck_value": [
+    {
+      "plural": "aces",
+      "singular": "ace"
+    },
+    {
+      "plural": "jacks",
+      "singular": "jack"
+    },
+    {
+      "plural": "queens",
+      "singular": "queen"
+    },
+    {
+      "plural": "kings",
+      "singular": "king"
+    }
+  ],
+  "major_name": [
+    "computer science",
+    "data science",
+    "business",
+    "psychology",
+    "biology",
+    "nursing",
+    "engineering",
+    "economics",
+    "political science",
+    "english",
+    "history",
+    "mathematics",
+    "chemistry",
+    "physics",
+    "communications",
+    "marketing",
+    "finance",
+    "architecture",
+    "statistics"
+  ],
+  "location_name": [
+    "park",
+    "library",
+    "hospital",
+    "cafe",
+    "museum",
+    "mall",
+    "movie theater",
+    "gym",
+    "beach",
+    "airport",
+    "train station",
+    "post office",
+    "bank",
+    "supermarket"
+  ],
+  "name": [
+    "James",
+    "John",
+    "Robert",
+    "Michael",
+    "William",
+    "David",
+    "Richard",
+    "Joseph",
+    "Thomas",
+    "Charles",
+    "Christopher",
+    "Daniel",
+    "Matthew",
+    "Anthony",
+    "Mark",
+    "Donald",
+    "Steven",
+    "Paul",
+    "Andrew",
+    "Joshua",
+    "Kenneth",
+    "Kevin",
+    "Brian",
+    "George",
+    "Edward",
+    "Ronald",
+    "Timothy",
+    "Jason",
+    "Jeffrey",
+    "Ryan",
+    "Jacob",
+    "Gary",
+    "Nicholas",
+    "Eric",
+    "Jonathan",
+    "Stephen",
+    "Larry",
+    "Justin",
+    "Scott",
+    "Brandon",
+    "Benjamin",
+    "Samuel",
+    "Gregory",
+    "Frank",
+    "Alexander",
+    "Raymond",
+    "Patrick",
+    "Jack",
+    "Dennis",
+    "Jerry",
+    "Tyler",
+    "Aaron",
+    "Jose",
+    "Adam",
+    "Nathan",
+    "Henry",
+    "Douglas",
+    "Zachary",
+    "Peter",
+    "Kyle",
+    "Walter",
+    "Ethan",
+    "Jeremy",
+    "Harold",
+    "Keith",
+    "Christian",
+    "Roger",
+    "Noah",
+    "Gerald",
+    "Carl",
+    "Terry",
+    "Sean",
+    "Arthur",
+    "Austin",
+    "Lawrence",
+    "Jesse",
+    "Dylan",
+    "Bryan",
+    "Joe",
+    "Jordan",
+    "Billy",
+    "Bruce",
+    "Albert",
+    "Willie",
+    "Gabriel",
+    "Logan",
+    "Alan",
+    "Juan",
+    "Wayne",
+    "Roy",
+    "Ralph",
+    "Randy",
+    "Eugene",
+    "Vincent",
+    "Russell",
+    "Louis",
+    "Philip",
+    "Bobby",
+    "Johnny",
+    "Mary",
+    "Patricia",
+    "Jennifer",
+    "Linda",
+    "Elizabeth",
+    "Barbara",
+    "Susan",
+    "Jessica",
+    "Sarah",
+    "Karen",
+    "Nancy",
+    "Lisa",
+    "Margaret",
+    "Betty",
+    "Sandra",
+    "Ashley",
+    "Kimberly",
+    "Emily",
+    "Donna",
+    "Michelle",
+    "Carol",
+    "Amanda",
+    "Dorothy",
+    "Melissa",
+    "Deborah",
+    "Stephanie",
+    "Rebecca",
+    "Sharon",
+    "Laura",
+    "Cynthia",
+    "Kathleen",
+    "Amy",
+    "Shirley",
+    "Angela",
+    "Helen",
+    "Anna",
+    "Brenda",
+    "Pamela",
+    "Nicole",
+    "Emma",
+    "Samantha",
+    "Katherine",
+    "Christine",
+    "Debra",
+    "Rachel",
+    "Catherine",
+    "Carolyn",
+    "Janet",
+    "Ruth",
+    "Maria",
+    "Heather",
+    "Diane",
+    "Virginia",
+    "Julie",
+    "Joyce",
+    "Victoria",
+    "Olivia",
+    "Kelly",
+    "Christina",
+    "Lauren",
+    "Joan",
+    "Evelyn",
+    "Judith",
+    "Megan",
+    "Cheryl",
+    "Andrea",
+    "Hannah",
+    "Martha",
+    "Jacqueline",
+    "Frances",
+    "Gloria",
+    "Ann",
+    "Teresa",
+    "Kathryn",
+    "Sara",
+    "Janice",
+    "Jean",
+    "Alice",
+    "Madison",
+    "Doris",
+    "Abigail",
+    "Julia",
+    "Judy",
+    "Grace",
+    "Denise",
+    "Amber",
+    "Marilyn",
+    "Beverly",
+    "Danielle",
+    "Theresa",
+    "Sophia",
+    "Marie",
+    "Diana",
+    "Brittany",
+    "Natalie",
+    "Isabella",
+    "Charlotte",
+    "Rose"
+  ]
+}
