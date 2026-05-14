@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Two Sample T Test</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link href="./css/style.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="icon" href="./assets/favicon.png" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['\\(', '\\)'], ['$', '$']],
+          displayMath: [['\\[', '\\]'], ['$$', '$$']]
+        },
+        options: {
+          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js"></script>
+</head>
+<body>
+  <header class="header">
+    <a href="/" class="home">
+      <img src="./assets/ucsb-logo-light.png" alt="UCSB" class="ucsb-logo logo-light">
+      <img src="./assets/ucsb-logo-dark.png" alt="UCSB" class="ucsb-logo logo-dark">
+      <h1 class="header-text">PSTAT 120 Applets</h1>
+    </a>
+
+    <button id="theme-toggle" aria-label="Toggle dark mode" class="dark-mode-btn"> 
+      <span>Dark Mode</span>
+    </button>
+
+    <script src="./js/utils/dark-mode.js"></script>
+  </header>
+
+  <main class="distribution-content">
+    <div class="distribution-shell">
+      <div class="hypothesis-tabs">
+        <button class="hypothesis-tab active" data-mode="composite">
+          Pooled
+        </button>
+
+        <button class="hypothesis-tab" data-mode="simple">
+          Unpooled
+        </button>
+      </div>
+
+      <div class="distribution-container">
+        <div class="distribution-name">
+          <h1>Two Sample T Test</h1>
+          <label class="segmented-toggle">
+            <input type="checkbox" id="formula-toggle" class="segmented-input">
+
+            <span class="segmented-track">
+              <span class="segmented-option left">Value</span>
+              <span class="segmented-option right"> Formula</span>
+              <span class="segmented-thumb"></span>
+            </span>
+          </label>
+        </div>
+
+        <div class="distribution-app">
+          <div class="split-layout">
+            <div class="left-panel">
+              <div class="hypothesis-inputs">
+                <div class="distribution-input-grid-2col">
+                  <div class="distribution-input">
+                    <label>\(H_0: \mu = \)</label>
+                    <input type="number" id="mu0">
+                  </div>
+
+                  <div class="distribution-input">
+                    <label for="a">\(\alpha =\)</label>
+
+                    <div class="has-tip">
+                      <input type="number" id="a">
+                      <div class="tip" role="tooltip">Significance level</div>
+                    </div>
+                  </div>
+
+                  <div class="distribution-input">
+                    <label>\(H_1: \mu \)</label>
+
+                    <select class="pill" id="h1-type">
+                      <option value="lt">&lt;</option>
+                      <option value="neq" selected>≠</option>
+                      <option value="gt">&gt;</option>
+                    </select>
+
+                    <span id="h1-equals" class="hidden equals-text">\(=\)</span>
+
+                    <input type="number" id="h1">
+                  </div>
+
+                  <div class="raw-data-actions">
+                    <button type="button" id="raw-data-btn" class="pill">Enter Raw Data</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="right-panel">
+              <div class="distribution-input-grid-2col">
+                <div class="distribution-input">
+                  <label for="x1">\(\bar{x}_1 =\)</label>
+                  
+                  <div class="has-tip">
+                    <input type="number" id="xbar1">
+                    <div class="tip" role="tooltip">Sample 1 mean</div>
+                  </div>
+                </div>
+
+                <div class="distribution-input">
+                  <label for="x2">\(\bar{x}_2 =\)</label>
+                  
+                  <div class="has-tip">
+                    <input type="number" id="xbar2">
+                    <div class="tip" role="tooltip">Sample 2 mean</div>
+                  </div>
+                </div>
+
+                <div class="distribution-input">
+                  <label for="s1">\(s_1 =\)</label>
+
+                  <div class="has-tip">
+                    <input type="number" id="s1">
+                    <div class="tip" role="tooltip">Sample 1 standard deviation</div>
+                  </div>
+                </div>
+
+                <div class="distribution-input">
+                  <label for="s2">\(s_2 =\)</label>
+
+                  <div class="has-tip">
+                    <input type="number" id="s2">
+                    <div class="tip" role="tooltip">Sample 2 standard deviation</div>
+                  </div>
+                </div>
+        
+                <div class="distribution-input">
+                  <label for="n_1">\(n_1 =\)</label>
+
+                  <div class="has-tip">
+                    <input type="number" id="n1">
+                    <div class="tip" role="tooltip">Sample 1 size</div>
+                  </div>
+                </div>
+
+                <div class="distribution-input">
+                  <label for="n_2">\(n_2 =\)</label>
+
+                  <div class="has-tip">
+                    <input type="number" id="n2">
+                    <div class="tip" role="tooltip">Sample 2 size</div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="raw-data-modal" class="raw-data-modal hidden" aria-hidden="true">
+                <div class="raw-data-modal-card">
+                  <h3>Enter numbers separated by commas</h3>
+
+                  <div class="raw-data-two-col">
+                    <div class="raw-data-group">
+                      <label for="raw-data-input-1">Sample 1</label>
+                      <textarea id="raw-data-input-1" rows="4"></textarea>
+                    </div>
+
+                    <div class="raw-data-group">
+                      <label for="raw-data-input-2">Sample 2</label>
+                      <textarea id="raw-data-input-2" rows="4"></textarea>
+                    </div>
+                  </div>
+
+                  <div id="raw-data-error" class="raw-data-error"></div>
+
+                  <div class="raw-data-modal-actions">
+                    <button type="button" id="raw-data-cancel" class="pill">Cancel</button>
+                    <button type="button" id="raw-data-submit" class="pill">Enter</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="distribution-output">
+            <div id="plot"></div>
+
+            <div id="stats-col" class="stats-col hidden">
+              <aside class="stats">
+                <div class="stats-row">
+                  <span class="stats-label" id="label-stat">Test Statistic</span>
+                  <span id="z-stat" class="stats-value">—</span>
+                </div>
+
+                <div class="stats-row">
+                  <span class="stats-label" id="label-p">P-Value</span>
+                  <span id="p-value" class="stats-value">—</span>
+                </div>
+
+                <div class="stats-row">
+                  <span class="stats-label" id="label-crit">Critical Value</span>
+                  <span id="crit-value" class="stats-value">—</span>
+                </div>
+              </aside>
+
+              <aside class="decision masked" id="decision-box">
+                <div class="functions-row">
+                  <div class="stats-label">Decision</div>
+                  <div id="decision" class="stats-function">\( \text{—} \)</div>
+                </div>
+
+                <div class="functions-row">
+                  <div class="stats-label" id="label-crit-rule">Critical Value Rule</div>
+                  <div id="crit-rule" class="stats-function">\( \text{—} \)</div>
+                </div>
+
+                <div class="functions-row">
+                  <div class="stats-label" id="label-p-rule">P-Value Rule</div>
+                  <div id="p-rule" class="stats-function">\( \text{—} \)</div>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script type="module" src="./js/pages/two-sample-t.js"></script>
+</body>
+</html>

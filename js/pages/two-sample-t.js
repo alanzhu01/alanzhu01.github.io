@@ -1,9 +1,13 @@
-import * as Utils from '../utils/hypothesis-test.js';
-import * as TTest from "../math/one-sample-t.js";
+import * as Utils from "../utils/hypothesis-test.js";
+import * as TwoSampleT from "../math/two-sample-t.js";
 
-const xbarInput = document.getElementById("xbar");
-const sigmaInput = document.getElementById("s");
-const nInput = document.getElementById("n");
+const xbar1Input = document.getElementById("xbar1");
+const xbar2Input = document.getElementById("xbar2");
+const s1Input = document.getElementById("s1");
+const s2Input = document.getElementById("s2");
+const n1Input = document.getElementById("n1");
+const n2Input = document.getElementById("n2");
+
 const alphaInput = document.getElementById("a");
 const mu0Input = document.getElementById("mu0");
 const h1Input = document.getElementById("h1");
@@ -16,18 +20,50 @@ const decisionBox = document.getElementById("decision-box");
 
 const rawDataBtn = document.getElementById("raw-data-btn");
 const rawDataModal = document.getElementById("raw-data-modal");
-const rawDataInput = document.getElementById("raw-data-input");
+const rawDataInput1 = document.getElementById("raw-data-input-1");
+const rawDataInput2 = document.getElementById("raw-data-input-2");
 const rawDataSubmit = document.getElementById("raw-data-submit");
 const rawDataCancel = document.getElementById("raw-data-cancel");
 const rawDataError = document.getElementById("raw-data-error");
 
-async function updateStats(xbar, sigma, n, mu0, alt) {
+const tabs = document.querySelectorAll(".hypothesis-tab");
+
+let currentMode = "pooled";
+
+function getModeFromTab(tab) {
+  return tab.dataset.mode === "simple" ? "unpooled" : "pooled";
+}
+
+function getStatsFunction() {
+  return currentMode === "pooled"
+    ? TwoSampleT.twoSampleZStatsPooled
+    : TwoSampleT.twoSampleZStatsUnpooled;
+}
+
+function getDataFunction() {
+  return currentMode === "pooled"
+    ? TwoSampleT.twoSampleZDataPooled
+    : TwoSampleT.twoSampleZDataUnpooled;
+}
+
+async function updateStats(xbar1, xbar2, s1, s2, n1, n2, mu0, alt) {
   const formula = formulaToggle.checked ? 1 : 0;
   const alpha = parseFloat(alphaInput.value);
 
-  const data = TTest.oneSampleTStats(xbar, sigma, n, mu0, alt, alpha, formula);
+  const data = getStatsFunction()(
+    xbar1,
+    xbar2,
+    s1,
+    s2,
+    n1,
+    n2,
+    mu0,
+    alt,
+    alpha,
+    formula
+  );
 
-  const zNode = Utils.setMath("z-stat", data.z_stat);
+  const tNode = Utils.setMath("z-stat", data.z_stat ?? data.t_stat);
   const pNode = Utils.setMath("p-value", data.p_value);
   const critNode = Utils.setMath("crit-value", data.crit_value);
   const decisionNode = Utils.setMath("decision", data.decision);
@@ -35,7 +71,7 @@ async function updateStats(xbar, sigma, n, mu0, alt) {
   const pRuleNode = Utils.setMath("p-rule", data.p_rule);
 
   await Utils.typesetNodes([
-    zNode,
+    tNode,
     pNode,
     critNode,
     decisionNode,
@@ -45,18 +81,30 @@ async function updateStats(xbar, sigma, n, mu0, alt) {
 }
 
 function validInputs() {
-  const xbar = parseFloat(xbarInput.value);
-  const sigma = parseFloat(sigmaInput.value);
-  const n = parseInt(nInput.value);
+  const xbar1 = parseFloat(xbar1Input.value);
+  const xbar2 = parseFloat(xbar2Input.value);
+  const s1 = parseFloat(s1Input.value);
+  const s2 = parseFloat(s2Input.value);
+  const n1 = parseInt(n1Input.value);
+  const n2 = parseInt(n2Input.value);
   const mu0 = parseFloat(mu0Input.value);
+  const alpha = parseFloat(alphaInput.value);
 
   return (
-    Number.isFinite(xbar) &&
-    Number.isFinite(sigma) &&
-    Number.isFinite(n) &&
+    Number.isFinite(xbar1) &&
+    Number.isFinite(xbar2) &&
+    Number.isFinite(s1) &&
+    Number.isFinite(s2) &&
+    Number.isFinite(n1) &&
+    Number.isFinite(n2) &&
     Number.isFinite(mu0) &&
-    sigma > 0 &&
-    n > 0
+    Number.isFinite(alpha) &&
+    s1 > 0 &&
+    s2 > 0 &&
+    n1 > 1 &&
+    n2 > 1 &&
+    alpha > 0 &&
+    alpha < 1
   );
 }
 
@@ -66,18 +114,20 @@ async function maybeGeneratePlot() {
     return;
   }
 
-  const xbar = parseFloat(xbarInput.value);
-  const sigma = parseFloat(sigmaInput.value);
-  const n = parseInt(nInput.value);
+  const xbar1 = parseFloat(xbar1Input.value);
+  const xbar2 = parseFloat(xbar2Input.value);
+  const s1 = parseFloat(s1Input.value);
+  const s2 = parseFloat(s2Input.value);
+  const n1 = parseInt(n1Input.value);
+  const n2 = parseInt(n2Input.value);
   const mu0 = parseFloat(mu0Input.value);
   const alt = altSelect.value;
 
   Utils.showOutputs({ plotEl, statsCol });
-  await updateStats(xbar, sigma, n, mu0, alt);
 
-  const data = TTest.oneSampleTData(xbar, sigma, n, mu0, alt);
+  await updateStats(xbar1, xbar2, s1, s2, n1, n2, mu0, alt);
 
-  const z = data.z;
+  const data = getDataFunction()(xbar1, xbar2, s1, s2, n1, n2, mu0, alt);
 
   Plotly.react(
     "plot",
@@ -136,12 +186,7 @@ async function maybeGeneratePlot() {
         linecolor: Utils.cssVar("--text-main"),
         tickcolor: Utils.cssVar("--text-main")
       },
-      margin: {
-        t: 50,
-        l: 80,
-        r: 40,
-        b: 80
-      }
+      margin: { t: 50, l: 80, r: 40, b: 80 }
     },
     {
       displayModeBar: false,
@@ -154,10 +199,25 @@ async function maybeGeneratePlot() {
   );
 }
 
+tabs.forEach(tab => {
+  tab.addEventListener("click", async () => {
+    tabs.forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+
+    currentMode = getModeFromTab(tab);
+
+    hideDecision();
+    await maybeGeneratePlot();
+  });
+});
+
 [
-  xbarInput,
-  sigmaInput,
-  nInput,
+  xbar1Input,
+  xbar2Input,
+  s1Input,
+  s2Input,
+  n1Input,
+  n2Input,
   alphaInput,
   mu0Input
 ].forEach(input => {
@@ -165,35 +225,28 @@ async function maybeGeneratePlot() {
 });
 
 altSelect.addEventListener("change", maybeGeneratePlot);
-
-window.addEventListener("load", () => {
-  if (window.MathJax?.typesetPromise) {
-    MathJax.typesetPromise();
-  }
-});
-
+formulaToggle.addEventListener("change", maybeGeneratePlot);
 document.addEventListener("themechange", maybeGeneratePlot);
 
-formulaToggle.addEventListener("change", maybeGeneratePlot);
+window.addEventListener("load", () => {
+  const activeTab = document.querySelector(".hypothesis-tab.active");
+  if (activeTab) currentMode = getModeFromTab(activeTab);
+
+  document.getElementById("label-stat").textContent = "Test Statistic";
+  if (window.MathJax?.typesetPromise) MathJax.typesetPromise();
+});
 
 let syncing = false;
 
 function syncInputs(source, target) {
   if (syncing) return;
   syncing = true;
-
   target.value = source.value;
-
   syncing = false;
 }
 
-Utils.onBlurOrEnter(mu0Input, () => {
-  syncInputs(mu0Input, h1Input);
-});
-
-Utils.onBlurOrEnter(h1Input, () => {
-  syncInputs(h1Input, mu0Input);
-});
+Utils.onBlurOrEnter(mu0Input, () => syncInputs(mu0Input, h1Input));
+Utils.onBlurOrEnter(h1Input, () => syncInputs(h1Input, mu0Input));
 
 function hideDecision() {
   decisionBox.classList.add("masked");
@@ -206,17 +259,16 @@ function revealDecision() {
 }
 
 decisionBox.addEventListener("click", () => {
-  if (decisionBox.classList.contains("masked")) {
-    revealDecision();
-  } else {
-    hideDecision();
-  }
+  decisionBox.classList.contains("masked") ? revealDecision() : hideDecision();
 });
 
 [
-  xbarInput,
-  sigmaInput,
-  nInput,
+  xbar1Input,
+  xbar2Input,
+  s1Input,
+  s2Input,
+  n1Input,
+  n2Input,
   alphaInput,
   mu0Input,
   h1Input
@@ -230,7 +282,7 @@ function openRawDataModal() {
   rawDataModal.classList.remove("hidden");
   rawDataModal.setAttribute("aria-hidden", "false");
   rawDataError.textContent = "";
-  rawDataInput.focus();
+  rawDataInput1.focus();
 }
 
 function closeRawDataModal() {
@@ -243,7 +295,7 @@ function parseRawData(text) {
   return text
     .split(",")
     .map(s => s.trim())
-    .filter(s => s.length > 0)
+    .filter(Boolean)
     .map(Number);
 }
 
@@ -256,32 +308,39 @@ function sampleStdDev(values) {
 
   const xbar = mean(values);
   const ss = values.reduce((sum, v) => sum + (v - xbar) ** 2, 0);
-  return Math.sqrt(ss / (values.length));
+
+  return Math.sqrt(ss / (values.length - 1));
 }
 
 async function applyRawData() {
-  const values = parseRawData(rawDataInput.value);
+  const values1 = parseRawData(rawDataInput1.value);
+  const values2 = parseRawData(rawDataInput2.value);
 
-  if (values.length === 0) {
-    rawDataError.textContent = "Please enter at least one number.";
+  if (values1.length < 2 || values2.length < 2) {
+    rawDataError.textContent =
+      "Please enter at least two numbers for each sample.";
     return;
   }
 
-  if (values.some(v => !Number.isFinite(v))) {
-    rawDataError.textContent = "Please enter only numbers separated by commas.";
+  if (
+    values1.some(v => !Number.isFinite(v)) ||
+    values2.some(v => !Number.isFinite(v))
+  ) {
+    rawDataError.textContent =
+      "Please enter only numbers separated by commas.";
     return;
   }
 
-  const n = values.length;
-  const xbar = mean(values);
-  const sigma = sampleStdDev(values);
-
-  xbarInput.value = xbar;
-  sigmaInput.value = sigma;
-  nInput.value = n;
+  xbar1Input.value = mean(values1);
+  xbar2Input.value = mean(values2);
+  s1Input.value = sampleStdDev(values1);
+  s2Input.value = sampleStdDev(values2);
+  n1Input.value = values1.length;
+  n2Input.value = values2.length;
 
   closeRawDataModal();
   hideDecision();
+
   await maybeGeneratePlot();
 }
 
@@ -289,17 +348,19 @@ rawDataBtn.addEventListener("click", openRawDataModal);
 rawDataCancel.addEventListener("click", closeRawDataModal);
 rawDataSubmit.addEventListener("click", applyRawData);
 
-rawDataInput.addEventListener("keydown", async (e) => {
-  if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
-    await applyRawData();
-  }
+[rawDataInput1, rawDataInput2].forEach(input => {
+  input.addEventListener("keydown", async e => {
+    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+      await applyRawData();
+    }
 
-  if (e.key === "Escape") {
-    closeRawDataModal();
-  }
+    if (e.key === "Escape") {
+      closeRawDataModal();
+    }
+  });
 });
 
-rawDataModal.addEventListener("click", (e) => {
+rawDataModal.addEventListener("click", e => {
   if (e.target === rawDataModal) {
     closeRawDataModal();
   }

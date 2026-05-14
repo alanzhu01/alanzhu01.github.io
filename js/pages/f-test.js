@@ -230,7 +230,7 @@ async function applyRawData() {
   const group2 = parseRawData(rawDataInput2.value);
 
   if (group1.length < 2 || group2.length < 2) {
-    rawDataError.textContent = "Each sample needs at least two numbers.";
+    rawDataError.textContent = "Please enter at least one number for each sample.";
     return;
   }
 

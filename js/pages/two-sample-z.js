@@ -1,9 +1,13 @@
 import * as Utils from '../utils/hypothesis-test.js';
-import * as TTest from "../math/one-sample-t.js";
+import * as TwoSampleZ from "../math/two-sample-z.js";
 
-const xbarInput = document.getElementById("xbar");
-const sigmaInput = document.getElementById("s");
-const nInput = document.getElementById("n");
+const xbar1Input = document.getElementById("xbar1");
+const xbar2Input = document.getElementById("xbar2");
+const sigma1Input = document.getElementById("s1");
+const sigma2Input = document.getElementById("s2");
+const n1Input = document.getElementById("n1");
+const n2Input = document.getElementById("n2");
+
 const alphaInput = document.getElementById("a");
 const mu0Input = document.getElementById("mu0");
 const h1Input = document.getElementById("h1");
@@ -16,16 +20,39 @@ const decisionBox = document.getElementById("decision-box");
 
 const rawDataBtn = document.getElementById("raw-data-btn");
 const rawDataModal = document.getElementById("raw-data-modal");
-const rawDataInput = document.getElementById("raw-data-input");
+
+const rawDataInput1 = document.getElementById("raw-data-input-1");
+const rawDataInput2 = document.getElementById("raw-data-input-2");
+
 const rawDataSubmit = document.getElementById("raw-data-submit");
 const rawDataCancel = document.getElementById("raw-data-cancel");
 const rawDataError = document.getElementById("raw-data-error");
 
-async function updateStats(xbar, sigma, n, mu0, alt) {
+async function updateStats(
+  xbar1,
+  xbar2,
+  sigma1,
+  sigma2,
+  n1,
+  n2,
+  mu0,
+  alt
+) {
   const formula = formulaToggle.checked ? 1 : 0;
   const alpha = parseFloat(alphaInput.value);
 
-  const data = TTest.oneSampleTStats(xbar, sigma, n, mu0, alt, alpha, formula);
+  const data = TwoSampleZ.twoSampleZStats(
+    xbar1,
+    xbar2,
+    sigma1,
+    sigma2,
+    n1,
+    n2,
+    mu0,
+    alt,
+    alpha,
+    formula
+  );
 
   const zNode = Utils.setMath("z-stat", data.z_stat);
   const pNode = Utils.setMath("p-value", data.p_value);
@@ -45,18 +72,29 @@ async function updateStats(xbar, sigma, n, mu0, alt) {
 }
 
 function validInputs() {
-  const xbar = parseFloat(xbarInput.value);
-  const sigma = parseFloat(sigmaInput.value);
-  const n = parseInt(nInput.value);
+  const xbar1 = parseFloat(xbar1Input.value);
+  const xbar2 = parseFloat(xbar2Input.value);
+
+  const sigma1 = parseFloat(sigma1Input.value);
+  const sigma2 = parseFloat(sigma2Input.value);
+
+  const n1 = parseInt(n1Input.value);
+  const n2 = parseInt(n2Input.value);
+
   const mu0 = parseFloat(mu0Input.value);
 
   return (
-    Number.isFinite(xbar) &&
-    Number.isFinite(sigma) &&
-    Number.isFinite(n) &&
+    Number.isFinite(xbar1) &&
+    Number.isFinite(xbar2) &&
+    Number.isFinite(sigma1) &&
+    Number.isFinite(sigma2) &&
+    Number.isFinite(n1) &&
+    Number.isFinite(n2) &&
     Number.isFinite(mu0) &&
-    sigma > 0 &&
-    n > 0
+    sigma1 > 0 &&
+    sigma2 > 0 &&
+    n1 > 0 &&
+    n2 > 0
   );
 }
 
@@ -66,16 +104,41 @@ async function maybeGeneratePlot() {
     return;
   }
 
-  const xbar = parseFloat(xbarInput.value);
-  const sigma = parseFloat(sigmaInput.value);
-  const n = parseInt(nInput.value);
+  const xbar1 = parseFloat(xbar1Input.value);
+  const xbar2 = parseFloat(xbar2Input.value);
+
+  const sigma1 = parseFloat(sigma1Input.value);
+  const sigma2 = parseFloat(sigma2Input.value);
+
+  const n1 = parseInt(n1Input.value);
+  const n2 = parseInt(n2Input.value);
+
   const mu0 = parseFloat(mu0Input.value);
   const alt = altSelect.value;
 
   Utils.showOutputs({ plotEl, statsCol });
-  await updateStats(xbar, sigma, n, mu0, alt);
 
-  const data = TTest.oneSampleTData(xbar, sigma, n, mu0, alt);
+  await updateStats(
+    xbar1,
+    xbar2,
+    sigma1,
+    sigma2,
+    n1,
+    n2,
+    mu0,
+    alt
+  );
+
+  const data = TwoSampleZ.twoSampleZData(
+    xbar1,
+    xbar2,
+    sigma1,
+    sigma2,
+    n1,
+    n2,
+    mu0,
+    alt
+  );
 
   const z = data.z;
 
@@ -120,7 +183,7 @@ async function maybeGeneratePlot() {
       paper_bgcolor: Utils.cssVar("--plot-bgcolor"),
       plot_bgcolor: Utils.cssVar("--plot-bgcolor"),
       xaxis: {
-        title: "t",
+        title: "z",
         showgrid: false,
         fixedrange: true,
         color: Utils.cssVar("--text-main"),
@@ -129,7 +192,7 @@ async function maybeGeneratePlot() {
         zeroline: false
       },
       yaxis: {
-        title: "f(t)",
+        title: "f(z)",
         showgrid: false,
         fixedrange: true,
         color: Utils.cssVar("--text-main"),
@@ -155,9 +218,12 @@ async function maybeGeneratePlot() {
 }
 
 [
-  xbarInput,
-  sigmaInput,
-  nInput,
+  xbar1Input,
+  xbar2Input,
+  sigma1Input,
+  sigma2Input,
+  n1Input,
+  n2Input,
   alphaInput,
   mu0Input
 ].forEach(input => {
@@ -180,10 +246,9 @@ let syncing = false;
 
 function syncInputs(source, target) {
   if (syncing) return;
+
   syncing = true;
-
   target.value = source.value;
-
   syncing = false;
 }
 
@@ -214,9 +279,12 @@ decisionBox.addEventListener("click", () => {
 });
 
 [
-  xbarInput,
-  sigmaInput,
-  nInput,
+  xbar1Input,
+  xbar2Input,
+  sigma1Input,
+  sigma2Input,
+  n1Input,
+  n2Input,
   alphaInput,
   mu0Input,
   h1Input
@@ -229,13 +297,16 @@ altSelect.addEventListener("change", hideDecision);
 function openRawDataModal() {
   rawDataModal.classList.remove("hidden");
   rawDataModal.setAttribute("aria-hidden", "false");
+
   rawDataError.textContent = "";
-  rawDataInput.focus();
+
+  rawDataInput1.focus();
 }
 
 function closeRawDataModal() {
   rawDataModal.classList.add("hidden");
   rawDataModal.setAttribute("aria-hidden", "true");
+
   rawDataError.textContent = "";
 }
 
@@ -255,48 +326,74 @@ function sampleStdDev(values) {
   if (values.length < 2) return 0;
 
   const xbar = mean(values);
-  const ss = values.reduce((sum, v) => sum + (v - xbar) ** 2, 0);
-  return Math.sqrt(ss / (values.length));
+
+  const ss = values.reduce(
+    (sum, v) => sum + (v - xbar) ** 2,
+    0
+  );
+
+  return Math.sqrt(ss / (values.length - 1));
 }
 
 async function applyRawData() {
-  const values = parseRawData(rawDataInput.value);
+  const values1 = parseRawData(rawDataInput1.value);
+  const values2 = parseRawData(rawDataInput2.value);
 
-  if (values.length === 0) {
-    rawDataError.textContent = "Please enter at least one number.";
+  if (values1.length === 0 || values2.length === 0) {
+    rawDataError.textContent =
+      "Please enter at least one number for each sample.";
     return;
   }
 
-  if (values.some(v => !Number.isFinite(v))) {
-    rawDataError.textContent = "Please enter only numbers separated by commas.";
+  if (
+    values1.some(v => !Number.isFinite(v)) ||
+    values2.some(v => !Number.isFinite(v))
+  ) {
+    rawDataError.textContent =
+      "Please enter only numbers separated by commas.";
     return;
   }
 
-  const n = values.length;
-  const xbar = mean(values);
-  const sigma = sampleStdDev(values);
+  const n1 = values1.length;
+  const n2 = values2.length;
 
-  xbarInput.value = xbar;
-  sigmaInput.value = sigma;
-  nInput.value = n;
+  const xbar1 = mean(values1);
+  const xbar2 = mean(values2);
+
+  const sigma1 = sampleStdDev(values1);
+  const sigma2 = sampleStdDev(values2);
+
+  xbar1Input.value = xbar1;
+  xbar2Input.value = xbar2;
+
+  sigma1Input.value = sigma1;
+  sigma2Input.value = sigma2;
+
+  n1Input.value = n1;
+  n2Input.value = n2;
 
   closeRawDataModal();
   hideDecision();
+
   await maybeGeneratePlot();
 }
 
 rawDataBtn.addEventListener("click", openRawDataModal);
+
 rawDataCancel.addEventListener("click", closeRawDataModal);
+
 rawDataSubmit.addEventListener("click", applyRawData);
 
-rawDataInput.addEventListener("keydown", async (e) => {
-  if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
-    await applyRawData();
-  }
+[rawDataInput1, rawDataInput2].forEach(input => {
+  input.addEventListener("keydown", async (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+      await applyRawData();
+    }
 
-  if (e.key === "Escape") {
-    closeRawDataModal();
-  }
+    if (e.key === "Escape") {
+      closeRawDataModal();
+    }
+  });
 });
 
 rawDataModal.addEventListener("click", (e) => {
