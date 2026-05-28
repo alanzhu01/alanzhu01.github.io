@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bayesian</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <link href="./css/style.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="icon" href="./assets/favicon.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']]
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js"></script>
+</head>
+
+<body>
+  <header class="header">
+    <a href="/" class="home">
+      <img src="./assets/ucsb-logo-light.png" alt="UCSB" class="ucsb-logo logo-light">
+      <img src="./assets/ucsb-logo-dark.png" alt="UCSB" class="ucsb-logo logo-dark">
+      <h1 class="header-text">PSTAT 120 Applets</h1>
+    </a>
+
+    <button id="theme-toggle" aria-label="Toggle dark mode" class="dark-mode-btn">
+      <span>Dark Mode</span>
+    </button>
+
+    <script src="./js/utils/dark-mode.js"></script>
+  </header>
+
+  <main class="distribution-content">
+    <div class="distribution-container">
+      <div class="distribution-name">
+        <a href="/bayesian.html" class="home">
+          <h1>Bayesian Statistics</h1>
+        </a>
+      </div>
+
+      <section id="start-menu" class="bayes-start-menu">
+        <div class="prompt-text bayes-instructions-box">
+          <p>Instructions</p>
+          <div>
+            Choose a data model and specify the true parameter (or randomize it), then click Start.
+            After each sample is generated, calculate and enter the posterior parameters for the updated distribution.
+          </div>
+        </div>
+
+        <div class="bayes-start-grid">
+          <div class="distribution-input">
+            <label for="data-model"><strong>Data:</strong></label>
+            <select id="data-model" class="dist-select">
+              <option value="binomial">Binomial</option>
+              <option value="poisson">Poisson</option>
+            </select>
+          </div>
+
+          <div class="distribution-input">
+            <label for="true-parameter" id="true-parameter-label">
+              <strong>Parameter:</strong> \( p = \)
+            </label>
+            <input type="number" id="true-parameter" step="0.01" min="0">
+          </div>
+        </div>
+
+        <label class="bayes-random-row">
+          <input type="checkbox" id="randomize-parameter" checked>
+          Randomize parameter
+        </label>
+
+        <button id="start-bayes" class="submit-btn">Start</button>
+      </section>
+
+      <div class="distribution-app bayes-app" id="bayes-app" hidden>
+        <div class="bayes-main-grid">
+            <div class="bayes-left-col">
+              <div class="distribution-prompt bayes-scenario">
+                <div class="prompt-text">
+                  <p>Scenario</p>
+                  <div id="scenario-text">Loading...</div>
+                </div>
+              </div>
+
+              <div id="stats-col" class="stats-col bayesian-stats">
+                <aside class="stats">
+                  <div class="stats-row">
+                    <span id="dist-label" class="stats-label">Prior Distribution</span>
+                    <span id="prior-dist" class="stats-value">—</span>
+                  </div>
+
+                  <div class="stats-row">
+                    <span id="mean-label" class="stats-label">Prior Mean</span>
+                    <span id="prior-mean" class="stats-value">—</span>
+                  </div>
+
+                  <div class="stats-row">
+                    <span id="var-label" class="stats-label">Prior Variance</span>
+                    <span id="prior-var" class="stats-value">—</span>
+                  </div>
+
+                  <div class="stats-row">
+                    <span id="ci-label" class="stats-label">95% Credible Interval</span>
+                    <span id="prior-ci" class="stats-value">—</span>
+                  </div>
+
+                  <div class="stats-row">
+                    <span class="stats-label">True Parameter</span>
+                    <span id="true-param" class="stats-value">—</span>
+                  </div>
+                </aside>
+              </div>
+
+              <section class="distribution-prompt bayes-update-box">
+                <div class="prompt-text">
+                  <p>Bayesian Update</p>
+
+                  <div class="distribution-input-grid-2col bayesian-grid-2col">
+                    <div class="distribution-input">
+                      <label for="alpha-answer">\( \alpha = \)</label>
+                      <input type="number" id="alpha-answer" step="1" min="0">
+                    </div>
+
+                    <div class="distribution-input">
+                      <label for="beta-answer">\( \beta = \)</label>
+                      <input type="number" id="beta-answer" step="1" min="0">
+                    </div>
+                  </div>
+
+                  <div id="feedback" class="feedback bayesian-feedback" aria-live="polite"></div>
+                </div>
+
+                <div class="controls-row">
+                  <button id="submit-answer" class="submit-btn" hidden>Submit</button>
+                </div>
+              </section>
+            </div>
+
+            <div class="bayes-plot-col">
+              <div id="prior-plot"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="./js/pages/bayesian.js"></script>
+</body>
+</html>

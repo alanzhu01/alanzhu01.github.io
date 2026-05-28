@@ -119,6 +119,10 @@
   --plot-red-bar: #7a4a4a;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 html {
   min-height: 100%;
   background: var(--bg-gradient);
@@ -1539,4 +1543,135 @@ input[type=number]::-webkit-outer-spin-button {
   font-weight: 700;
   color: var(--text-main);
   padding-right: 6px;
+}
+
+.bayes-app {
+  width: min(1050px, 100%);
+}
+
+.bayes-main-grid {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 28px;
+  width: 100%;
+}
+
+.bayes-left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  flex: 0 0 420px;
+}
+
+.bayes-plot-col {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 500px;
+  gap: 18px;
+  align-self: stretch;
+}
+
+#prior-plot {
+  flex: 1 1 auto;
+  min-height: 320px;
+
+  border-radius: 30px;
+  border: 1px solid var(--border-soft);
+  overflow: hidden;
+  background-color: var(--plot-bgcolor);
+}
+
+.bayes-update-box {
+  margin-top: 0;
+}
+
+.bayes-update-box .prompt-text {
+  max-width: 100%;
+}
+
+.bayes-update-box .submit-btn {
+  width: 100%;
+}
+
+.bayesian-stats {
+  flex: 0 0 auto;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.bayesian-grid-2col {
+  grid-template-rows: auto;
+}
+
+.bayes-start-menu {
+  width: min(600px, 100%);
+  margin: 0 auto;
+  padding: 15px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.bayes-start-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 32px;
+}
+
+.bayes-start-grid .distribution-input {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.bayes-start-grid select {
+  height: 30px;
+  border-radius: 15px;
+  background-color: var(--text-input-background);
+  border: none;
+  padding: 0 12px;
+  color: var(--text-main);
+}
+
+.bayes-random-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: var(--text-main);
+  font-weight: 500;
+
+  white-space: nowrap;
+}
+
+#start-bayes {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .bayes-start-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+#true-parameter-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  white-space: nowrap;
+}
+
+.controls-row.empty {
+  display: none;
+}
+
+.feedback.empty {
+  display: none;
+}
+
+.bayesian-feedback {
+  margin-top: 10px;
 }
