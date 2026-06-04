@@ -76,15 +76,6 @@
                   </div>
 
                   <div class="distribution-input">
-                    <label for="a">\(\alpha =\)</label>
-
-                    <div class="has-tip">
-                      <input type="number" id="a">
-                      <div class="tip" role="tooltip">Significance level</div>
-                    </div>
-                  </div>
-
-                  <div class="distribution-input">
                     <label>\(H_1: \mu \)</label>
 
                     <select class="pill" id="h1-type">
@@ -96,6 +87,15 @@
                     <span id="h1-equals" class="hidden equals-text">\(=\)</span>
 
                     <input type="number" id="h1">
+                  </div>
+
+                  <div class="distribution-input">
+                    <label for="a">\(\alpha =\)</label>
+
+                    <div class="has-tip">
+                      <input type="number" id="a">
+                      <div class="tip" role="tooltip">Significance level</div>
+                    </div>
                   </div>
 
                   <div class="raw-data-actions">
@@ -161,31 +161,6 @@
                   </div>
                 </div>
               </div>
-
-              <div id="raw-data-modal" class="raw-data-modal hidden" aria-hidden="true">
-                <div class="raw-data-modal-card">
-                  <h3>Enter numbers separated by commas</h3>
-
-                  <div class="raw-data-two-col">
-                    <div class="raw-data-group">
-                      <label for="raw-data-input-1">Sample 1</label>
-                      <textarea id="raw-data-input-1" rows="4"></textarea>
-                    </div>
-
-                    <div class="raw-data-group">
-                      <label for="raw-data-input-2">Sample 2</label>
-                      <textarea id="raw-data-input-2" rows="4"></textarea>
-                    </div>
-                  </div>
-
-                  <div id="raw-data-error" class="raw-data-error"></div>
-
-                  <div class="raw-data-modal-actions">
-                    <button type="button" id="raw-data-cancel" class="pill">Cancel</button>
-                    <button type="button" id="raw-data-submit" class="pill">Enter</button>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -228,6 +203,31 @@
               </aside>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="raw-data-modal" class="raw-data-modal hidden" aria-hidden="true">
+      <div class="raw-data-modal-card">
+        <h3>Enter numbers separated by commas</h3>
+
+        <div class="raw-data-two-col">
+          <div class="raw-data-group">
+            <label for="raw-data-input-1">Sample 1</label>
+            <textarea id="raw-data-input-1" rows="4"></textarea>
+          </div>
+
+          <div class="raw-data-group">
+            <label for="raw-data-input-2">Sample 2</label>
+            <textarea id="raw-data-input-2" rows="4"></textarea>
+          </div>
+        </div>
+
+        <div id="raw-data-error" class="raw-data-error"></div>
+
+        <div class="raw-data-modal-actions">
+          <button type="button" id="raw-data-cancel" class="pill">Cancel</button>
+          <button type="button" id="raw-data-submit" class="pill">Enter</button>
         </div>
       </div>
     </div>

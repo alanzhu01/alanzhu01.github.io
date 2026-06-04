@@ -279,7 +279,7 @@ body {
 
 .applets{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 24px 60px;
   width: 93%;
   justify-items: center;
@@ -458,6 +458,7 @@ body {
   display: grid;
   grid-template-columns: auto auto;
   grid-template-rows: auto auto;
+  grid-auto-flow: column;
   gap: 1.5rem 3rem;
   justify-content: center;
   margin: 0 auto;
@@ -654,6 +655,17 @@ input[type=number]::-webkit-outer-spin-button {
   color: var(--text-main);
 }
 
+.functions-nonparametric {
+  width: max-content;
+  min-width: 100%;
+  background: var(--plot-bgcolor);
+  border: 1px solid var(--border-soft);
+  border-radius: 22px;
+  padding: 16px 16px;
+  color: var(--text-main);
+  visibility: hidden;
+}
+
 .segmented-toggle {
   display: inline-block;
   cursor: pointer;
@@ -790,174 +802,6 @@ input[type=number]::-webkit-outer-spin-button {
 
 .has-tip:focus-within .tip {
   transform: translate(-50%, -120%);
-}
-
-
-@media (max-width: 480px) {
-  .header {
-    justify-content: center;
-    height: 80px;
-  }
-
-  .header-text {
-    font-size: 22px
-  }
-
-  .ucsb-logo {
-    height: 28px;
-  }
-
-  .dark-mode-btn {
-    display: none;
-  }
-
-  .content {
-    padding: 5px 10px;
-    flex: 1;
-  }
-
-  .categories {
-    margin: 10px 0px;
-  }
-
-  .category h1 {
-    font-size: 24px;
-    padding: 0px 0 10px;
-  }
-
-  .applets {
-    margin: 20px;
-  }
-
-  .applet-selection {
-    width: 95%;
-  }
-
-  .department {
-    font-size: 16px;
-    line-height: 22px; 
-  }
-
-  .footer {
-    padding: 18px 12px 30px 12px;
-  }
-
-  .distribution-name {
-    padding-top: 10px;
-    padding-bottom: 5px;
-  }
-
-  .distribution-name h1 {
-    font-size: 24px;
-    padding: 8px 0 2px;
-  }
-
-  .distribution-output {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px
-  }
-
-  .segmented-track {
-    width: 120px;
-    font-size: 10px;
-    height: 26px;
-  }
-
-  .distribution-content {
-    padding: 5px 10px;
-    flex: 1;
-    width: 100%;
-    align-items: flex-start;
-  }
-
-  .distribution-input {
-    justify-content: flex-start;
-    flex-wrap: nowrap;
-  }
-
-  .distribution-input label {
-    color: var(--text-main);
-    flex: 0 0 auto;
-  }
-
-  .distribution-input input {
-    display: block;
-    flex: 1 1 auto;
-    min-width: 0;
-    width: unset;
-  }
-
-  .distribution-input-grid-2col,
-  .distribution-input-grid-3col {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    gap: 12px;
-    width: 100%;
-    padding: 0 15px;
-  }
-
-  .px-row {
-    grid-column: auto;
-  }
-
-  .distribution-app .matching-app {
-    padding: 15px 7px;
-    width: 100%;
-  }
-
-  .distribution-container {
-    margin: 10px 0px;
-    display: flex;
-    width: 100%;
-    max-width: 100%;
-    }
-
-  #plot {
-    width: 100%;
-    flex: 0 0 300px;
-    
-  }
-
-  .stats-col {
-    flex: 0 0 auto;
-    gap: 10px;
-    margin-top: 0px;
-    width: 100%;
-    font-size: 14px;
-  }
-
-  .stats-function {
-    font-size: 14px;
-  }
-
-  .stats {
-    width: 100%;
-  }
-
-  .has-tip .tip {
-    font-size: 0.85rem;
-  }
-
-  .distribution-input input,
-  .distribution-input select,
-  .distribution-input textarea {
-    font-size: 16px;
-  }
-
-  .has-tip {
-    flex: 1 1 auto;
-    min-width: 0;
-  }
-
-  .has-tip > input {
-    width: 100%;
-  }
-
-  .empty-space {
-    display: none;
-  }
-
 }
 
 .distribution-prompt {
@@ -1423,12 +1267,6 @@ input[type=number]::-webkit-outer-spin-button {
   resize: vertical;
 }
 
-@media (max-width: 700px) {
-  .raw-data-two-col {
-    grid-template-columns: 1fr;
-  }
-}
-
 .hypothesis-box {
   background: white;
   border-radius: 12px;
@@ -1522,17 +1360,6 @@ input[type=number]::-webkit-outer-spin-button {
   width: 72px;
   height: 34px;
   flex: 0 0 auto;
-}
-
-@media (max-width: 700px) {
-  .raw-data-modal-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .raw-data-grid input {
-    width: 58px;
-  }
 }
 
 .raw-data-row-label {
@@ -1651,12 +1478,6 @@ input[type=number]::-webkit-outer-spin-button {
   width: 100%;
 }
 
-@media (max-width: 600px) {
-  .bayes-start-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 #true-parameter-label {
   display: inline-flex;
   align-items: center;
@@ -1674,4 +1495,285 @@ input[type=number]::-webkit-outer-spin-button {
 
 .bayesian-feedback {
   margin-top: 10px;
+}
+
+@media (max-width: 480px) {
+  .raw-data-two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .bayes-start-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .raw-data-modal-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .raw-data-grid input {
+    width: 58px;
+  }
+
+  .functions-nonparametric {
+    display: none;
+  }
+
+  .header {
+    justify-content: center;
+    height: 80px;
+  }
+
+  .header-text {
+    font-size: 22px
+  }
+
+  .ucsb-logo {
+    height: 28px;
+  }
+
+  .dark-mode-btn {
+    display: none;
+  }
+
+  .content {
+    padding: 5px 10px;
+    flex: 1;
+  }
+
+  .categories {
+    margin: 10px 0px;
+  }
+
+  .category h1 {
+    font-size: 24px;
+    padding: 0px 0 10px;
+  }
+
+  .applets {
+    margin: 20px;
+  }
+
+  .applet-selection {
+    width: 95%;
+  }
+
+  .department {
+    font-size: 16px;
+    line-height: 22px; 
+  }
+
+  .footer {
+    padding: 18px 12px 30px 12px;
+  }
+
+  .distribution-name {
+    padding-top: 10px;
+    padding-bottom: 5px;
+  }
+
+  .distribution-name h1 {
+    font-size: 24px;
+    padding: 8px 0 2px;
+  }
+
+  .distribution-output {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px
+  }
+
+  .segmented-track {
+    width: 120px;
+    font-size: 10px;
+    height: 26px;
+  }
+
+  .distribution-content {
+    padding: 5px 10px;
+    flex: 1;
+    width: 100%;
+    align-items: center;
+  }
+
+  .distribution-input {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+  }
+
+  .distribution-input label {
+    color: var(--text-main);
+    flex: 0 0 auto;
+  }
+
+  .distribution-input input {
+    display: block;
+    flex: 1 1 auto;
+    min-width: 0;
+    width: unset;
+  }
+
+  .distribution-input-grid-2col,
+  .distribution-input-grid-3col {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-auto-flow: row;
+    gap: 12px;
+    width: 100%;
+    padding: 0 15px;
+  }
+
+  .px-row {
+    grid-column: auto;
+  }
+
+  .distribution-app .matching-app {
+    padding: 15px 10px;
+    width: 100%;
+  }
+
+  .distribution-container {
+    margin: 10px 0px;
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    }
+
+  #plot {
+    width: 100%;
+    flex: 0 0 300px;
+    
+  }
+
+  .stats-col {
+    flex: 0 0 auto;
+    gap: 10px;
+    margin-top: 0px;
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .stats-function {
+    font-size: 14px;
+  }
+
+  .stats {
+    width: 100%;
+  }
+
+  .has-tip .tip {
+    font-size: 0.85rem;
+  }
+
+  .distribution-input input,
+  .distribution-input select,
+  .distribution-input textarea {
+    font-size: 16px;
+  }
+
+  .has-tip {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .has-tip > input {
+    width: 100%;
+  }
+
+  .empty-space {
+    display: none;
+  }
+
+  .split-layout {
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .left-panel,
+  .right-panel {
+    width: 100%;
+  }
+
+  .right-panel {
+    padding-left: 0;
+    border-left: none;
+    border-top: 1px solid var(--border-soft);
+    padding-top: 20px;
+  }
+
+  .distribution-input-grid-2col-1row {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .hypothesis-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+
+  .hypothesis-tab {
+    flex-shrink: 0;
+  }
+
+  .distribution-input-grid-2col,
+  .distribution-input-grid-3col {
+    padding: 0;
+  }
+
+  .distribution-input {
+    width: 100%;
+    gap: 8px;
+  }
+
+  .distribution-input label {
+    flex: 0 0 auto;
+    font-size: 1rem;
+  }
+
+  .distribution-input input {
+    flex: 1 1 0;
+    width: 100%;
+  }
+
+  .raw-data-actions {
+    justify-content: center;
+  }
+
+  .bayes-app {
+    width: 100%;
+    padding: 15px 10px;
+  }
+
+  .bayes-main-grid {
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .bayes-left-col,
+  .bayes-plot-col {
+    flex: 0 1 auto;
+    width: 100%;
+  }
+
+  #prior-plot {
+    width: 100%;
+    min-height: 280px;
+  }
+
+  .prompt-text {
+    max-width: 100%;
+  }
+
+  .stats-row {
+    gap: 12px;
+  }
+
+  .stats-label {
+    margin-right: 0;
+  }
+
 }

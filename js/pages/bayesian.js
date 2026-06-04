@@ -42,6 +42,8 @@ let current = null;
 let totalRed = 0;
 let totalBlue = 0;
 
+const isMobile = window.innerWidth <= 480;
+
 function updateControlsRowVisibility() {
   const controlsRow = submitBtn.closest(".controls-row");
 
@@ -202,7 +204,7 @@ function renderBetaPlot(alpha, beta, phase = "Prior", previousPrior = null) {
     y: mainData.y,
     type: "scatter",
     mode: "lines",
-    name: `${phase} distribution`,
+    name: isMobile ? `${phase}` : `${phase} distribution`,
     line: {
       color: Utils.cssVar("--plot-blue-bar"),
       width: 3
@@ -222,9 +224,9 @@ function renderBetaPlot(alpha, beta, phase = "Prior", previousPrior = null) {
       mode: "lines",
       name: "Prior distribution",
       line: {
-        color: "gray",
+        color: "black",
         width: 3,
-        dash: "dash"
+        dash: "dashdot"
       },
       hoverinfo: "skip"
     });
@@ -236,7 +238,7 @@ function renderBetaPlot(alpha, beta, phase = "Prior", previousPrior = null) {
       y: [0, yMax],
       type: "scatter",
       mode: "lines",
-      name: "True parameter",
+      name: isMobile ? "True" : "True parameter",
       line: {
         color: "black",
         width: 3
@@ -250,7 +252,7 @@ function renderBetaPlot(alpha, beta, phase = "Prior", previousPrior = null) {
     y: [0, yMax],
     type: "scatter",
     mode: "lines",
-    name: `${phase} mean`,
+    name: isMobile ? "Mean" : `${phase} mean`,
     line: {
       color: "black",
       width: 3,
@@ -269,7 +271,17 @@ function renderBetaPlot(alpha, beta, phase = "Prior", previousPrior = null) {
         orientation: "h",
         x: 0.5,
         xanchor: "center",
-        y: -0.3
+        y: isMobile ? -0.6 : -0.3,
+        font: {
+          size: isMobile ? 10 : 14
+        },
+        itemwidth: isMobile ? 30 : 40
+      },
+      margin: {
+        t: isMobile ? 20 : 50,
+        l: isMobile ? 35 : 80,
+        r: isMobile ? 15 : 80,
+        b: isMobile ? 65 : 110
       },
       hovermode: "closest",
       paper_bgcolor: Utils.cssVar("--plot-bgcolor"),
@@ -369,7 +381,7 @@ function renderGammaPlot(alpha, beta, phase = "Prior", previousPrior = null) {
     y: mainData.y,
     type: "scatter",
     mode: "lines",
-    name: `${phase} distribution`,
+    name: isMobile ? `${phase}` : `${phase} distribution`,
     line: {
       color: Utils.cssVar("--plot-blue-bar"),
       width: 3
@@ -389,9 +401,9 @@ function renderGammaPlot(alpha, beta, phase = "Prior", previousPrior = null) {
       mode: "lines",
       name: "Prior distribution",
       line: {
-        color: "gray",
+        color: "black",
         width: 3,
-        dash: "dash"
+        dash: "dashdot"
       },
       hoverinfo: "skip"
     });
@@ -417,7 +429,7 @@ function renderGammaPlot(alpha, beta, phase = "Prior", previousPrior = null) {
     y: [0, yMax],
     type: "scatter",
     mode: "lines",
-    name: `${phase} mean`,
+    name: isMobile ? "Mean" : `${phase} mean`,
     line: {
       color: "black",
       width: 3,
@@ -436,7 +448,17 @@ function renderGammaPlot(alpha, beta, phase = "Prior", previousPrior = null) {
         orientation: "h",
         x: 0.5,
         xanchor: "center",
-        y: -0.3
+        y: isMobile ? -0.6 : -0.3,
+        font: {
+          size: isMobile ? 10 : 14
+        },
+        itemwidth: isMobile ? 30 : 40
+      },
+      margin: {
+        t: isMobile ? 20 : 50,
+        l: isMobile ? 35 : 80,
+        r: isMobile ? 15 : 80,
+        b: isMobile ? 65 : 110
       },
       paper_bgcolor: Utils.cssVar("--plot-bgcolor"),
       plot_bgcolor: Utils.cssVar("--plot-bgcolor"),
