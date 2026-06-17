@@ -1,6 +1,12 @@
 import { fmt } from "./format.js";
 const { jStat } = window;
 
+function cleanNumber(value, digits = 3) {
+  return Number(value.toFixed(digits)).toString();
+}
+
+const EPS = 1e-12;
+
 function pdf(a, b, x) {
   if (x < a || x > b) return 0;
   return 1 / (b - a);
@@ -70,12 +76,16 @@ export function uniformStats(a, b, formula = false) {
   const aDisplay = Number.isInteger(a) ? a : a;
   const bDisplay = Number.isInteger(b) ? b : b;
 
+  const exp1 = (b !== 1) ? b : "";
+  const exp2 = (a !== 1) ? a : "";
+  const cons1 = (b - a !== 1) ? cleanNumber(b - a) : "";
+
   if (formula) {
     return {
       is_formula: true,
-      mean: String.raw`\mu = \frac{1}{2}(a+b)`,
-      variance: String.raw`\sigma^2 = \frac{1}{12}(b-a)^2`,
-      sd: String.raw`\sigma = \sqrt{\frac{1}{12}(b-a)^2}`,
+      mean: String.raw`\frac{1}{2}(a+b)`,
+      variance: String.raw`\frac{1}{12}(b-a)^2`,
+      sd: String.raw`\sqrt{\frac{1}{12}(b-a)^2}`,
       pdf_latex: String.raw`f_X(x) = \frac{1}{b-a}`,
       mgf_latex: String.raw`M(t) = \frac{e^{tb}-e^{ta}}{t(b-a)}`
     };
@@ -89,7 +99,7 @@ export function uniformStats(a, b, formula = false) {
     pdf_latex:
       b - a === 1
         ? String.raw`f_X(x) = 1`
-        : String.raw`f_X(x) = \frac{1}{${b - a}}`,
-    mgf_latex: String.raw`M(t) = \frac{e^{${bDisplay}t}-e^{${aDisplay}t}}{${b - a}t}`
+        : String.raw`f_X(x) = \frac{1}{${cleanNumber(b - a)}}`,
+    mgf_latex: String.raw`M(t) = \frac{e^{${exp1}t}-e^{${exp2}t}}{${cons1}t}`
   };
 }

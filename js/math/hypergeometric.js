@@ -1,6 +1,12 @@
 import { fmt } from "./format.js";
 const { jStat } = window;
 
+function cleanNumber(value, digits = 3) {
+  return Number(value.toFixed(digits)).toString();
+}
+
+const EPS = 1e-12;
+
 function lowerBound(N, K, n) {
   return Math.max(0, n - (N - K));
 }
@@ -73,7 +79,7 @@ export function hypergeometricInverse(N, K, n, px, rel) {
 
   if (rel === "le") {
     for (let k = lo; k <= hi; k++) {
-      if (cdf(N, K, n, k) >= px) {
+      if (cdf(N, K, n, k) + EPS >= px) {
         return { x: k };
       }
     }
@@ -81,7 +87,7 @@ export function hypergeometricInverse(N, K, n, px, rel) {
   }
 
   for (let k = lo; k <= hi; k++) {
-    if (probGE(N, K, n, k) <= px) {
+    if (probGE(N, K, n, k) <= px + EPS) {
       return { x: k };
     }
   }
@@ -100,10 +106,10 @@ export function hypergeometricStats(N, K, n, formula = false) {
   if (formula) {
     return {
       is_formula: true,
-      mean: String.raw`\mu = n\frac{K}{N}`,
-      variance: String.raw`\sigma^2 = n\frac{K}{N}\left(1-\frac{K}{N}\right)\frac{N-n}{N-1}`,
-      sd: String.raw`\sigma = \sqrt{n\frac{K}{N}\left(1-\frac{K}{N}\right)\frac{N-n}{N-1}}`,
-      pmf_latex: String.raw`\mathbb{P}_{X}(x)=\frac{\binom{K}{x}\binom{N-K}{n-x}}{\binom{N}{n}}`,
+      mean: String.raw`n\frac{r}{N}`,
+      variance: String.raw`n\frac{r}{N}\left(1-\frac{r}{N}\right)\frac{N-n}{N-1}`,
+      sd: String.raw`\sqrt{n\frac{r}{N}\left(1-\frac{r}{N}\right)\frac{N-n}{N-1}}`,
+      pmf_latex: String.raw`\mathbb{P}_{X}(x)=\frac{\binom{r}{x}\binom{N-r}{n-x}}{\binom{N}{n}}`,
       mgf_latex: String.raw`\text{No Closed Form}`
     };
   }
@@ -113,7 +119,7 @@ export function hypergeometricStats(N, K, n, formula = false) {
     mean: fmt(mean),
     variance: fmt(variance),
     sd: fmt(sd),
-    pmf_latex: String.raw`\mathbb{P}_{X}(x)=\frac{\binom{${K}}{x}\binom{${N - K}}{${n}-x}}{\binom{${N}}{${n}}}`,
+    pmf_latex: String.raw`\mathbb{P}(X = x)=\frac{\binom{${K}}{x}\binom{${N - K}}{${n}-x}}{\binom{${N}}{${n}}}`,
     mgf_latex: String.raw`\text{No Closed Form}`
   };
 }

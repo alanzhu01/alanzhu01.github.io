@@ -1,6 +1,10 @@
 import { fmt } from "./format.js";
 const { jStat } = window;
 
+function cleanNumber(value, digits = 3) {
+  return Number(value.toFixed(digits)).toString();
+}
+
 function pdf(mu, sigma, x) {
   return jStat.normal.pdf(x, mu, sigma);
 }
@@ -58,8 +62,8 @@ export function normalInverse(mu, sigma, px, rel) {
 
 export function normalStats(mu, sigma, formula = false) {
   const mean = mu;
-  const variance = sigma ** 2;
-  const sd = sigma;
+  const variance = cleanNumber(sigma ** 2);
+  const sd = cleanNumber(sigma);
 
   if (formula) {
     return {
@@ -67,17 +71,24 @@ export function normalStats(mu, sigma, formula = false) {
       mean: String.raw`\mu`,
       variance: String.raw`\sigma^2`,
       sd: String.raw`\sigma`,
-      pdf_latex: String.raw`f_X(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}`,
-      mgf_latex: String.raw`M(t) = \exp\left(\mu t + \frac{1}{2}\sigma^2 t^2\right)`
+      pdf_latex: String.raw`f_X(x) = \frac{1}{\sigma \sqrt{2\pi}} \exp \{ -\frac{(x-\mu)^2}{2\sigma^2} \}`,
+      mgf_latex: String.raw`M(t) = e^{\mu t + \frac{1}{2}\sigma^2 t^2}`
     };
   }
+
+  const conssigma1 = (sd != 1) ? sd : "";
+  const consmu1 = (mu == 0) ? "x^2" : (mu < 0) ? String.raw`(x + ${Math.abs(mu)})^2` : String.raw`(x - ${mu})^2`;
+  const consmu2 = (mu != 1) ? mu : "";
+
+  const mgf1 = (consmu2 !== 0) ? String.raw`e^{${consmu2}t +` : "e^{";
+
 
   return {
     is_formula: false,
     mean: fmt(mean),
     variance: fmt(variance),
     sd: fmt(sd),
-    pdf_latex: String.raw`f_X(x) = \frac{1}{${sigma}\sqrt{2\pi}} e^{-\frac{(x-${mu})^2}{2${sigma}^2}}`,
-    mgf_latex: String.raw`M(t) = \exp(${mu}t + \frac{1}{2}${sigma ** 2}t^2)`
+    pdf_latex: String.raw`f_X(x) = \frac{1}{${conssigma1}\sqrt{2\pi}} \exp \{ -\frac{${consmu1}}{${2 * variance}} \}`,
+    mgf_latex: String.raw`M(t) = ${mgf1} ${variance / 2}t^2 }`
   };
 }

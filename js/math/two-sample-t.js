@@ -187,11 +187,13 @@ function twoSampleTStatsGeneric(
         : `t = \\frac{(\\bar{x}_1 - \\bar{x}_2) - \\mu_0}{\\sqrt{\\frac{s_1^2}{n_1} + \\frac{s_2^2}{n_2}}}`,
       p_value: `p = \\mathbb{P}(T \\le t)`,
       crit_value: alt === "neq"
-        ? `t_{\\alpha / 2,\\, df}`
-        : `t_{\\alpha,\\, df}`,
+        ? `t_{\\alpha / 2}`
+        : `t_{\\alpha}`,
       decision,
-      crit_rule: critRule,
-      p_rule: pRule
+      crit_rule: alt === "lt" ? `t < t_{\\alpha}`
+        : alt === "gt" ? `t > t_{\\alpha}`
+        : `\\vert t \\vert > t_{\\alpha / 2}`,
+      p_rule: `p < \\alpha`
     };
   }
 
@@ -200,10 +202,8 @@ function twoSampleTStatsGeneric(
     p_value: fmt(pValue),
     crit_value: typeof critValue === "number" ? fmt(critValue) : critValue,
     decision,
-    crit_rule: alt === "lt" ? `t < t_{\\alpha}`
-    : alt === "gt" ? `t > t_{\\alpha}`
-    : `\\vert t \\vert > t_{\\alpha / 2}`,
-    p_rule: `p < \\alpha`
+    crit_rule: critRule,
+    p_rule: pRule
   };
 }
 

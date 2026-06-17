@@ -1,6 +1,10 @@
 import { fmt } from "./format.js";
 const { jStat } = window;
 
+function cleanNumber(value, digits = 3) {
+  return Number(value.toFixed(digits)).toString();
+}
+
 function pdf(df, x) {
   return jStat.studentt.pdf(x, df);
 }
@@ -67,9 +71,9 @@ export function studenttStats(df, formula = false) {
   if (formula) {
     return {
       is_formula: true,
-      mean: String.raw`\mu = 0 \quad (\nu > 1)`,
-      variance: String.raw`\sigma^2 = \frac{\nu}{\nu-2} \quad (\nu > 2)`,
-      sd: String.raw`\sigma = \sqrt{\frac{\nu}{\nu-2}} \quad (\nu > 2)`,
+      mean: String.raw`0 \quad (\nu > 1)`,
+      variance: String.raw`\frac{\nu}{\nu-2} \quad (\nu > 2)`,
+      sd: String.raw`\sqrt{\frac{\nu}{\nu-2}} \quad (\nu > 2)`,
       pdf_latex: String.raw`f_X(x) = \frac{\Gamma\left(\frac{\nu+1}{2}\right)}{\sqrt{\nu\pi}\,\Gamma\left(\frac{\nu}{2}\right)}\left(1+\frac{x^2}{\nu}\right)^{-\frac{\nu+1}{2}}`,
       mgf_latex: String.raw`\text{Does Not Exist}`
     };
@@ -80,7 +84,7 @@ export function studenttStats(df, formula = false) {
     mean: Number.isFinite(mean) ? fmt(mean) : "undefined",
     variance: Number.isFinite(variance) ? fmt(variance) : (variance === Infinity ? "infinite" : "undefined"),
     sd: Number.isFinite(sd) ? fmt(sd) : (sd === Infinity ? "infinite" : "undefined"),
-    pdf_latex: String.raw`f_X(x) = \frac{\Gamma\left(\frac{${dfDisplay}+1}{2}\right)}{\sqrt{${dfDisplay}\pi}\,\Gamma\left(\frac{${dfDisplay}}{2}\right)}\left(1+\frac{x^2}{${dfDisplay}}\right)^{-\frac{${dfDisplay}+1}{2}}`,
+    pdf_latex: String.raw`f_X(x) = \frac{\Gamma\left(${cleanNumber((dfDisplay + 1) / 2)}\right)}{\sqrt{${dfDisplay}\pi}\,\Gamma\left( ${cleanNumber(dfDisplay / 2)} \right)}\left(1+\frac{x^2}{${dfDisplay}}\right)^{- ${cleanNumber((dfDisplay + 1) / 2)}}`,
     mgf_latex: String.raw`\text{Does Not Exist}`
   };
 }

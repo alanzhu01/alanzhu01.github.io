@@ -14,6 +14,15 @@ const formulaToggle = document.getElementById("formula-toggle");
 
 let currentXValues = [];
 
+function setError(input, message) {
+  input.setCustomValidity(message);
+  input.reportValidity();
+}
+
+function clearError(input) {
+  input.setCustomValidity("");
+}
+
 async function updateStats(M, n, N) {
   const formula = formulaToggle.checked ? 1 : 0;
   const data = Hypergeometric.hypergeometricStats(M, n, N, formula);
@@ -28,17 +37,22 @@ async function updateStats(M, n, N) {
   await Utils.typesetNodes([meanNode, varNode, sdNode, pmfNode, mgfNode]);
 }
 
-
 function normalizeM() {
   if (MInput.value.trim() === "") return false;
 
   const raw = Number(MInput.value);
 
-  if (!Number.isFinite(raw)) return false;
+  if (!Number.isFinite(raw)) {
+    setError(MInput, "N must be a positive integer");
+    return false;
+  }
 
-  const M = Utils.roundInt(raw, 1, Infinity);
-  MInput.value = M;
+  if (!Number.isInteger(raw) || raw < 1) {
+    setError(MInput, "N must be a positive integer");
+    return false;
+  }
 
+  clearError(MInput);
   return true;
 }
 
@@ -48,10 +62,17 @@ function normalizen() {
   const raw = Number(nInput.value);
   const M = Number(MInput.value);
 
-  if (!Number.isFinite(M) || !Number.isFinite(raw)) return false;
+  if (!Number.isFinite(M) || !Number.isFinite(raw) || !Number.isInteger(raw) || raw < 0) {
+    setError(nInput, `r must be an integer between 0 and ${M}`);
+    return false;
+  }
 
-  const n = Utils.roundInt(raw, 0, M);
-  nInput.value = n;
+  if (raw > M) {
+    setError(nInput, `r must be an integer between 0 and ${M}`);
+    return false;
+  }
+
+  clearError(nInput);
   return true;
 }
 
@@ -61,10 +82,17 @@ function normalizeN() {
   const raw = Number(NInput.value);
   const M = Number(MInput.value);
 
-  if (!Number.isFinite(M) || !Number.isFinite(raw)) return false;
+  if (!Number.isFinite(M) || !Number.isFinite(raw) || !Number.isInteger(raw) || raw < 0) {
+    setError(NInput, `n must be an integer between 0 and ${M}`);
+    return false;
+  }
 
-  const N = Utils.roundInt(raw, 0, M);
-  NInput.value = N;
+  if (raw > M) {
+    setError(NInput, `n must be an integer between 0 and ${M}`);
+    return false;
+  }
+
+  clearError(NInput);
   return true;
 }
 
@@ -76,10 +104,25 @@ function normalizeX() {
   const N = Number(NInput.value);
   const raw = Number(xInput.value);
 
-  if (!Number.isFinite(M) || !Number.isFinite(n) || !Number.isFinite(N) || !Number.isFinite(raw)) return false;
+  const minX = Math.max(0, N + n - M);
+  const maxX = Math.min(n, N);
 
-  const x = Utils.roundInt(raw, Math.max(0, N + n - M), Math.min(n, N));
-  xInput.value = x;
+  if (
+    !Number.isFinite(M) ||
+    !Number.isFinite(n) ||
+    !Number.isFinite(N) ||
+    !Number.isFinite(raw)
+  ) {
+    setError(xInput, `x must be an integer between ${minX} and ${maxX}.`);
+    return false;
+  }
+
+  if (!Number.isInteger(raw) || raw < minX || raw > maxX) {
+    setError(xInput, `x must be an integer between ${minX} and ${maxX}.`);
+    return false;
+  }
+
+  clearError(xInput);
   return true;
 }
 
@@ -87,12 +130,20 @@ function normalizePX() {
   if (pxOutput.value.trim() === "") return false;
 
   const raw = Number(pxOutput.value);
-  if (!Number.isFinite(raw)) return false;
 
-  const px = Utils.clamp(raw, 0, 1);
-  pxOutput.value = px;
+  if (!Number.isFinite(raw)) {
+    setError(pxOutput, "Probability must satisfy 0 ≤ p ≤ 1");
+    return false;
+  }
+
+  if (raw < 0 || raw > 1) {
+    setError(pxOutput, "Probability must satisfy 0 ≤ p ≤ 1");
+    return false;
+  }
+
+  clearError(pxOutput);
   return true;
-}
+} 
 
 async function maybeUpdateX() {
   const M = parseInt(MInput.value, 10);

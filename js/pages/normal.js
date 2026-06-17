@@ -14,6 +14,15 @@ const formulaToggle = document.getElementById("formula-toggle");
 let currentXValues = [];
 let currentYValues = [];
 
+function setError(input, message) {
+  input.setCustomValidity(message);
+  input.reportValidity();
+}
+
+function clearError(input) {
+  input.setCustomValidity("");
+}
+
 async function updateStats(m, s) {
   const formula = formulaToggle.checked ? 1 : 0;
   const data = Normal.normalStats(m, s, formula);
@@ -32,8 +41,13 @@ function normalizeM() {
   if (mInput.value.trim() === "") return false;
 
   const raw = Number(mInput.value);
-  if (!Number.isFinite(raw)) return false;
 
+  if (!Number.isFinite(raw)) {
+    setError(mInput, "μ must be a real number");
+    return false;
+  }
+
+  clearError(mInput);
   return true;
 }
 
@@ -41,11 +55,18 @@ function normalizeS() {
   if (sInput.value.trim() === "") return false;
 
   const raw = Number(sInput.value);
-  if (!Number.isFinite(raw)) return false;
 
-  const s = Utils.clamp(raw, 0, Infinity);
-  
-  sInput.value = s;
+  if (!Number.isFinite(raw)) {
+    setError(sInput, "σ must be a positive real number");
+    return false;
+  }
+
+  if (raw <= 0) {
+    setError(sInput, "σ must be a positive real number");
+    return false;
+  }
+
+  clearError(sInput);
   return true;
 }
 
@@ -53,8 +74,13 @@ function normalizeX() {
   if (xInput.value.trim() === "") return false;
 
   const raw = Number(xInput.value);
-  if (!Number.isFinite(raw)) return false;
 
+  if (!Number.isFinite(raw)) {
+    setError(xInput, "x must be a real number");
+    return false;
+  }
+
+  clearError(xInput);
   return true;
 }
 
@@ -62,10 +88,18 @@ function normalizePX() {
   if (pxOutput.value.trim() === "") return false;
 
   const raw = Number(pxOutput.value);
-  if (!Number.isFinite(raw)) return false;
 
-  const px = Utils.clamp(raw, 0, 0.9999999999);
-  pxOutput.value = px;
+  if (!Number.isFinite(raw)) {
+    setError(pxOutput, "Probability must satisfy 0 < p < 1");
+    return false;
+  }
+
+  if (raw <= 0 || raw >= 1) {
+    setError(pxOutput, "Probability must satisfy 0 < p < 1");
+    return false;
+  }
+
+  clearError(pxOutput);
   return true;
 }
 

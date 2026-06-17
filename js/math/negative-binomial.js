@@ -1,6 +1,12 @@
 import { fmt } from "./format.js";
 const { jStat } = window;
 
+function cleanNumber(value, digits = 3) {
+  return Number(value.toFixed(digits)).toString();
+}
+
+const EPS = 1e-12;
+
 function pmf(r, p, x) {
   if (!Number.isInteger(x) || x < 0) return 0;
   return jStat.negbin.pdf(x, r, p);
@@ -47,12 +53,15 @@ export function negbinProb(r, p, x, rel) {
 
 export function negbinInverse(r, p, px, rel) {
   if (rel === "le") {
-    return { x: jStat.negbin.inv(px, r, p) };
+    for (let k = 0; k < 1000; k++) {
+      if (cdf(r, p, k) + EPS >= px) {
+        return { x: k };
+      }
+    }
   }
 
   for (let k = 0; k < 1000; k++) {
-    const tail = probGE(r, p, k);
-    if (tail <= px) {
+    if (probGE(r, p, k) <= px + EPS) {
       return { x: k };
     }
   }
@@ -66,14 +75,14 @@ export function negbinStats(r, p, formula = false) {
   const sd = Math.sqrt(variance);
 
   const pDisplay = p === 1 ? 1 : p;
-  const qDisplay = 1 - p;
+  const qDisplay = cleanNumber(1 - p);
 
   if (formula) {
     return {
       is_formula: true,
-      mean: String.raw`\mu = \frac{r(1-p)}{p}`,
-      variance: String.raw`\sigma^2 = \frac{r(1-p)}{p^2}`,
-      sd: String.raw`\sigma = \sqrt{\frac{r(1-p)}{p^2}}`,
+      mean: String.raw`\frac{r(1-p)}{p}`,
+      variance: String.raw`\frac{r(1-p)}{p^2}`,
+      sd: String.raw`\sqrt{\frac{r(1-p)}{p^2}}`,
       pmf_latex: String.raw`\mathbb{P}_{X}(x) = \binom{x+r-1}{x}(1-p)^x p^r`,
       mgf_latex: String.raw`M(t) = \left(\frac{p}{1-(1-p)e^t}\right)^r`
     };
@@ -84,7 +93,13 @@ export function negbinStats(r, p, formula = false) {
     mean: fmt(mean),
     variance: fmt(variance),
     sd: fmt(sd),
-    pmf_latex: String.raw`\mathbb{P}_{X}(x) = \binom{x+${r}-1}{x} (${qDisplay})^x (${pDisplay})^{${r}}`,
-    mgf_latex: String.raw`M(t) = \left(\frac{${pDisplay}}{1-${qDisplay}e^t}\right)^{${r}}`
+    pmf_latex: 
+      r !== 1
+        ? String.raw`\mathbb{P}(X = x) = \binom{x+${r - 1}}{x} (${qDisplay})^x (${pDisplay})^{${r}}`
+        : String.raw`\mathbb{P}(X = x) = (${qDisplay})^x (${pDisplay})`,
+    mgf_latex: 
+      r !== 1
+        ? String.raw`M(t) = \left(\frac{${pDisplay}}{1-${qDisplay}e^t}\right)^{${r}}`
+        : String.raw`M(t) = \frac{${pDisplay}}{1-${qDisplay}e^t}`
   };
 }

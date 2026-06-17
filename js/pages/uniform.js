@@ -14,6 +14,15 @@ const formulaToggle = document.getElementById("formula-toggle");
 let currentXValues = [];
 let currentYValues = [];
 
+function setError(input, message) {
+  input.setCustomValidity(message);
+  input.reportValidity();
+}
+
+function clearError(input) {
+  input.setCustomValidity("");
+}
+
 async function updateStats(a, b) {
   const formula = formulaToggle.checked ? 1 : 0;
 
@@ -35,18 +44,26 @@ function normalizeA() {
   const raw = Number(aInput.value);
   const bStr = bInput.value.trim();
 
-  if (!Number.isFinite(raw)) return false;
-
-  if (bStr === "") {
-    aInput.value = raw;
-    return true;
+  if (!Number.isFinite(raw)) {
+    setError(aInput, "a must be a real number");
+    return false;
   }
 
-  const b = Number(bStr);
-  if (!Number.isFinite(b)) return false;
+  if (bStr !== "") {
+    const b = Number(bStr);
 
-  const a = Utils.clamp(raw, -Infinity, b);
-  aInput.value = a;
+    if (!Number.isFinite(b)) {
+      setError(aInput, "b must be a real number");
+      return false;
+    }
+
+    if (raw >= b) {
+      setError(aInput, "a must be less than b");
+      return false;
+    }
+  }
+
+  clearError(aInput);
   return true;
 }
 
@@ -56,18 +73,26 @@ function normalizeB() {
   const raw = Number(bInput.value);
   const aStr = aInput.value.trim();
 
-  if (!Number.isFinite(raw)) return false;
-
-  if (aStr === "") {
-    bInput.value = raw;
-    return true;
+  if (!Number.isFinite(raw)) {
+    setError(bInput, "b must be a real number");
+    return false;
   }
 
-  const a = Number(aStr);
-  if (!Number.isFinite(a)) return false;
-  
-  const b = Utils.clamp(raw, a, Infinity);
-  bInput.value = b;
+  if (aStr !== "") {
+    const a = Number(aStr);
+
+    if (!Number.isFinite(a)) {
+      setError(bInput, "a must be a real number");
+      return false;
+    }
+
+    if (raw <= a) {
+      setError(bInput, "b must be greater than a");
+      return false;
+    }
+  }
+
+  clearError(bInput);
   return true;
 }
 
@@ -78,10 +103,22 @@ function normalizeX() {
   const a = Number(aInput.value);
   const b = Number(bInput.value);
 
-  if (!Number.isFinite(raw)) return false;
-  
-  const x = Utils.clamp(raw, a, b);
-  xInput.value = x;
+  if (!Number.isFinite(raw)) {
+    setError(xInput, "x must be a real number");
+    return false;
+  }
+
+  if (!Number.isFinite(a) || !Number.isFinite(b) || a >= b) {
+    setError(xInput, "Enter the parameters first");
+    return false;
+  }
+
+  if (raw < a || raw > b) {
+    setError(xInput, `x must be between ${a} and ${b}`);
+    return false;
+  }
+
+  clearError(xInput);
   return true;
 }
 
@@ -89,10 +126,18 @@ function normalizePX() {
   if (pxOutput.value.trim() === "") return false;
 
   const raw = Number(pxOutput.value);
-  if (!Number.isFinite(raw)) return false;
 
-  const px = Utils.clamp(raw, 0, 0.9999999999);
-  pxOutput.value = px;
+  if (!Number.isFinite(raw)) {
+    setError(pxOutput, "Probability must satisfy 0 < p < 1");
+    return false;
+  }
+
+  if (raw <= 0 || raw >= 1) {
+    setError(pxOutput, "Probability must satisfy 0 < p < 1.");
+    return false;
+  }
+
+  clearError(pxOutput);
   return true;
 }
 

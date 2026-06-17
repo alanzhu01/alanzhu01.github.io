@@ -1,6 +1,11 @@
 import { fmt } from "./format.js";
 const { jStat } = window;
 
+function cleanNumber(value, digits = 3) {
+  return Number(value.toFixed(digits)).toString();
+}
+
+
 function pdf(b, x) {
   if (x < 0) return 0;
   return jStat.exponential.pdf(x, 1 / b);
@@ -75,7 +80,7 @@ export function exponentialStats(b, param, formula = false) {
         mean: String.raw`\mu = \beta`,
         variance: String.raw`\sigma^2 = \beta^2`,
         sd: String.raw`\sigma = \beta`,
-        pdf_latex: String.raw`f_X(x) = \frac{1}{\beta}e^{-x/\beta}`,
+        pdf_latex: String.raw`f_X(x) = \frac{1}{\beta}e^{-x / \beta}`,
         mgf_latex: String.raw`M(t) = \frac{1}{1-\beta t}`
       };
     }
@@ -88,7 +93,7 @@ export function exponentialStats(b, param, formula = false) {
       pdf_latex:
         String.raw`f_X(x) =` +
         (bDisplay !== 1 ? String.raw`\frac{1}{${bDisplay}}` : String.raw``) +
-        (bDisplay !== 1 ? String.raw`e^{-x/${bDisplay}}` : String.raw`e^{-x}`),
+        (bDisplay !== 1 ? String.raw`e^{-x / ${bDisplay}}` : String.raw`e^{-x}`),
       mgf_latex:
         bDisplay !== 1
           ? String.raw`M(t) = \frac{1}{1-${bDisplay} t}`
@@ -99,9 +104,9 @@ export function exponentialStats(b, param, formula = false) {
   if (formula) {
     return {
       is_formula: true,
-      mean: String.raw`\mu = \frac{1}{\lambda}`,
-      variance: String.raw`\sigma^2 = \frac{1}{\lambda^2}`,
-      sd: String.raw`\sigma = \frac{1}{\lambda}`,
+      mean: String.raw`\frac{1}{\lambda}`,
+      variance: String.raw`\frac{1}{\lambda^2}`,
+      sd: String.raw`\frac{1}{\lambda}`,
       pdf_latex: String.raw`f_X(x) = \lambda e^{-\lambda x}`,
       mgf_latex: String.raw`M(t) = \frac{\lambda}{\lambda-t}`
     };

@@ -28,15 +28,8 @@
   <header class="header">
     <a href="/" class="home">
       <img src="./assets/ucsb-logo-light.png" alt="UCSB" class="ucsb-logo logo-light">
-      <img src="./assets/ucsb-logo-dark.png" alt="UCSB" class="ucsb-logo logo-dark">
       <h1 class="header-text">PSTAT 120 Applets</h1>
     </a>
-
-    <button id="theme-toggle" aria-label="Toggle dark mode" class="dark-mode-btn"> 
-      <span>Dark Mode</span>
-    </button>
-
-    <script src="./js/utils/dark-mode.js"></script>
   </header>
 
   <main class="distribution-content">
@@ -69,10 +62,10 @@
           <div class="split-layout">
             <div class="left-panel">
               <div class="hypothesis-inputs">
-                <div class="distribution-input-grid-2col">
+                <div class="distribution-input-grid-2col-col">
                   <div class="distribution-input">
                     <label>\(H_0: \mu = \)</label>
-                    <input type="number" id="mu0">
+                    <input type="text" id="mu0" maxlength="8">
                   </div>
 
                   <div class="distribution-input">
@@ -86,14 +79,14 @@
 
                     <span id="h1-equals" class="hidden equals-text">\(=\)</span>
 
-                    <input type="number" id="h1">
+                    <input type="text" id="h1" maxlength="8">
                   </div>
 
                   <div class="distribution-input">
                     <label for="a">\(\alpha =\)</label>
 
                     <div class="has-tip">
-                      <input type="number" id="a">
+                      <input type="text" id="a" maxlength="8">
                       <div class="tip" role="tooltip">Significance level</div>
                     </div>
                   </div>
@@ -111,7 +104,7 @@
                   <label for="x">\(\bar{x} =\)</label>
                   
                   <div class="has-tip">
-                    <input type="number" id="xbar">
+                    <input type="text" id="xbar" maxlength="8">
                     <div class="tip" role="tooltip">Sample mean</div>
                   </div>
                 </div>
@@ -120,7 +113,7 @@
                   <label for="s">\(\sigma =\)</label>
 
                   <div class="has-tip">
-                    <input type="number" id="s">
+                    <input type="text" id="s" maxlength="8">
                     <div class="tip" role="tooltip">Standard deviation</div>
                   </div>
                 </div>
@@ -129,7 +122,7 @@
                   <label for="n">\(n =\)</label>
 
                   <div class="has-tip">
-                    <input type="number" id="n">
+                    <input type="text" id="n" maxlength="8">
                     <div class="tip" role="tooltip">Sample size</div>
                   </div>
                 </div>

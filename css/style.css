@@ -43,9 +43,6 @@
   --categories-background: rgba(255,255,255,.55);
   --categories-border: 1px solid rgba(255,255,255,.6);
 
-  --dark-mode-btn-background: #0f172a;
-  --dark-mode-btn-color: rgba(255,255,255,.85);
-
   --shadow-plot: 0 8px 16px rgba(15,23,42,.07);
 
   --text-input-background: #FFFFFF;
@@ -59,64 +56,6 @@
 
   --distribution-choose: #5e6680;
   --distribution-notchoose: rgba(79, 140, 255, 0.15);
-}
-
-[data-theme="dark"] {
-  --bg-gradient:
-      radial-gradient(
-        1200px 800px at 10% 30%,
-        rgba(59, 130, 246, 0.18),
-        transparent 75%
-      ),
-
-      radial-gradient(
-        1000px 700px at 90% 15%,
-        rgba(139, 92, 246, 0.14),
-        transparent 70%
-      ),
-
-      radial-gradient(
-        1200px 900px at 50% 95%,
-        rgba(96, 165, 250, 0.16),
-        transparent 78%
-      ),
-
-      linear-gradient(
-        180deg,
-        #0b1020 0%,
-        #050812 45%,
-        #020617 100%
-      );
-
-  --header-bg: rgba(18, 18, 20, 1);
-  --card-bg: rgba(18, 18, 20, .8);
-  --card-bg-hover: rgba(29, 39, 58, 0.88);
-
-  --text-main: #ffffff;
-  --text-muted: rgba(229,231,235,.55);
-
-  --border-soft: rgba(148,163,184,.12);
-  --border-hover: rgba(148,163,184,.30);
-
-  --shadow-card: 0 10px 30px rgba(0,0,0,.6);
-  --shadow-card-hover: 0 16px 40px rgba(0,0,0,.75);
-
-  --home-color: #ffffff;
-
-  --categories-background: rgba(18, 18, 24, 0.55);
-  --categories-border: 1px solid rgba(148,163,184,.2);
-
-  --dark-mode-btn-background: #ffffff;
-  --dark-mode-btn-color: #0f172a;
-
-  --text-input-background: rgb(32, 32, 48);
-  --px-background: #7a4a4a;
-
-  --plot-bgcolor: rgb(32, 32, 48);
-  --plot-bordercolor: rgba(148,163,184,.2);
-  --plot-font: #FFFFFF;
-  --plot-blue-bar: #40537d;
-  --plot-red-bar: #7a4a4a;
 }
 
 [hidden] {
@@ -159,45 +98,6 @@ body {
   height: 80px;
 }
 
-.dark-mode-btn{
-  appearance: none;
-  border: none;
-
-  padding: 8px 14px;
-  border-radius: 999px;
-
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-
-  color: var(--dark-mode-btn-color);
-  background: var(--dark-mode-btn-background);
-
-  border: 1px solid rgba(15,23,42,.15);
-  box-shadow:
-    0 2px 6px rgba(15,23,42,.10);
-
-  cursor: pointer;
-  transition:
-    background-color .15s ease,
-    box-shadow .15s ease,
-    transform .1s ease;
-}
-
-.dark-mode-btn:hover{
-  box-shadow: 0 4px 12px rgba(15,23,42,.15);
-}
-
-.dark-mode-btn:active{
-  transform: translateY(1px);
-  box-shadow: 0 2px 6px rgba(15,23,42,.12);
-}
-
-.dark-mode-btn:focus-visible{
-  outline: 3px solid rgba(59,130,246,.45);
-  outline-offset: 3px;
-}
-
 .home,
 .home:visited {
   display: inline-flex;
@@ -231,16 +131,6 @@ body {
 
   text-decoration: none;
   color: #0f172a;
-}
-
-[data-theme="dark"] .applet-selection {
-  background: rgba(18, 18, 24, 0.72);
-
-  border: 1px solid rgba(255,255,255,0.10);
-
-  box-shadow:
-    0 12px 28px rgba(0,0,0,0.55),
-    inset 0 1px 0 rgba(255,255,255,0.05);
 }
 
 .applet-selection:hover{
@@ -360,19 +250,6 @@ body {
   height: 45px;
 }
 
-
-.logo-dark {
-  display: none;
-}
-
-:root[data-theme="dark"] .logo-light {
-  display: none;
-}
-
-:root[data-theme="dark"] .logo-dark {
-  display: inline;
-}
-
 .footer {
   top: 0;
   z-index: 1000; 
@@ -455,6 +332,16 @@ body {
 }
 
 .distribution-input-grid-2col {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  grid-auto-flow: row;
+  gap: 1.5rem 3rem;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.distribution-input-grid-2col-col {
   display: grid;
   grid-template-columns: auto auto;
   grid-template-rows: auto auto;
@@ -1231,14 +1118,6 @@ input[type=number]::-webkit-outer-spin-button {
   box-shadow: 0 -4px 14px rgba(0,0,0,0.06);
 }
 
-[data-theme="dark"] .hypothesis-tab:hover {
-  background: rgba(29,39,58,0.65);
-}
-
-[data-theme="dark"] .hypothesis-tab.active {
-  background: var(--card-bg);
-}
-
 .distribution-shell {
   display: inline-flex;
   flex-direction: column;
@@ -1531,11 +1410,7 @@ input[type=number]::-webkit-outer-spin-button {
   .ucsb-logo {
     height: 28px;
   }
-
-  .dark-mode-btn {
-    display: none;
-  }
-
+  
   .content {
     padding: 5px 10px;
     flex: 1;

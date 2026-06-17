@@ -28,15 +28,8 @@
   <header class="header">
     <a href="/" class="home">
       <img src="./assets/ucsb-logo-light.png" alt="UCSB" class="ucsb-logo logo-light">
-      <img src="./assets/ucsb-logo-dark.png" alt="UCSB" class="ucsb-logo logo-dark">
       <h1 class="header-text">PSTAT 120 Applets</h1>
     </a>
-
-    <button id="theme-toggle" aria-label="Toggle dark mode" class="dark-mode-btn"> 
-      <span>Dark Mode</span>
-    </button>
-
-    <script src="./js/utils/dark-mode.js"></script>
   </header>
 
   <main class="distribution-content">
@@ -59,7 +52,7 @@
           <div class="distribution-input">
             <label for="p">\(p =\)</label>
             <div class="has-tip">
-              <input type="number" id="p">
+              <input type="text" id="p" maxlength="8">
               <div class="tip" role="tooltip">Probability of success</div>
             </div>
           </div>
@@ -68,7 +61,7 @@
   
           <div class="distribution-input">
             <label for="x">\(x =\)</label>
-            <input type="number" id="x">
+            <input type="number" id="x" maxlength="3">
           </div>
 
           <div class="distribution-input">
@@ -84,7 +77,7 @@
               <span class="math">\( x) = \)</span>
             </label>
 
-            <input type="number" id="px" class="px">
+            <input type="number" id="px" class="px" maxlength="8">
           </div>
         </div>
 

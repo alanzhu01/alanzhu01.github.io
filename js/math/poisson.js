@@ -1,6 +1,12 @@
 import { fmt } from "./format.js";
 const { jStat } = window;
 
+function cleanNumber(value, digits = 3) {
+  return Number(value.toFixed(digits)).toString();
+}
+
+const EPS = 1e-12;
+
 function pmf(lambda, x) {
   if (!Number.isInteger(x) || x < 0) return 0;
   return jStat.poisson.pdf(x, lambda);
@@ -47,12 +53,16 @@ export function poissonProb(lambda, x, rel) {
 
 export function poissonInverse(lambda, px, rel) {
   if (rel === "le") {
-    return { x: jStat.poisson.inv(px, lambda) };
+    for (let k = 0; k < 1000; k++) {
+      const tail = probGE(lambda, k);
+      if (cdf(lambda, k) + EPS >= px) {
+        return { x: k };
+      }
+    }
   }
 
   for (let k = 0; k < 1000; k++) {
-    const tail = probGE(lambda, k);
-    if (tail <= px) {
+    if (probGE(lambda, k) <= px + EPS) {
       return { x: k };
     }
   }
@@ -68,11 +78,11 @@ export function poissonStats(lambda, formula = false) {
   if (formula) {
     return {
       is_formula: true,
-      mean: String.raw`\mu = \lambda`,
-      variance: String.raw`\sigma^2 = \lambda`,
-      sd: String.raw`\sigma = \sqrt{\lambda}`,
+      mean: String.raw`\lambda`,
+      variance: String.raw`\lambda`,
+      sd: String.raw`\sqrt{\lambda}`,
       pmf_latex: String.raw`\mathbb{P}_{X}(x) = \frac{\lambda^x e^{-\lambda}}{x!}`,
-      mgf_latex: String.raw`M(t) = \exp(\lambda(e^{t}-1))`
+      mgf_latex: String.raw`M(t) = e^{\lambda(e^{t}-1)}`
     };
   }
 
@@ -81,7 +91,10 @@ export function poissonStats(lambda, formula = false) {
     mean: fmt(mean),
     variance: fmt(variance),
     sd: fmt(sd),
-    pmf_latex: String.raw`\mathbb{P}_{X}(x) = \frac{${lambda}^x e^{-${lambda}}}{x!}`,
-    mgf_latex: String.raw`M(t) = \exp(${lambda}(e^{t}-1))`
+    pmf_latex: 
+      lambda !== 1
+        ? String.raw`\mathbb{P}(X = x) = \frac{${lambda}^x e^{-${lambda}}}{x!}`
+        : String.raw`\mathbb{P}(X = x) = \frac{e^{-${lambda}}}{x!}`,
+    mgf_latex: String.raw`M(t) = e^{${lambda}(e^{t}-1)}`
   };
 }

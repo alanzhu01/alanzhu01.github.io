@@ -335,8 +335,8 @@
   ],
   "candy_item": [
     {
-      "plural": "dark chocolate",
-      "singular": "dark chocolate"
+      "plural": "pieces of dark chocolate",
+      "singular": "piece of dark chocolate"
     },
     {
       "plural": "gummy bears",
@@ -351,20 +351,20 @@
       "singular": "jelly bean"
     },
     {
-      "plural": "Hershey's",
-      "singular": "Hershey's"
+      "plural": "Hershey's bars",
+      "singular": "Hershey's bar"
     },
     {
-      "plural": "licorice",
-      "singular": "licorice"
+      "plural": "pieces of licorice",
+      "singular": "piece of licorice"
     },
     {
-      "plural": "Sour Patch Kids",
-      "singular": "Sour Patch Kid"
+      "plural": "Sour Patch Kids candies",
+      "singular": "Sour Patch Kids candy"
     },
     {
-      "plural": "mint chocolate",
-      "singular": "mint chocolate"
+      "plural": "pieces of mint chocolate",
+      "singular": "piece of mint chocolate"
     },
     {
       "plural": "Reese's Peanut Butter Cups",
@@ -383,40 +383,40 @@
       "singular": "marshmallow"
     },
     {
-      "plural": "M&M's",
-      "singular": "M&M"
+      "plural": "M&M's candies",
+      "singular": "M&M's candy"
     },
     {
-      "plural": "butterscotch",
-      "singular": "butterscotch"
+      "plural": "pieces of butterscotch",
+      "singular": "piece of butterscotch"
     },
     {
-      "plural": "chewing gum",
-      "singular": "chewing gum"
+      "plural": "pieces of chewing gum",
+      "singular": "piece of chewing gum"
     },
     {
-      "plural": "Starburst",
-      "singular": "Starburst"
+      "plural": "Starburst candies",
+      "singular": "Starburst candy"
     },
     {
-      "plural": "Kit Kat",
-      "singular": "Kit Kat"
+      "plural": "Kit Kat bars",
+      "singular": "Kit Kat bar"
     },
     {
-      "plural": "Snickers",
-      "singular": "Snickers"
+      "plural": "Snickers bars",
+      "singular": "Snickers bar"
     },
     {
-      "plural": "Twix",
-      "singular": "Twix"
+      "plural": "Twix bars",
+      "singular": "Twix bar"
     },
     {
-      "plural": "Milky Way",
-      "singular": "Milky Way"
+      "plural": "Milky Way bars",
+      "singular": "Milky Way bar"
     },
     {
-      "plural": "milk chocolate",
-      "singular": "milk chocolate"
+      "plural": "pieces of milk chocolate",
+      "singular": "piece of milk chocolate"
     },
     {
       "plural": "chocolate-covered almonds",
@@ -431,8 +431,8 @@
       "singular": "gummy ring"
     },
     {
-      "plural": "Almond Joy",
-      "singular": "Almond Joy"
+      "plural": "Almond Joy bars",
+      "singular": "Almond Joy bar"
     }
   ],
   "movie_name": [

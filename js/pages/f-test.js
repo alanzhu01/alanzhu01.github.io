@@ -20,6 +20,80 @@ const rawDataSubmit = document.getElementById("raw-data-submit");
 const rawDataCancel = document.getElementById("raw-data-cancel");
 const rawDataError = document.getElementById("raw-data-error");
 
+function setError(input, message) {
+  input.setCustomValidity(message);
+  input.reportValidity();
+}
+
+function clearError(input) {
+  input.setCustomValidity("");
+}
+
+function normalizeS1() {
+  if (s1Input.value.trim() === "") return false;
+  const raw = Number(s1Input.value);
+
+  if (!Number.isFinite(raw) || raw <= 0) {
+    setError(s1Input, "s₁² must be a positive real number");
+    return false;
+  }
+
+  clearError(s1Input);
+  return true;
+}
+
+function normalizeS2() {
+  if (s2Input.value.trim() === "") return false;
+  const raw = Number(s2Input.value);
+
+  if (!Number.isFinite(raw) || raw <= 0) {
+    setError(s2Input, "s₂² must be a positive real number");
+    return false;
+  }
+
+  clearError(s2Input);
+  return true;
+}
+
+function normalizeN1() {
+  if (n1Input.value.trim() === "") return false;
+  const raw = Number(n1Input.value);
+
+  if (!Number.isFinite(raw) || raw <= 1 || !Number.isInteger(raw)) {
+    setError(n1Input, "n₁ must be an integer greater than 1");
+    return false;
+  }
+
+  clearError(n1Input);
+  return true;
+}
+
+function normalizeN2() {
+  if (n2Input.value.trim() === "") return false;
+  const raw = Number(n2Input.value);
+
+  if (!Number.isFinite(raw) || raw <= 1 || !Number.isInteger(raw)) {
+    setError(n2Input, "n₂ must be an integer greater than 1");
+    return false;
+  }
+
+  clearError(n2Input);
+  return true;
+}
+
+function normalizeAlpha() {
+  if (alphaInput.value.trim() === "") return false;
+  const raw = Number(alphaInput.value);
+
+  if (!Number.isFinite(raw) || raw <= 0 || raw >= 1) {
+    setError(alphaInput, "α must satisfy 0 < α < 1");
+    return false;
+  }
+
+  clearError(alphaInput);
+  return true;
+}
+
 async function updateStats(s1, s2, n1, n2) {
   const formula = formulaToggle.checked ? 1 : 0;
   const alpha = parseFloat(alphaInput.value);
@@ -46,8 +120,8 @@ async function updateStats(s1, s2, n1, n2) {
 function validInputs() {
   const s1 = parseFloat(s1Input.value);
   const s2 = parseFloat(s2Input.value);
-  const n1 = parseInt(n1Input.value);
-  const n2 = parseInt(n2Input.value);
+  const n1 = Number(n1Input.value);
+  const n2 = Number(n2Input.value);
   const alpha = parseFloat(alphaInput.value);
 
   return (
@@ -55,6 +129,8 @@ function validInputs() {
     Number.isFinite(s2) &&
     Number.isFinite(n1) &&
     Number.isFinite(n2) &&
+    Number.isInteger(n1) &&
+    Number.isInteger(n2) &&
     Number.isFinite(alpha) &&
     s1 > 0 &&
     s2 > 0 &&
@@ -157,14 +233,54 @@ async function maybeGeneratePlot() {
   );
 }
 
-[
-  s1Input,
-  s2Input,
-  n1Input,
-  n2Input,
-  alphaInput
-].forEach(input => {
-  Utils.onBlurOrEnter(input, maybeGeneratePlot);
+Utils.onBlurOrEnter(s1Input, () => {
+  if (!normalizeS1()) {
+    Utils.hideOutputs({ plotEl, statsCol });
+    return;
+  }
+
+  maybeGeneratePlot();
+  hideDecision();
+});
+
+Utils.onBlurOrEnter(s2Input, () => {
+  if (!normalizeS2()) {
+    Utils.hideOutputs({ plotEl, statsCol });
+    return;
+  }
+
+  maybeGeneratePlot();
+  hideDecision();
+});
+
+Utils.onBlurOrEnter(n1Input, () => {
+  if (!normalizeN1()) {
+    Utils.hideOutputs({ plotEl, statsCol });
+    return;
+  }
+
+  maybeGeneratePlot();
+  hideDecision();
+});
+
+Utils.onBlurOrEnter(n2Input, () => {
+  if (!normalizeN2()) {
+    Utils.hideOutputs({ plotEl, statsCol });
+    return;
+  }
+
+  maybeGeneratePlot();
+  hideDecision();
+});
+
+Utils.onBlurOrEnter(alphaInput, () => {
+  if (!normalizeAlpha()) {
+    Utils.hideOutputs({ plotEl, statsCol });
+    return;
+  }
+
+  maybeGeneratePlot();
+  hideDecision();
 });
 
 window.addEventListener("load", () => {
@@ -192,16 +308,6 @@ decisionBox.addEventListener("click", () => {
   } else {
     hideDecision();
   }
-});
-
-[
-  s1Input,
-  s2Input,
-  n1Input,
-  n2Input,
-  alphaInput
-].forEach(input => {
-  Utils.onBlurOrEnter(input, hideDecision);
 });
 
 function openRawDataModal() {

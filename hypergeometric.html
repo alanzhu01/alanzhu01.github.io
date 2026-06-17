@@ -28,15 +28,8 @@
   <header class="header">
     <a href="/" class="home">
       <img src="./assets/ucsb-logo-light.png" alt="UCSB" class="ucsb-logo logo-light">
-      <img src="./assets/ucsb-logo-dark.png" alt="UCSB" class="ucsb-logo logo-dark">
       <h1 class="header-text">PSTAT 120 Applets</h1>
     </a>
-
-    <button id="theme-toggle" aria-label="Toggle dark mode" class="dark-mode-btn"> 
-      <span>Dark Mode</span>
-    </button>
-
-    <script src="./js/utils/dark-mode.js"></script>
   </header>
 
   <main class="distribution-content">
@@ -59,7 +52,7 @@
           <div class="distribution-input" >
             <label for="M">\(N =\)</label>
             <div class="has-tip">
-              <input type="number" id="M">
+              <input type="text" id="M" maxlength="3">
               <div class="tip" role="tooltip">Population size</div>
             </div>
           </div>
@@ -67,7 +60,7 @@
           <div class="distribution-input">
             <label for="n">\(r =\)</label>
             <div class="has-tip">
-              <input type="number" id="n">
+              <input type="text" id="n" maxlength="3">
               <div class="tip" role="tooltip">Number of successes</div>
             </div>
           </div>
@@ -75,14 +68,14 @@
           <div class="distribution-input">
             <label for="N">\(n =\)</label>
             <div class="has-tip">
-              <input type="number" id="N">
+              <input type="text" id="N" maxlength="3">
               <div class="tip" role="tooltip">Sample size</div>
             </div>
           </div>
   
           <div class="distribution-input">
             <label for="x">\(x =\)</label>
-            <input type="number" id="x">
+            <input type="text" id="x" maxlength="3">
           </div>
 
           <div class="distribution-input px-row">
@@ -98,7 +91,7 @@
               <span class="math">\( x) = \)</span>
             </label>
 
-            <input type="number" id="px" class="px">
+            <input type="text" id="px" class="px" maxlength="8">
           </div>
         </div>
 

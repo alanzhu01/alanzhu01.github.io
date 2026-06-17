@@ -1,6 +1,10 @@
 import { fmt } from "./format.js";
 const { jStat } = window;
 
+function cleanNumber(value, digits = 3) {
+  return Number(value.toFixed(digits)).toString();
+}
+
 function pdf(d1, d2, x) {
   if (x < 0) return 0;
   return jStat.centralF.pdf(x, d1, d2);
@@ -71,14 +75,28 @@ export function fStats(d1, d2, formula = false) {
   const d1Display = Number.isInteger(d1) ? d1 : d1;
   const d2Display = Number.isInteger(d2) ? d2 : d2;
 
+  const exp1 = 
+    d1 == d2
+      ? ""
+      : d1 !== 2
+        ? String.raw`\left(${cleanNumber(d1Display / d2Display)}\right)^{${cleanNumber(d1Display / 2)}}`
+        : String.raw`\left(${cleanNumber(d1Display / d2Display)}\right)`
+
+  const exp2 = 
+    d1 === 4
+      ? String.raw`x`
+      : d1 === 2
+        ? ""
+        : String.raw`x^{${(d1Display / 2) - 1}}`
+
   if (formula) {
     return {
       is_formula: true,
-      mean: String.raw`\mu = \frac{d_2}{d_2-2} \quad (d_2 > 2)`,
-      variance: String.raw`\sigma^2 = \frac{2 d_2^2 (d_1 + d_2 - 2)}{d_1 (d_2 - 2)^2 (d_2 - 4)} \quad (d_2 > 4)`,
-      sd: String.raw`\sigma = \sqrt{\frac{2 d_2^2 (d_1 + d_2 - 2)}{d_1 (d_2 - 2)^2 (d_2 - 4)}}`,
-      pdf_latex: String.raw`f_X(x)=\frac{1}{B(d_1/2,d_2/2)}\left(\frac{d_1}{d_2}\right)^{d_1/2} x^{d_1/2-1}\left(1+\frac{d_1}{d_2}x\right)^{-(d_1+d_2)/2}`,
-      mgf_latex: String.raw`\text{Does not exist}`
+      mean: String.raw`\frac{\nu_2}{\nu_2-2} \quad (\nu_2 > 2)`,
+      variance: String.raw`\frac{2 \nu_2^2 (\nu_1 + \nu_2 - 2)}{\nu_1 (\nu_2 - 2)^2 (\nu_2 - 4)} \quad (\nu_2 > 4)`,
+      sd: String.raw`\sqrt{\frac{2 \nu_2^2 (\nu_1 + \nu_2 - 2)}{\nu_1 (\nu_2 - 2)^2 (\nu_2 - 4)}}`,
+      pdf_latex: String.raw`f_X(x)=\frac{1}{B \left( \frac{\nu_1}{2},\frac{\nu_2}{2} \right) }\left(\frac{\nu_1}{\nu_2}\right)^{\frac{\nu_1}{2}} x^{\frac{\nu_1}{2}-1}\left(1+\frac{\nu_1}{\nu_2}x\right)^{-\frac{\nu_1+\nu_2}{2}}`,
+      mgf_latex: String.raw`\text{Does Not Exist}`
     };
   }
 
@@ -87,7 +105,7 @@ export function fStats(d1, d2, formula = false) {
     mean: Number.isFinite(mean) ? fmt(mean) : "undefined",
     variance: Number.isFinite(variance) ? fmt(variance) : "undefined",
     sd: Number.isFinite(sd) ? fmt(sd) : "undefined",
-    pdf_latex: String.raw`f_X(x)=\frac{1}{B(${d1Display}/2,${d2Display}/2)}\left(\frac{${d1Display}}{${d2Display}}\right)^{${d1Display}/2} x^{${d1Display}/2-1}\left(1+\frac{${d1Display}}{${d2Display}}x\right)^{-\frac{${d1Display}+${d2Display}}{2}}`,
+    pdf_latex: String.raw`f_X(x)=\frac{1}{B(${cleanNumber(d1Display / 2)},${cleanNumber(d2Display / 2)})} ${exp1} ${exp2} \left(1+${d1 == d2 ? "" : cleanNumber(d1Display / d2Display)}x\right)^{-${cleanNumber((d1Display + d2Display) / 2)}}`,
     mgf_latex: String.raw`\text{Does not exist}`
   };
 }

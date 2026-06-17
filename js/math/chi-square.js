@@ -1,6 +1,10 @@
 import { fmt } from "./format.js";
 const { jStat } = window;
 
+function cleanNumber(value, digits = 3) {
+  return Number(value.toFixed(digits)).toString();
+}
+
 function pdf(df, x) {
   if (x < 0) return 0;
   return jStat.chisquare.pdf(x, df);
@@ -65,14 +69,15 @@ export function chisquareStats(df, formula = false) {
   const sd = Math.sqrt(variance);
 
   const dfDisplay = Number.isInteger(df) ? df : df;
+  const halfdfDisplay = cleanNumber(dfDisplay / 2)
 
   if (formula) {
     return {
       is_formula: true,
-      mean: String.raw`\mu = \nu`,
-      variance: String.raw`\sigma^2 = 2\nu`,
-      sd: String.raw`\sigma = \sqrt{2\nu}`,
-      pdf_latex: String.raw`f_X(x) = \frac{1}{2^{\nu/2}\Gamma(\nu/2)}x^{\nu/2-1}e^{-x/2}`,
+      mean: String.raw`\nu`,
+      variance: String.raw`2\nu`,
+      sd: String.raw`\sqrt{2\nu}`,
+      pdf_latex: String.raw`f_X(x) = \frac{1}{2^{\nu/2}\Gamma(\nu/2)}x^{(\nu/2)-1}e^{-x/2}`,
       mgf_latex: String.raw`M(t) = (1-2t)^{-\nu/2}`
     };
   }
@@ -82,7 +87,22 @@ export function chisquareStats(df, formula = false) {
     mean: fmt(mean),
     variance: fmt(variance),
     sd: fmt(sd),
-    pdf_latex: String.raw`f_X(x) = \frac{1}{2^(${dfDisplay}/2)\Gamma(${dfDisplay}/2)}x^{${dfDisplay}/2-1}e^{-x/2}`,
-    mgf_latex: String.raw`M(t) = (1-2t)^{-${dfDisplay}/2}`
+    pdf_latex: 
+        String.raw`f_X(x) = \frac{1}{` +
+        (
+          halfdfDisplay != 1
+            ? String.raw`2^{${halfdfDisplay}}`
+            : String.raw`2`
+        ) +
+        String.raw`\Gamma(${halfdfDisplay})}` +
+        (
+          halfdfDisplay == 2
+            ? String.raw`x`
+            : halfdfDisplay == 1
+              ? ""
+              : String.raw`x^{${cleanNumber(halfdfDisplay - 1)}}`
+        ) +
+        String.raw`e^{-x/2}`,
+    mgf_latex: String.raw`M(t) = (1-2t)^{-${halfdfDisplay}}`
   };
 }

@@ -7,7 +7,7 @@
       }
     },
     {
-      "template": "{name} rolls a fair die {n} times. The number of {dice_roll}'s rolled follows which probability distribution?",
+      "template": "{name} rolls a fair die {n} times. The number of {dice_roll}'s rolled follows which probability distribution? Round parameters to two decimal places.",
       "fixed_params": {
         "p": 0.17
       }
@@ -45,7 +45,7 @@
       }
     },
     {
-      "template": "{name} rolls a fair die repeatedly until the 1st {dice_roll} appears. The total number of rolls follows which probability distribution?",
+      "template": "{name} rolls a fair die repeatedly until the 1st {dice_roll} appears. The total number of rolls follows which probability distribution? Round parameters to two decimal places.",
       "fixed_params": {
         "p": 0.17
       }
@@ -77,20 +77,20 @@
   ],
   "hypergeometric": [
     {
-      "template": "{name} Co. has {N} {object_manufactured} in their warehouse, of which {r_display} are defective. If {n} {object_manufactured} are selected at random without replacement, the total number of {not_choice}defective {object_manufactured} in the sample follows which probability distribution?"
+      "template": "{name} Co. has {N} {object_manufactured.plural} in their warehouse, of which {r_display} are defective. If {n} {object_manufactured.plural} are selected at random without replacement, the total number of {not_choice}defective {object_manufactured.plural} in the sample follows which probability distribution?"
     },
     {
-      "template": "A candy machine contains {r1} {candy_name_1}, {r2} {candy_name_2}, and {r3} {candy_name_3}. If {n} candies are dispensed, the total number of {not_choice}{candy_choice} in the sample follows which probability distribution?"
+      "template": "A candy machine contains {r1} {candies.0.plural}, {r2} {candies.1.plural}, and {r3} {candies.2.plural}. If {n} candies are dispensed without replacement, the total number of {not_choice}{choice.plural} in the sample follows which probability distribution?"
     },
     {
-      "template": "{name} has an aquarium where {r1} of the fish are {fish_name_1}, {r2} are {fish_name_2}, and {r3} are {fish_name_3}. If {n} fish are selected at random without replacement, the total number of {not_choice}{fish_choice} in the sample follows which probability distribution?"
+      "template": "{name} has an aquarium where {r1} of the fish are {fish.0.plural}, {r2} are {fish.1.plural}, and {r3} are {fish.2.plural}. If {n} fish are selected at random without replacement, the total number of {not_choice}{choice.plural} in the sample follows which probability distribution?"
     },
     {
-      "template": "{name} randomly shuffles a standard 52-card deck. If {n} cards are drawn without replacement, the total number of {deck_suit} in the sample follows which probability distribution?",
+      "template": "{name} randomly shuffles a standard 52-card deck. If {n} cards are drawn without replacement, the total number of {deck_suit.plural} in the sample follows which probability distribution?",
       "fixed_params": { "N": 52, "r": 13 }
     },
     {
-      "template": "{name} randomly shuffles a standard 52-card deck. If {n} cards are drawn without replacement, the total number of {deck_value} in the sample follows which probability distribution?",
+      "template": "{name} randomly shuffles a standard 52-card deck. If {n} cards are drawn without replacement, the total number of {deck_value.plural} in the sample follows which probability distribution?",
       "fixed_params": { "N": 52, "r": 4 }
     },
     {
@@ -102,7 +102,7 @@
       "template": "{name} Co. manufactures {l_display} {object_manufactured.plural} per day on average. The total number of {object_manufactured.plural} manufactured in {time_length} day{time_plural} follows which probability distribution?"
     },
     {
-      "template": "A candy machine dispenses {l_display} {candy_item.plural} per hour on average. The total number of {candy_item.plural} dispensed in {time_length} minute{time_plural} follows which probability distribution?"
+      "template": "A candy machine dispenses {l_display} {candy_item.plural} per minute on average. The total number of {candy_item.plural} dispensed in {time_length} minute{time_plural} follows which probability distribution?"
     },
     {
       "template": "{name} is fishing and catches {l_display} {fish_item.plural} per day on average. The total number of {fish_item.plural} caught in {time_length} day{time_plural} follows which probability distribution?"
@@ -137,7 +137,7 @@
       }
     },
     {
-      "template": "{name} rolls a fair die repeatedly until the {r_str} {dice_roll} appears. The total number of rolls follows which probability distribution?",
+      "template": "{name} rolls a fair die repeatedly until the {r_str} {dice_roll} appears. The total number of rolls follows which probability distribution? Round parameters to two decimal places.",
       "fixed_params": {
         "p": 0.17
       }
@@ -244,7 +244,7 @@
       "template": "{name} Co. manufactures {l_display} {object_manufactured.plural} per day on average. The time until {a} {object_manufactured.plural} are manufactured in days follows which probability distribution?"
     },
     {
-      "template": "A candy machine dispenses {l_display} {candy_item.plural} per hour on average. The time until {a} {candy_item.plural} are dispensed in minutes follows which probability distribution?"
+      "template": "A candy machine dispenses {l_display} {candy_item.plural} per minute on average. The time until {a} {candy_item.plural} are dispensed in minutes follows which probability distribution?"
     },
     {
       "template": "{name} is fishing and catches {l_display} {fish_item.plural} per day on average. The time until {a} {fish_item.plural} are caught in days follows which probability distribution?"
@@ -270,16 +270,16 @@
   ],
   "beta": [
     {
-      "template": "{name} Co. manufactured {b_display} {object_manufactured.singular} during a week. The proportion into the week when the {a_display} {object_manufactured.plural} are manufactured follows which probability distribution?"
+      "template": "{name} Co. manufactured {b_display} {object_manufactured.plural} during a week. The proportion into the week when the {a_display} {object_manufactured.singular} is manufactured follows which probability distribution?"
     },
     {
-      "template": "{name} catches {b_display} {fish_item.plural} during a day of fishing. The proportion into the day when the {a_display} {fish_item.plural} are caught follows which probability distribution?"
+      "template": "{name} catches {b_display} {fish_item.plural} during a day of fishing. The proportion into the day when the {a_display} {fish_item.singular} is caught follows which probability distribution?"
     },
     {
-      "template": "{name} eats {b_display} {candy_item.plural} during a movie. The proportion into the movie when the {a_display} {candy_item.plural} are eaten follows which probability distribution?"
+      "template": "{name} eats {b_display} {candy_item.plural} during a movie. The proportion into the movie when the {a_display} {candy_item.singular} is eaten follows which probability distribution?"
     },
     {
-      "template": "{name} delivers {b_display} {pizza_item} pizzas during a shift. The proportion into the shift when the {a_display} pizza is delivered follows which probability distribution?"
+      "template": "{name} delivers {b_display} pizzas with {pizza_item} during a shift. The proportion into the shift when the {a_display} pizza is delivered follows which probability distribution?"
     },
     {
       "template": "{name} listens to {b_display} songs from the {music_name} genre. The proportion into the playlist when the {a_display} song is played follows which probability distribution?"
@@ -288,16 +288,16 @@
       "template": "{name} watches {b_display} {movie_name} movies during a marathon. The proportion into the marathon when the {a_display} movie begins follows which probability distribution?"
     },
     {
-      "template": "{name} reads {b_display} {book_type.plural} during a semester. The proportion into the semester when the {a_display} {book_type.plural} are finished follows which probability distribution?"
+      "template": "{name} reads {b_display} {book_type.plural} during a semester. The proportion into the semester when the {a_display} {book_type.singular} is finished follows which probability distribution?"
     },
     {
-      "template": "{name} visits {b_display} locations near {location_name} during a trip. The proportion into the trip when the {a_display} location is visited follows which probability distribution?"
+      "template": "{name} visits {b_display} locations near the {location_name} during a trip. The proportion into the trip when the {a_display} location is visited follows which probability distribution?"
     },
     {
-      "template": "{name} receives {b_display} patients needing {medical_treatment.singular} during a shift. The proportion into the shift when the {a_display} patient arrives follows which probability distribution?"
+      "template": "{name} receives {b_display} patients needing {medical_treatment.plural} during a shift. The proportion into the shift when the {a_display} patient arrives follows which probability distribution?"
     },
     {
-      "template": "{name} makes {b_display} {basketball_type.plural} during practice. The proportion into practice when the {a_display} {basketball_type.plural} is made follows which probability distribution?"
+      "template": "{name} makes {b_display} {basketball_type.plural} during practice. The proportion into practice when the {a_display} {basketball_type.singular} is made follows which probability distribution?"
     }
   ]
 }

@@ -1,5 +1,11 @@
 import { fmt } from "./format.js";
 
+function cleanNumber(value, digits = 3) {
+  return Number(value.toFixed(digits)).toString();
+}
+
+const EPS = 1e-12;
+
 function comb(n, k) {
   if (!Number.isInteger(n) || !Number.isInteger(k)) return 0;
   if (k < 0 || k > n) return 0;
@@ -94,24 +100,29 @@ export function runsInverse(n1, n2, px, rel) {
 
   if (rel === "le") {
     let cdf = 0;
+
     for (let i = 0; i < r.length; i++) {
       cdf += p[i];
-      if (cdf >= px) {
+
+      if (cdf + EPS >= px) {
         return { x: r[i] };
       }
     }
+
     return { x: r[r.length - 1] };
   }
 
   let sf = 0;
+
   for (let i = r.length - 1; i >= 0; i--) {
     sf += p[i];
-    if (sf <= px) {
+
+    if (sf + EPS >= px) {
       return { x: r[i] };
     }
   }
 
-  return { x: r[r.length - 1] };
+  return { x: r[0] };
 }
 
 export function runsStats(n1, n2, formula = false) {
@@ -125,9 +136,9 @@ export function runsStats(n1, n2, formula = false) {
   if (formula) {
     return {
       is_formula: true,
-      mean: String.raw`\mu = 1 + \frac{2n_1 n_2}{n_1+n_2}`,
-      variance: String.raw`\sigma^2 = \frac{2n_1 n_2(2n_1 n_2 - n_1 - n_2)}{(n_1+n_2)^2 (n_1+n_2-1)}`,
-      sd: String.raw`\sigma = \sqrt{\frac{2n_1 n_2(2n_1 n_2 - n_1 - n_2)}{(n_1+n_2)^2 (n_1+n_2-1)}}`
+      mean: String.raw`1 + \frac{2n_1 n_2}{n_1+n_2}`,
+      variance: String.raw`\frac{2n_1 n_2(2n_1 n_2 - n_1 - n_2)}{(n_1+n_2)^2 (n_1+n_2-1)}`,
+      sd: String.raw`\sqrt{\frac{2n_1 n_2(2n_1 n_2 - n_1 - n_2)}{(n_1+n_2)^2 (n_1+n_2-1)}}`
     };
   }
 

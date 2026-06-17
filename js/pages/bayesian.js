@@ -33,6 +33,15 @@ const ciLabelEl = document.getElementById("ci-label");
 
 const trueParameterLabel = document.querySelector('label[for="true-parameter"]');
 
+function setError(input, message) {
+  input.setCustomValidity(message);
+  input.reportValidity();
+}
+
+function clearError(input) {
+  input.setCustomValidity("");
+}
+
 let showingPosterior = false;
 
 let currentPriorAlpha = 2;
@@ -64,23 +73,38 @@ function setMath(el, value) {
 
 function normalizeTrueParameterInput() {
   if (trueParameterInput.value.trim() === "") {
-    return;
+    return false;
   }
-  
+
   const raw = Number(trueParameterInput.value);
 
   if (!Number.isFinite(raw)) {
-    trueParameterInput.value = "";
-    return;
+    setError(trueParameterInput, "Parameter must be a real number");
+    return false;
   }
 
   const model = dataModelInput.value;
 
   if (model === "binomial") {
-    trueParameterInput.value = Utils.clamp(raw, 0, 1);
+    if (raw <= 0 || raw >= 1) {
+      setError(
+        trueParameterInput,
+        "p must satisfy 0 < p < 1"
+      );
+      return false;
+    }
   } else {
-    trueParameterInput.value = Utils.clamp(raw, 1, 10);
+    if (raw <= 0 || raw >= 100) {
+      setError(
+        trueParameterInput,
+        "λ must satisfy 0 < λ < 100"
+      );
+      return false;
+    }
   }
+
+  clearError(trueParameterInput);
+  return true;
 }
 
 function setFeedback(message, isCorrect = false) {
@@ -680,6 +704,24 @@ randomizeParameterInput.addEventListener("change", () => {
 startBayesBtn.addEventListener("click", () => {
   selectedDataModel = dataModelInput.value;
 
+  if (
+    trueParameterInput.value.trim() === "" &&
+    !randomizeParameterInput.checked
+  ) {
+    setError(
+      trueParameterInput,
+      "Please fill in a parameter or check randomize parameter"
+    );
+    return;
+  }
+
+  if (
+    !randomizeParameterInput.checked &&
+    !normalizeTrueParameterInput()
+  ) {
+    return;
+  }
+
   const manualParam = Number(trueParameterInput.value);
 
   if (!randomizeParameterInput.checked && !Number.isFinite(manualParam)) {
@@ -765,4 +807,6 @@ function updateParameterLabel() {
 dataModelInput.addEventListener("change", updateParameterLabel);
 updateParameterLabel();
 
-Utils.onBlurOrEnter(trueParameterInput, normalizeTrueParameterInput);
+Utils.onBlurOrEnter(trueParameterInput, () => {
+  normalizeTrueParameterInput();
+});

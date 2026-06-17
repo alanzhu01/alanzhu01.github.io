@@ -13,6 +13,15 @@ const formulaToggle = document.getElementById("formula-toggle");
 let currentXValues = [];
 let currentYValues = [];
 
+function setError(input, message) {
+  input.setCustomValidity(message);
+  input.reportValidity();
+}
+
+function clearError(input) {
+  input.setCustomValidity("");
+}
+
 async function updateStats(n) {
   const formula = formulaToggle.checked ? 1 : 0;
   const data = ChiSquare.chisquareStats(n, formula);
@@ -32,10 +41,17 @@ function normalizeN() {
 
   const raw = Number(nInput.value);
 
-  if (!Number.isFinite(raw)) return false;
-  
-  const n = Utils.clamp(raw, 0, Infinity);
-  nInput.value = n;
+  if (!Number.isFinite(raw)) {
+    setError(nInput, "ν must be a positive real number");
+    return false;
+  }
+
+  if (raw <= 0) {
+    setError(nInput, "ν must be a positive real number");
+    return false;
+  }
+
+  clearError(nInput);
   return true;
 }
 
@@ -44,10 +60,17 @@ function normalizeX() {
 
   const raw = Number(xInput.value);
 
-  if (!Number.isFinite(raw)) return false;
-  
-  const x = Utils.clamp(raw, 0, Infinity);
-  xInput.value = x;
+  if (!Number.isFinite(raw)) {
+    setError(xInput, "x must be a nonnegative real number");
+    return false;
+  }
+
+  if (raw < 0) {
+    setError(xInput, "x must be a nonnegative real number");
+    return false;
+  }
+
+  clearError(xInput);
   return true;
 }
 
@@ -55,10 +78,18 @@ function normalizePX() {
   if (pxOutput.value.trim() === "") return false;
 
   const raw = Number(pxOutput.value);
-  if (!Number.isFinite(raw)) return false;
 
-  const px = Utils.clamp(raw, 0, 0.9999999999);
-  pxOutput.value = px;
+  if (!Number.isFinite(raw)) {
+    setError(pxOutput, "Probability must satisfy 0 < p < 1");
+    return false;
+  }
+
+  if (raw <= 0 || raw >= 1) {
+    setError(pxOutput, "Probability must satisfy 0 < p < 1");
+    return false;
+  }
+
+  clearError(pxOutput);
   return true;
 }
 

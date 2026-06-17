@@ -12,6 +12,15 @@ const formulaToggle = document.getElementById("formula-toggle");
 
 let currentXValues = [];
 
+function setError(input, message) {
+  input.setCustomValidity(message);
+  input.reportValidity();
+}
+
+function clearError(input) {
+  input.setCustomValidity("");
+}
+
 async function updateStats(p) {
   const formula = formulaToggle.checked ? 1 : 0;
   const data = Geometric.geometricStats(p, formula);
@@ -30,11 +39,20 @@ function normalizeP() {
   if (pInput.value.trim() === "") return false;
 
   const raw = Number(pInput.value);
-  if (!Number.isFinite(raw)) return false;
 
-  const p = Utils.clamp(raw, 0, 1);
-  pInput.value = p;
+  if (!Number.isFinite(raw)) {
+    pInput.setCustomValidity("p must satisfy 0 < p < 1");
+    pInput.reportValidity();
+    return false;
+  }
 
+  if (raw <= 0 || raw >= 1) {
+    pInput.setCustomValidity("p must satisfy 0 < p < 1");
+    pInput.reportValidity();
+    return false;
+  }
+
+  pInput.setCustomValidity("");
   return true;
 }
 
@@ -43,10 +61,19 @@ function normalizeX() {
 
   const raw = Number(xInput.value);
 
-  if (!Number.isFinite(raw)) return false;
+  if (!Number.isFinite(raw)) {
+    xInput.setCustomValidity("x must be a nonnegative integer");
+    xInput.reportValidity();
+    return false;
+  }
 
-  const x = Utils.roundInt(raw, 0, Infinity);
-  xInput.value = x;
+  if (!Number.isInteger(raw) || raw < 0) {
+    xInput.setCustomValidity("x must be a nonnegative integer");
+    xInput.reportValidity();
+    return false;
+  }
+
+  xInput.setCustomValidity("");
   return true;
 }
 
@@ -54,10 +81,20 @@ function normalizePX() {
   if (pxOutput.value.trim() === "") return false;
 
   const raw = Number(pxOutput.value);
-  if (!Number.isFinite(raw)) return false;
 
-  const px = Utils.clamp(raw, 0, 1);
-  pxOutput.value = px;
+  if (!Number.isFinite(raw)) {
+    pxOutput.setCustomValidity("Probability must satisfy 0 ≤ p ≤ 1");
+    pxOutput.reportValidity();
+    return false;
+  }
+
+  if (raw < 0 || raw > 1) {
+    pxOutput.setCustomValidity("Probability must satisfy 0 ≤ p ≤ 1");
+    pxOutput.reportValidity();
+    return false;
+  }
+
+  pxOutput.setCustomValidity("");
   return true;
 }
 

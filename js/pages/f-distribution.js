@@ -14,6 +14,15 @@ const formulaToggle = document.getElementById("formula-toggle");
 let currentXValues = [];
 let currentYValues = [];
 
+function setError(input, message) {
+  input.setCustomValidity(message);
+  input.reportValidity();
+}
+
+function clearError(input) {
+  input.setCustomValidity("");
+}
+
 async function updateStats(n1, n2) {
   const formula = formulaToggle.checked ? 1 : 0;
   const data = F.fStats(n1, n2, formula);
@@ -33,10 +42,17 @@ function normalizeN1() {
 
   const raw = Number(n1Input.value);
 
-  if (!Number.isFinite(raw)) return false;
-  
-  const n1 = Utils.clamp(raw, 0, Infinity);
-  n1Input.value = n1;
+  if (!Number.isFinite(raw)) {
+    setError(n1Input, "ν₁ must be a positive real number");
+    return false;
+  }
+
+  if (raw <= 0) {
+    setError(n1Input, "ν₁ must be a positive real number");
+    return false;
+  }
+
+  clearError(n1Input);
   return true;
 }
 
@@ -45,10 +61,17 @@ function normalizeN2() {
 
   const raw = Number(n2Input.value);
 
-  if (!Number.isFinite(raw)) return false;
-  
-  const n2 = Utils.clamp(raw, 0, Infinity);
-  n2Input.value = n2;
+  if (!Number.isFinite(raw)) {
+    setError(n2Input, "ν₂ must be a positive real number");
+    return false;
+  }
+
+  if (raw <= 0) {
+    setError(n2Input, "ν₂ must be a positive real number");
+    return false;
+  }
+
+  clearError(n2Input);
   return true;
 }
 
@@ -57,22 +80,36 @@ function normalizeX() {
 
   const raw = Number(xInput.value);
 
-  if (!Number.isFinite(raw)) return false;
-  
-  const x = Utils.clamp(raw, 0, Infinity);
-  xInput.value = x;
+  if (!Number.isFinite(raw)) {
+    setError(xInput, "x must be a nonnegative real number");
+    return false;
+  }
+
+  if (raw < 0) {
+    setError(xInput, "x must be a nonnegative real number");
+    return false;
+  }
+
+  clearError(xInput);
   return true;
 }
-
 
 function normalizePX() {
   if (pxOutput.value.trim() === "") return false;
 
   const raw = Number(pxOutput.value);
-  if (!Number.isFinite(raw)) return false;
 
-  const px = Utils.clamp(raw, 0, 0.9999999999);
-  pxOutput.value = px;
+  if (!Number.isFinite(raw)) {
+    setError(pxOutput, "Probability must satisfy 0 < p < 1");
+    return false;
+  }
+
+  if (raw <= 0 || raw >= 1) {
+    setError(pxOutput, "Probability must satisfy 0 < p < 1");
+    return false;
+  }
+
+  clearError(pxOutput);
   return true;
 }
 

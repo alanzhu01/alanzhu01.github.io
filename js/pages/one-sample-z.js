@@ -21,6 +21,93 @@ const rawDataSubmit = document.getElementById("raw-data-submit");
 const rawDataCancel = document.getElementById("raw-data-cancel");
 const rawDataError = document.getElementById("raw-data-error");
 
+function setError(input, message) {
+  input.setCustomValidity(message);
+  input.reportValidity();
+}
+
+function clearError(input) {
+  input.setCustomValidity("");
+}
+
+function normalizeXbar() {
+  if (xbarInput.value.trim() === "") return false;
+  const raw = Number(xbarInput.value);
+
+  if (!Number.isFinite(raw)) {
+    setError(xbarInput, "x̄ must be a real number");
+    return false;
+  }
+
+  clearError(xbarInput);
+  return true;
+}
+
+function normalizeSigma() {
+  if (sigmaInput.value.trim() === "") return false;
+  const raw = Number(sigmaInput.value);
+
+  if (!Number.isFinite(raw) || raw <= 0) {
+    setError(sigmaInput, "σ must be a positive real number");
+    return false;
+  }
+
+  clearError(sigmaInput);
+  return true;
+}
+
+function normalizeN() {
+  if (nInput.value.trim() === "") return false;
+  const raw = Number(nInput.value);
+
+  if (!Number.isFinite(raw) || raw <= 0 || !Number.isInteger(raw)) {
+    setError(nInput, "n must be a positive integer");
+    return false;
+  }
+
+  clearError(nInput);
+  return true;
+}
+
+function normalizeAlpha() {
+  if (alphaInput.value.trim() === "") return false;
+  const raw = Number(alphaInput.value);
+
+  if (!Number.isFinite(raw) || raw <= 0 || raw >= 1) {
+    setError(alphaInput, "α must satisfy 0 < α < 1");
+    return false;
+  }
+
+  clearError(alphaInput);
+  return true;
+}
+
+function normalizeMu0() {
+  if (mu0Input.value.trim() === "") return false;
+  const raw = Number(mu0Input.value);
+
+  if (!Number.isFinite(raw)) {
+    setError(mu0Input, "μ must be a real number");
+    return false;
+  }
+
+  clearError(mu0Input);
+  return true;
+}
+
+function normalizeH1() {
+  if (h1Input.value.trim() === "") return false;
+  const raw = Number(h1Input.value);
+
+  if (!Number.isFinite(raw)) {
+    setError(h1Input, "μ must be a real number");
+    return false;
+  }
+
+  clearError(h1Input);
+  return true;
+}
+
 async function updateStats(xbar, sigma, n, mu0, alt) {
   const formula = formulaToggle.checked ? 1 : 0;
   const alpha = parseFloat(alphaInput.value);
@@ -80,15 +167,22 @@ function validInputs() {
   const xbar = parseFloat(xbarInput.value);
   const sigma = parseFloat(sigmaInput.value);
   const n = parseInt(nInput.value);
+  const alpha = parseFloat(alphaInput.value);
   const mu0 = parseFloat(mu0Input.value);
+  const h1 = parseFloat(h1Input.value);
 
   return (
     Number.isFinite(xbar) &&
     Number.isFinite(sigma) &&
     Number.isFinite(n) &&
+    Number.isInteger(n) &&
+    Number.isFinite(alpha) &&
     Number.isFinite(mu0) &&
+    Number.isFinite(h1) &&
     sigma > 0 &&
-    n > 0
+    n > 0 &&
+    alpha > 0 &&
+    alpha < 1
   );
 }
 
@@ -144,7 +238,7 @@ async function maybeGeneratePlot() {
 
   const xbar = parseFloat(xbarInput.value);
   const sigma = parseFloat(sigmaInput.value);
-  const n = parseInt(nInput.value);
+  const n = Number(nInput.value);
   const mu0 = parseFloat(mu0Input.value);
   const alt = altSelect.value;
 
@@ -401,15 +495,72 @@ async function maybeGeneratePlot() {
   );
 }
 
-[
-  xbarInput,
-  sigmaInput,
-  nInput,
-  alphaInput,
-  mu0Input,
-  h1Input
-].forEach(input => {
-  Utils.onBlurOrEnter(input, maybeGeneratePlot);
+Utils.onBlurOrEnter(xbarInput, () => {
+  if (!normalizeXbar()) {
+    Utils.hideOutputs({ plotEl, statsCol });
+    return;
+  }
+
+  maybeGeneratePlot();
+  hideDecision();
+});
+
+Utils.onBlurOrEnter(sigmaInput, () => {
+  if (!normalizeSigma()) {
+    Utils.hideOutputs({ plotEl, statsCol });
+    return;
+  }
+
+  maybeGeneratePlot();
+  hideDecision();
+});
+
+Utils.onBlurOrEnter(nInput, () => {
+  if (!normalizeN()) {
+    Utils.hideOutputs({ plotEl, statsCol });
+    return;
+  }
+
+  maybeGeneratePlot();
+  hideDecision();
+});
+
+Utils.onBlurOrEnter(alphaInput, () => {
+  if (!normalizeAlpha()) {
+    Utils.hideOutputs({ plotEl, statsCol });
+    return;
+  }
+
+  maybeGeneratePlot();
+  hideDecision();
+});
+
+Utils.onBlurOrEnter(mu0Input, () => {
+  if (!normalizeMu0()) {
+    Utils.hideOutputs({ plotEl, statsCol });
+    return;
+  }
+
+  if (hypothesisMode === "composite") {
+    syncInputs(mu0Input, h1Input);
+  }
+
+  maybeGeneratePlot();
+  hideDecision();
+});
+
+Utils.onBlurOrEnter(h1Input, () => {
+  if (!normalizeH1()) {
+    Utils.hideOutputs({ plotEl, statsCol });
+    return;
+  }
+
+  if (hypothesisMode === "composite") {
+    syncInputs(h1Input, mu0Input);
+  }
+
+  maybeGeneratePlot();
+  hideDecision();
 });
 
 altSelect.addEventListener("change", maybeGeneratePlot);
@@ -435,20 +586,6 @@ function syncInputs(source, target) {
   syncing = false;
 }
 
-Utils.onBlurOrEnter(mu0Input, () => {
-  if (hypothesisMode === "composite") {
-    syncInputs(mu0Input, h1Input);
-    maybeGeneratePlot();
-  }
-});
-
-Utils.onBlurOrEnter(h1Input, () => {
-  if (hypothesisMode === "composite") {
-    syncInputs(h1Input, mu0Input);
-    maybeGeneratePlot();
-  }
-});
-
 function hideDecision() {
   decisionBox.classList.add("masked");
   decisionBox.classList.remove("revealed");
@@ -465,17 +602,6 @@ decisionBox.addEventListener("click", () => {
   } else {
     hideDecision();
   }
-});
-
-[
-  xbarInput,
-  sigmaInput,
-  nInput,
-  alphaInput,
-  mu0Input,
-  h1Input
-].forEach(input => {
-  Utils.onBlurOrEnter(input, hideDecision);
 });
 
 altSelect.addEventListener("change", hideDecision);

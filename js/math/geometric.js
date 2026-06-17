@@ -1,5 +1,11 @@
 import { fmt } from "./format.js";
 
+function cleanNumber(value, digits = 3) {
+  return Number(value.toFixed(digits)).toString();
+}
+
+const EPS = 1e-12;
+
 function pmf(p, x) {
   if (!Number.isInteger(x) || x < 1) return 0;
   return p * ((1 - p) ** (x - 1));
@@ -47,7 +53,7 @@ export function geometricProb(p, x, rel) {
 export function geometricInverse(p, px, rel) {
   if (rel === "le") {
     for (let k = 1; k < 1000; k++) {
-      if (cdf(p, k) >= px) {
+      if (cdf(p, k) + EPS >= px) {
         return { x: k };
       }
     }
@@ -55,7 +61,7 @@ export function geometricInverse(p, px, rel) {
   }
 
   for (let k = 1; k < 1000; k++) {
-    if (probGE(p, k) <= px) {
+    if (probGE(p, k) <= px + EPS) {
       return { x: k };
     }
   }
@@ -69,14 +75,14 @@ export function geometricStats(p, formula = false) {
   const sd = Math.sqrt(variance);
 
   const pDisplay = p === 1 ? 1 : p;
-  const qDisplay = 1 - p;
+  const qDisplay = cleanNumber(1 - p);
 
   if (formula) {
     return {
       is_formula: true,
-      mean: String.raw`\mu = \frac{1}{p}`,
-      variance: String.raw`\sigma^2 = \frac{1-p}{p^2}`,
-      sd: String.raw`\sigma = \sqrt{\frac{1-p}{p^2}}`,
+      mean: String.raw`\frac{1}{p}`,
+      variance: String.raw`\frac{1-p}{p^2}`,
+      sd: String.raw`\sqrt{\frac{1-p}{p^2}}`,
       pmf_latex: String.raw`\mathbb{P}_{X}(x) = p(1-p)^{x-1}`,
       mgf_latex: String.raw`M(t) = \frac{pe^{t}}{1-(1-p)e^{t}}`
     };
@@ -87,7 +93,7 @@ export function geometricStats(p, formula = false) {
     mean: fmt(mean),
     variance: fmt(variance),
     sd: fmt(sd),
-    pmf_latex: String.raw`\mathbb{P}_{X}(x) = ${pDisplay} (${qDisplay})^{x-1}`,
+    pmf_latex: String.raw`\mathbb{P}(X = x) = ${pDisplay} (${qDisplay})^{x-1}`,
     mgf_latex: String.raw`M(t) = \frac{${pDisplay}e^{t}}{1-${qDisplay}e^{t}}`
   };
 }

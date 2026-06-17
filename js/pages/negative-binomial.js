@@ -13,6 +13,15 @@ const formulaToggle = document.getElementById("formula-toggle");
 
 let currentXValues = [];
 
+function setError(input, message) {
+  input.setCustomValidity(message);
+  input.reportValidity();
+}
+
+function clearError(input) {
+  input.setCustomValidity("");
+}
+
 async function updateStats(n, p) {
   const formula = formulaToggle.checked ? 1 : 0;
   const data = NegativeBinomial.negbinStats(n, p, formula);
@@ -32,11 +41,17 @@ function normalizeN() {
 
   const raw = Number(nInput.value);
 
-  if (!Number.isFinite(raw)) return false;
+  if (!Number.isFinite(raw)) {
+    setError(nInput, "n must be a positive integer");
+    return false;
+  }
 
-  const n = Utils.roundInt(raw, 1, Infinity);
-  nInput.value = n;
+  if (!Number.isInteger(raw) || raw < 1) {
+    setError(nInput, "n must be a positive integer");
+    return false;
+  }
 
+  clearError(nInput);
   return true;
 }
 
@@ -44,11 +59,18 @@ function normalizeP() {
   if (pInput.value.trim() === "") return false;
 
   const raw = Number(pInput.value);
-  if (!Number.isFinite(raw)) return false;
 
-  const p = Utils.clamp(raw, 0, 1);
-  pInput.value = p;
+  if (!Number.isFinite(raw)) {
+    setError(pInput, "p must satisfy 0 < p < 1");
+    return false;
+  }
 
+  if (raw <= 0 || raw >= 1) {
+    setError(pInput, "p must satisfy 0 < p < 1");
+    return false;
+  }
+
+  clearError(pInput);
   return true;
 }
 
@@ -57,10 +79,17 @@ function normalizeX() {
 
   const raw = Number(xInput.value);
 
-  if (!Number.isFinite(raw)) return false;
+  if (!Number.isFinite(raw)) {
+    setError(xInput, "x must be a nonnegative integer");
+    return false;
+  }
 
-  const x = Utils.roundInt(raw, 0, Infinity);
-  xInput.value = x;
+  if (!Number.isInteger(raw) || raw < 0) {
+    setError(xInput, "x must be a nonnegative integer");
+    return false;
+  }
+
+  clearError(xInput);
   return true;
 }
 
@@ -68,10 +97,18 @@ function normalizePX() {
   if (pxOutput.value.trim() === "") return false;
 
   const raw = Number(pxOutput.value);
-  if (!Number.isFinite(raw)) return false;
 
-  const px = Utils.clamp(raw, 0, 1);
-  pxOutput.value = px;
+  if (!Number.isFinite(raw)) {
+    setError(pxOutput, "Probability must satisfy 0 < p < 1");
+    return false;
+  }
+
+  if (raw < 0 || raw > 1) {
+    setError(pxOutput, "Probability must satisfy 0 < p < 1");
+    return false;
+  }
+
+  clearError(pxOutput);
   return true;
 }
 

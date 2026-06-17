@@ -161,8 +161,10 @@ export function twoSampleZStats(
         ? `z_{\\alpha / 2}`
         : `z_{\\alpha}`,
       decision,
-      crit_rule: critRule,
-      p_rule: pRule
+      crit_rule: alt === "lt" ? `z < z_{\\alpha}`
+        : alt === "gt" ? `z > z_{\\alpha}`
+        : `\\vert z \\vert > z_{\\alpha / 2}`,
+      p_rule: `p < \\alpha`
     };
   }
 
@@ -171,10 +173,8 @@ export function twoSampleZStats(
     p_value: fmt(pValue),
     crit_value: typeof critValue === "number" ? fmt(critValue) : critValue,
     decision,
-    crit_rule: alt === "lt" ? `z < z_{\\alpha}`
-    : alt === "gt" ? `z > z_{\\alpha}`
-    : `\\vert z \\vert > z_{\\alpha / 2}`,
-    p_rule: `p < \\alpha`
+    crit_rule: critRule,
+    p_rule: pRule
   };
 }
 

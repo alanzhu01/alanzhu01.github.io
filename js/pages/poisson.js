@@ -12,6 +12,15 @@ const formulaToggle = document.getElementById("formula-toggle");
 
 let currentXValues = [];
 
+function setError(input, message) {
+  input.setCustomValidity(message);
+  input.reportValidity();
+}
+
+function clearError(input) {
+  input.setCustomValidity("");
+}
+
 async function updateStats(l) {
   const formula = formulaToggle.checked ? 1 : 0;
 
@@ -31,11 +40,18 @@ function normalizeL() {
   if (lInput.value.trim() === "") return false;
 
   const raw = Number(lInput.value);
-  if (!Number.isFinite(raw)) return false;
 
-  const l = Utils.clamp(raw, 1, Infinity);
-  lInput.value = l;
+  if (!Number.isFinite(raw)) {
+    setError(lInput, "λ must be a positive real number");
+    return false;
+  }
 
+  if (raw <= 0) {
+    setError(lInput, "λ must be a positive real number");
+    return false;
+  }
+
+  clearError(lInput);
   return true;
 }
 
@@ -44,10 +60,17 @@ function normalizeX() {
 
   const raw = Number(xInput.value);
 
-  if (!Number.isFinite(raw)) return false;
+  if (!Number.isFinite(raw)) {
+    setError(xInput, "x must be a nonnegative integer");
+    return false;
+  }
 
-  const x = Utils.roundInt(raw, 0, Infinity);
-  xInput.value = x;
+  if (!Number.isInteger(raw) || raw < 0) {
+    setError(xInput, "x must be a nonnegative integer");
+    return false;
+  }
+
+  clearError(xInput);
   return true;
 }
 
@@ -55,10 +78,18 @@ function normalizePX() {
   if (pxOutput.value.trim() === "") return false;
 
   const raw = Number(pxOutput.value);
-  if (!Number.isFinite(raw)) return false;
 
-  const px = Utils.clamp(raw, 0, 1);
-  pxOutput.value = px;
+  if (!Number.isFinite(raw)) {
+    setError(pxOutput, "Probability must satisfy 0 ≤ p ≤ 1");
+    return false;
+  }
+
+  if (raw < 0 || raw > 1) {
+    setError(pxOutput, "Probability must satisfy 0 ≤ p ≤ 1");
+    return false;
+  }
+
+  clearError(pxOutput);
   return true;
 }
 

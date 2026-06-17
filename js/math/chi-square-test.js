@@ -159,8 +159,8 @@ function chiSquareStatsFromValues(x2, df, alpha, formula = 0, contingency = true
       p_value: `p = \\mathbb{P}(\\chi^2_{${df}} \\ge \\chi^2)`,
       crit_value: `\\chi^2_{\\alpha, ${df}}`,
       decision,
-      crit_rule: critRule,
-      p_rule: pRule
+      crit_rule: `\\chi^2 > \\chi^2_{\\alpha, ${df}}`,
+      p_rule: `p < \\alpha`
     };
   }
 
@@ -169,8 +169,8 @@ function chiSquareStatsFromValues(x2, df, alpha, formula = 0, contingency = true
     p_value: fmt(pValue),
     crit_value: fmt(critValue),
     decision,
-    crit_rule: `\\chi^2 > \\chi^2_{\\alpha, ${df}}`,
-    p_rule: `p < \\alpha`
+    crit_rule: critRule,
+    p_rule: pRule
   };
 }
 

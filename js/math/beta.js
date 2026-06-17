@@ -1,6 +1,10 @@
 import { fmt } from "./format.js";
 const { jStat } = window;
 
+function cleanNumber(value, digits = 3) {
+  return Number(value.toFixed(digits)).toString();
+}
+
 function pdf(a, b, x) {
   if (x < 0 || x > 1) return 0;
   return jStat.beta.pdf(x, a, b);
@@ -71,11 +75,11 @@ export function betaStats(a, b, formula = false) {
   if (formula) {
     return {
       is_formula: true,
-      mean: String.raw`\mu = \frac{\alpha}{\alpha + \beta}`,
-      variance: String.raw`\sigma^2 = \frac{\alpha \beta}{(\alpha + \beta)^2 (\alpha + \beta + 1)}`,
-      sd: String.raw`\sigma = \sqrt{\frac{\alpha \beta}{(\alpha + \beta)^2 (\alpha + \beta + 1)}}`,
+      mean: String.raw`\frac{\alpha}{\alpha + \beta}`,
+      variance: String.raw`\frac{\alpha \beta}{(\alpha + \beta)^2 (\alpha + \beta + 1)}`,
+      sd: String.raw`\sqrt{\frac{\alpha \beta}{(\alpha + \beta)^2 (\alpha + \beta + 1)}}`,
       pdf_latex: String.raw`f_X(x) = \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} x^{\alpha-1}(1-x)^{\beta-1}`,
-      mgf_latex: String.raw`\text{No simple closed form}`
+      mgf_latex: String.raw`\text{No Closed Form}`
     };
   }
 
@@ -84,7 +88,22 @@ export function betaStats(a, b, formula = false) {
     mean: fmt(mean),
     variance: fmt(variance),
     sd: fmt(sd),
-    pdf_latex: String.raw`f_X(x) = \frac{\Gamma(${aDisplay + bDisplay})}{\Gamma(${aDisplay})\Gamma(${bDisplay})} x^{${aDisplay}-1}(1-x)^{${bDisplay}-1}`,
-    mgf_latex: String.raw`\text{No simple closed form}`
+    pdf_latex: 
+      String.raw`f_X(x) = \frac{\Gamma(${cleanNumber(aDisplay + bDisplay)})}{\Gamma(${aDisplay})\Gamma(${bDisplay})} ` +
+        (
+          aDisplay === 2
+            ? String.raw`x`
+            : aDisplay === 1
+              ? ""
+              : String.raw`x^{${cleanNumber(aDisplay-1)}}`
+        ) +
+        (
+          bDisplay === 2
+            ? String.raw`(1-x)`
+            : bDisplay === 1
+              ? ""
+              : String.raw`(1-x)^{${cleanNumber(bDisplay-1)}}`
+        ),
+    mgf_latex: String.raw`\text{No Closed Form}`
   };
 }

@@ -30,7 +30,7 @@ export function oneSampleFData(s1, s2, n1, n2) {
   const ordered = orderVariances(s1, s2, n1, n2);
   const df1 = ordered.nTop - 1;
   const df2 = ordered.nBottom - 1;
-  const f = ordered.top / ordered.bottom;
+  const f = (ordered.top ** 2) / (ordered.bottom ** 2);
 
   const x = [];
   const y = [];
@@ -98,7 +98,7 @@ export function oneSampleFStats(
   const ordered = orderVariances(s1, s2, n1, n2);
   const df1 = ordered.nTop - 1;
   const df2 = ordered.nBottom - 1;
-  const f = ordered.top / ordered.bottom;
+  const f = (ordered.top ** 2) / (ordered.bottom ** 2);
 
   const fCrit = jStat.centralF.inv(1 - alpha, df1, df2);
   const p = 1 - jStat.centralF.cdf(f, df1, df2);

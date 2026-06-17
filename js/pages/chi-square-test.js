@@ -24,6 +24,29 @@ let mode = "independence";
 let observedMatrix = null;
 let rawGridValues = [];
 
+function setError(input, message) {
+  input.setCustomValidity(message);
+  input.reportValidity();
+}
+
+function clearError(input) {
+  input.setCustomValidity("");
+}
+
+function normalizeAlpha() {
+  if (alphaInput.value.trim() === "") return false;
+
+  const raw = Number(alphaInput.value);
+
+  if (!Number.isFinite(raw) || raw <= 0 || raw >= 1) {
+    setError(alphaInput, "α must satisfy 0 < α < 1");
+    return false;
+  }
+
+  clearError(alphaInput);
+  return true;
+}
+
 function clampGridSize(value) {
   return Math.max(1, Math.min(8, Number(value) || 1));
 }
@@ -38,7 +61,7 @@ function isGoodnessOfFit() {
 
 
 function validInputs() {
-  const alpha = parseFloat(alphaInput.value);
+  const alpha = Number(alphaInput.value);
 
   if (!observedMatrix || !Number.isFinite(alpha) || alpha <= 0 || alpha >= 1) {
     return false;
@@ -346,10 +369,19 @@ async function applyRawData() {
       return;
     }
 
-    observedMatrix = [
-      numbers.slice(0, cols),
-      numbers.slice(cols, cols * 2)
-    ];
+    const observed = numbers.slice(0, cols);
+    const expected = numbers.slice(cols, cols * 2);
+
+    const observedTotal = observed.reduce((a, b) => a + b, 0);
+    const expectedTotal = expected.reduce((a, b) => a + b, 0);
+
+    if (Math.abs(observedTotal - expectedTotal) > 1e-10) {
+      rawDataError.textContent =
+        `Observed total (${observedTotal}) must equal expected total (${expectedTotal}).`;
+      return;
+    }
+
+    observedMatrix = [observed, expected];
   } else {
     const rows = clampGridSize(rawDataRows.value);
     const cols = clampGridSize(rawDataCols.value);
@@ -396,6 +428,11 @@ rawDataModal.addEventListener("keydown", async e => {
 });
 
 Utils.onBlurOrEnter(alphaInput, async () => {
+  if (!normalizeAlpha()) {
+    Utils.hideOutputs({ plotEl, statsCol });
+    return;
+  }
+
   hideDecision();
   await maybeGeneratePlot();
 });

@@ -1,6 +1,11 @@
 import { fmt } from "./format.js";
 const { jStat } = window;
 
+function cleanNumber(value, digits = 3) {
+  return Number(value.toFixed(digits)).toString();
+}
+
+
 function pdf(a, b, x) {
   if (x < 0) return 0;
   return jStat.gamma.pdf(x, a, b);
@@ -73,10 +78,10 @@ export function gammaStats(a, b, param, formula = false) {
     if (formula) {
       return {
         is_formula: true,
-        mean: String.raw`\mu = \alpha \beta`,
-        variance: String.raw`\sigma^2 = \alpha \beta ^ 2`,
-        sd: String.raw`\sigma = \sqrt{\alpha \beta ^ 2}`,
-        pdf_latex: String.raw`f_X(x) = \left( \frac{1}{\Gamma(\alpha) \beta^\alpha} \right) x^{\alpha - 1} e^{-x / \beta}`,
+        mean: String.raw`\alpha \beta`,
+        variance: String.raw`\alpha \beta ^ 2`,
+        sd: String.raw`\sqrt{\alpha \beta ^ 2}`,
+        pdf_latex: String.raw`f_X(x) = \left( \frac{1}{\Gamma(\alpha) \beta^\alpha} \right) x^{\alpha - 1} e^{- x / \beta}`,
         mgf_latex: String.raw`M(t) = (1-\beta t)^{-\alpha}`
       };
     }
@@ -91,9 +96,7 @@ export function gammaStats(a, b, param, formula = false) {
         (
           bDisplay === 1
             ? String.raw`\frac{1}{\gamma(${aDisplay})}`
-            : aDisplay === 1
-              ? String.raw`\frac{1}{\gamma(${aDisplay}) (${bDisplay})}`
-              : String.raw`\frac{1}{\gamma(${aDisplay}) ${bDisplay}^{${aDisplay}}}`
+            : String.raw`\frac{1}{\gamma(${aDisplay}) ${bDisplay}^{${aDisplay}}}`
         ) +
         String.raw`\right)` +
         (
@@ -105,19 +108,22 @@ export function gammaStats(a, b, param, formula = false) {
         ) +
         (
           bDisplay !== 1
-            ? String.raw`e^{-x / ${bDisplay}}`
+            ? String.raw`e^{- x / ${bDisplay}}`
             : String.raw`e^{-x}`
         ),
-      mgf_latex: String.raw`M(t) = (1-${bDisplay} t)^{-${aDisplay}}`
+      mgf_latex: 
+        bDisplay !== 1 
+          ? String.raw`M(t) = (1-${bDisplay} t)^{-${aDisplay}}`
+          : String.raw`M(t) = (1-t)^{-${aDisplay}}`
     };
   }
 
   if (formula) {
     return {
       is_formula: true,
-      mean: String.raw`\mu = \frac{\alpha}{\lambda}`,
-      variance: String.raw`\sigma^2 = \frac{\alpha}{\lambda ^ 2}`,
-      sd: String.raw`\sigma = \sqrt{\frac{\alpha}{\lambda ^ 2}}`,
+      mean: String.raw`\frac{\alpha}{\lambda}`,
+      variance: String.raw`\frac{\alpha}{\lambda ^ 2}`,
+      sd: String.raw`\sqrt{\frac{\alpha}{\lambda ^ 2}}`,
       pdf_latex: String.raw`f_X(x) = \left( \frac{\lambda^\alpha}{\Gamma(\alpha)} \right) x^{\alpha - 1} e^{-\lambda x}`,
       mgf_latex: String.raw`M(t) = (1-\frac{t}{\lambda})^{-\alpha}`
     };
@@ -150,6 +156,9 @@ export function gammaStats(a, b, param, formula = false) {
           ? String.raw`e^{-${bDisplay}x}`
           : String.raw`e^{-x}`
       ),
-    mgf_latex: String.raw`M(t) = (1-\frac{t}{${bDisplay}})^{-${aDisplay}}`
+    mgf_latex: 
+      bDisplay !== 1 
+        ? String.raw`M(t) = (1-\frac{t}{${bDisplay}})^{-${aDisplay}}`
+        : String.raw`M(t) = (1-t)^{-${aDisplay}}`
   };
 }

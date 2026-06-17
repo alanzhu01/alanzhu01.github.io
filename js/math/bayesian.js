@@ -35,7 +35,7 @@ const POISSON_SCENARIOS = [
   },
   {
     intro: (sum, n) =>
-      `You are tracking the number of patients arriving at an emergency room each hour, and you want to estimate the true arrival rate of patients.\n\nYou observe ${sum} patients arrival over ${n} hours.`,
+      `You are tracking the number of patients arriving at an emergency room each hour, and you want to estimate the true arrival rate of patients.\n\nYou observe ${sum} patients arrive over ${n} hours.`,
     next: (sum, n) =>
       `You observe another ${sum} patient arrivals over ${n} hours.`
   },
@@ -174,7 +174,7 @@ export function generateBayesianBinomialScenario(priorAlpha = 2, priorBeta = 2, 
 
 
 function gammaMean(a, b) {
-  return a / b; // rate parameterization
+  return a / b;
 }
 
 function gammaVariance(a, b) {

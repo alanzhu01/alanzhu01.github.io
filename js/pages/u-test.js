@@ -13,6 +13,15 @@ const formulaToggle = document.getElementById("formula-toggle");
 
 let currentXValues = [];
 
+function setError(input, message) {
+  input.setCustomValidity(message);
+  input.reportValidity();
+}
+
+function clearError(input) {
+  input.setCustomValidity("");
+}
+
 async function updateStats(n1, n2) {
   const formula = formulaToggle.checked ? 1 : 0;
   const data = Binomial.mannWhitneyStats(n1, n2, formula);
@@ -23,27 +32,22 @@ async function updateStats(n1, n2) {
 
   await Utils.typesetNodes([meanNode, varNode, sdNode]);
 }
-
 function normalizeN1() {
   if (n1Input.value.trim() === "") return false;
 
   const raw = Number(n1Input.value);
 
-  if (!Number.isFinite(raw)) return false;
-
-  const n1 = Utils.roundInt(raw, 1, Infinity);
-  n1Input.value = n1;
-
-  if (xInput.value.trim() === "") {
-    return true;
+  if (!Number.isFinite(raw)) {
+    setError(n1Input, "n₁ must be a positive integer");
+    return false;
   }
 
-  const x = Number(xInput.value);
-  const n2 = Number(n2Input.value);
+  if (!Number.isInteger(raw) || raw < 1) {
+    setError(n1Input, "n₁ must be a positive integer");
+    return false;
+  }
 
-  const xRound = Utils.roundInt(x, 0, n1 * n2);
-  xInput.value = xRound;
-
+  clearError(n1Input);
   return true;
 }
 
@@ -52,21 +56,17 @@ function normalizeN2() {
 
   const raw = Number(n2Input.value);
 
-  if (!Number.isFinite(raw)) return false;
-
-  const n2 = Utils.roundInt(raw, 1, Infinity);
-  n2Input.value = n2;
-
-  if (xInput.value.trim() === "") {
-    return true;
+  if (!Number.isFinite(raw)) {
+    setError(n2Input, "n₂ must be a positive integer");
+    return false;
   }
 
-  const x = Number(xInput.value);
-  const n1 = Number(n1Input.value);
+  if (!Number.isInteger(raw) || raw < 1) {
+    setError(n2Input, "n₂ must be a positive integer");
+    return false;
+  }
 
-  const xRound = Utils.roundInt(x, 0, n1 * n2);
-  xInput.value = xRound;
-
+  clearError(n2Input);
   return true;
 }
 
@@ -77,10 +77,20 @@ function normalizeX() {
   const n2 = Number(n2Input.value);
   const raw = Number(xInput.value);
 
-  if (!Number.isFinite(n1) || !Number.isFinite(n2) || !Number.isFinite(raw)) return false;
+  if (!Number.isFinite(n1) || !Number.isFinite(n2)) {
+    setError(xInput, "Enter valid n₁ and n₂ first");
+    return false;
+  }
 
-  const xRound = Utils.roundInt(raw, 0, n1 * n2);
-  xInput.value = xRound;
+  const minX = 0;
+  const maxX = n1 * n2;
+
+  if (!Number.isInteger(raw) || raw < minX || raw > maxX) {
+    setError(xInput, `x must be an integer between ${minX} and ${maxX}`);
+    return false;
+  }
+
+  clearError(xInput);
   return true;
 }
 
@@ -88,10 +98,18 @@ function normalizePX() {
   if (pxOutput.value.trim() === "") return false;
 
   const raw = Number(pxOutput.value);
-  if (!Number.isFinite(raw)) return false;
 
-  const px = Utils.clamp(raw, 0, 1);
-  pxOutput.value = px;
+  if (!Number.isFinite(raw)) {
+    setError(pxOutput, "Probability must satisfy 0 ≤ p ≤ 1");
+    return false;
+  }
+
+  if (raw < 0 || raw > 1) {
+    setError(pxOutput, "Probability must satisfy 0 ≤ p ≤ 1");
+    return false;
+  }
+
+  clearError(pxOutput);
   return true;
 }
 
