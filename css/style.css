@@ -1651,4 +1651,13 @@ input[type=number]::-webkit-outer-spin-button {
     margin-right: 0;
   }
 
+  .distribution-input-grid-2col-col {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-auto-flow: row;
+    gap: 12px;
+    width: 100%;
+    padding: 0 15px;
+  }
+
 }

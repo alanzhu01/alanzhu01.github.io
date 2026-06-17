@@ -52,26 +52,25 @@
           <div class="split-layout">
             <div class="left-panel">
               <div class="hypothesis-inputs">
-                <div class="distribution-input-grid-2col-col">
-                  <div class="distribution-input">
+                <div class="distribution-input-grid-2col-1row">
+                  <div class="distribution-input hypothesis-box">
                     <label>\(H_0: \sigma_1^2 = \sigma_2^2 \)</label>
-                  </div>
-
-                  <div class="distribution-input">
                     <label>\(H_1: \sigma_1^2 \neq \sigma_2^2 \)</label>
                   </div>
 
-                  <div class="distribution-input">
-                    <label for="a">\(\alpha =\)</label>
+                  <div class="distribution-input alpha-controls">
+                    <div class="alpha-row">
+                      <label for="a">\(\alpha =\)</label>
 
-                    <div class="has-tip">
-                      <input type="text" id="a" maxlength="8">
-                      <div class="tip" role="tooltip">Significance level</div>
+                      <div class="has-tip">
+                        <input type="text" id="a" maxlength="8">
+                        <div class="tip" role="tooltip">Significance level</div>
+                      </div>
                     </div>
-                  </div>
 
-                  <div class="raw-data-actions">
-                    <button type="button" id="raw-data-btn" class="pill">Enter Data</button>
+                    <div class="raw-data-actions">
+                      <button type="button" id="raw-data-btn" class="pill">Enter Data</button>
+                    </div>
                   </div>
                 </div>
               </div>
