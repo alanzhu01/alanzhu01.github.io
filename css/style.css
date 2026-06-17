@@ -55,7 +55,7 @@
   --plot-red-bar: #e6acac;
 
   --distribution-choose: #5e6680;
-  --distribution-notchoose: rgba(79, 140, 255, 0.15);
+  --distribution-notchoose: rgba(94, 102, 128, 0.4);
 }
 
 [hidden] {
@@ -719,7 +719,7 @@ input[type=number]::-webkit-outer-spin-button {
   user-select: none;
 
   background: var(--distribution-notchoose);
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 1);
 
   transition: all 0.18s ease;
 }

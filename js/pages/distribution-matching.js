@@ -456,7 +456,7 @@ function renderChecklist() {
     const cb = document.createElement("input");
     cb.type = "checkbox";
     cb.value = d.key;
-    cb.checked = true;
+    cb.checked = false;
 
     const text = document.createElement("span");
     text.textContent = d.label;
